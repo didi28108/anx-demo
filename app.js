@@ -16,5 +16,7 @@ app.use('/', function (req, res) {
 	res.send('anx-demo!');
 });
 
-app.listen(port);
-console.log('Anx-demo server running on port ' + port);
+var server = require('http').createServer(app);
+server.listen(port, function () {
+	console.log('Anx-demo server running on port ' + port);
+});
