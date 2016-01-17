@@ -2,9 +2,9 @@
   "name": "anx-demo",
   "version": "0.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "test": "node server.js"
+    "test": "node app.js"
   },
   "repository": {
     "type": "git",
