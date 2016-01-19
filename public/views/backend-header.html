@@ -1,0 +1,63 @@
+<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<style>
+	.header-wrap {
+		display: block;
+		width: 100%;
+		height: 100px;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+		background-color: #333;
+		-webkit-user-select: none;
+		font-family: 'Open Sans Condensed', sans-serif;
+	}
+	#header {
+		float: left;
+		padding-top: 20px;
+	}
+	#header a {
+		color: #fff;
+		font-size: 40px;
+	}
+	#header a:hover {
+		text-decoration: none;
+	}
+	#header a:focus {
+		text-decoration: none;
+	}
+	.time-wrap {
+		float: right;
+		padding-top: 25px;
+		padding-bottom: 25px;
+		color: #fff;
+		font-size: 20px;
+		line-height: 25px;
+		text-align: right;
+	}
+</style>
+
+<div class="header-wrap">
+	<div class="container">
+		<div id="header">
+			<a href="/backend">ANX - BackEnd</a>
+		</div>
+		<div class="time-wrap">
+			<div id="date"></div>
+			<div id="time"></div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function () {
+		updateClock();
+	});
+	function updateClock() {
+		var y = new Date().getFullYear();
+		var m = new Date().getMonth();
+		var d = new Date().getDate();
+		$('#date').html(y+'/'+m+1+'/'+d);
+		var time = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+		$('#time').html(time);
+		setTimeout(updateClock, 1000);
+	}
+
+</script>
