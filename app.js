@@ -22,7 +22,7 @@ mongoose.connect(dbconfig.url, function(err){
 });
 
 // routes
-require('./routes/index.js')(app);
+require('./routes/index.js')(app, __dirname);
 
 var server = require('http').createServer(app);
 server.listen(port, function () {
