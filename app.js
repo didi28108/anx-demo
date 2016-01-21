@@ -6,7 +6,7 @@ var morgan = require('morgan');
 app.use(morgan('dev'));
 
 var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({'extended':'false'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
 
 var path = require('path');
@@ -21,8 +21,14 @@ mongoose.connect(dbconfig.url, function(err){
 	else console.log('MongoDB connected! \nlink: ' + dbconfig.url);
 });
 
+// use the passport package
+var passport = require('passport');
+app.use(passport.initialize());
+
+require('./config/passport')(passport);
+
 // routes
-require('./routes/index.js')(app, __dirname);
+require('./routes/index.js')(app, passport, __dirname);
 
 var server = require('http').createServer(app);
 server.listen(port, function () {
