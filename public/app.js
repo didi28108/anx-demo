@@ -1,41 +1,90 @@
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ui.router']);
 
-myApp.config(function($routeProvider, $locationProvider) {
+// myApp.config(function($routeProvider, $locationProvider) {
+// 	$locationProvider.html5Mode(true);
+
+// 	$routeProvider
+// 		.when('/', {
+// 			templateUrl: 'views/home.html'
+// 		})
+// 		.when('/course', {
+// 			templateUrl: 'views/course.html'
+// 		})
+// 		.when('/news', {
+// 			templateUrl: 'views/news.html'
+// 		})
+// 		.when('/backend', {
+// 			templateUrl: 'views/backend-home.html'
+// 		})
+// 		.when('/backend/login', {
+// 			templateUrl: 'views/backend-login.html'
+// 		})
+// 		.when('/backend/test',  {
+// 			templateUrl: 'views/test.html'
+// 		})
+// 		.otherwise({
+// 			redirectTo: '/'
+// 		});
+
+// });
+
+myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 
-	$routeProvider
-		.when('/', {
+	$stateProvider
+		.state('anx', {
+			url: '/',
 			templateUrl: 'views/home.html'
 		})
-		.when('/course', {
+		.state('course', {
+			url: '/course',
 			templateUrl: 'views/course.html'
 		})
-		.when('/news', {
+		.state('news', {
+			url: '/news',
 			templateUrl: 'views/news.html'
 		})
-		.when('/backend', {
+		.state('backend', {
+			url: '/backend',
 			templateUrl: 'views/backend-home.html'
 		})
-		.when('/backend/login', {
-			templateUrl: 'views/backend-login.html'
+		.state('backend.login', {
+			url: '/login', 
+			templateUrl: 'views/backend-login.html',
+			controller: 'LoginCtrl'
 		})
-		.when('/backend/test',  {
-			templateUrl: 'views/test.html'
+		.state('backend.inside', {
+			url: '/inside',
+			templateUrl: 'views/backend-inside.html',
+			controller: 'InsideCtrl'
+			// data: {
+			// 	needLogin: true
+			// }
 		})
-		.otherwise({
-			redirectTo: '/'
-		});
 
-});
+		;
 
-myApp.controller('loginCtrl', function($scope){
-		$scope.login = function (argument) {
+	  $urlRouterProvider.otherwise('/');
+})
 
-			var username = $scope.username;
-			var password = $scope.password;
+.run(function($rootScope, $state, AuthService){
+	// $rootScope.$on('$stateChangeStart', function(e, to) {
+	// 	if (to.data && to.data.needLogin) {
+	// 		if (!AuthService.isAuthenticated()) {
+	// 			e.preventDefault();
+	// 			$state.go('backend.login');
+	// 		}
+	// 	}
+	// });
 
-			if($scope.username == 'admin' && $scope.password == 'admin') {
-				$location.path('/backend/test');
+	$rootScope.$on('$stateChangeStart', function(event, next, nextParams, fromState) {
+		if (!AuthService.isAuthenticated()) {
+			console.log("current state: " + next.name);
+			if (next.name === 'backend' ||
+					next.name === 'backend.inside') {
+				event.preventDefault();
+				$state.go('backend.login');
 			}
 		}
+	});
 });
