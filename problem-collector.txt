@@ -1,0 +1,8 @@
+problem collector
+
+- 後台無法自動登出
+- 首頁image slider有時不會自己滑
+- 其他頁面切換回首頁時image slider 的 image顯示不出來
+- 網頁需要支援強國及國際通用語言
+- 後端的所有api related routes都應該要有驗證機制，連postman都不能亂po的那種
+- PM太屌
