@@ -1,11 +1,75 @@
 var jwt = require('jwt-simple');
+var config = require('../config/db_conn');
 
 var User = require('../api/model/user');
+var CourseApi = require('../api/course');
+var CategoryApi = require('../api/category');
 
-var config = require('../config/db_conn');
+var Course = new CourseApi();
+var Category = new CategoryApi();
+
 
 module.exports = function (app, passport, root_dir) {
 
+	// course category
+	app.get('/api/getCategory', function (req, res) {
+		Category.getAll(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/addCategory', function (req, res) {
+		Category.create(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.get('/api/removeAllCats', function (req, res) {
+		Category.removeAll(req, function (data) {
+			res.json(data);
+		});
+	});
+
+
+
+	// course
+	app.get('/api/getAllCourse', function (req, res) {
+		Course.getAll(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/getCourse', function (req, res) {
+		Course.getOne(req, function (data) {
+			res.json(data);
+		});
+	});
+	
+	app.post('/api/addCourse', function (req, res) {
+		Course.create(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/updateCourse', function (req, res) {
+		Course.update(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/removeCourse', function (req, res) {
+		Course.removeOne(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.get('/api/removeAllCourse', function (req, res) {
+		Course.removeAll(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	// authentication related
 	app.post('/api/signup', function (req, res) {
 		if (!req.body.name || !req.body.password) {
 			res.json({success: false, msg: 'Please pass name and password.'});
@@ -60,7 +124,7 @@ module.exports = function (app, passport, root_dir) {
 					return res.status(403).send({success: false, msg: 'Authentication failed.'});
 				} else {
 					// return res.status(403).send({success: true, msg: 'Welcome, ' + user.name + '!'});
-					res.json({success: true, msg: 'Welcome, ' + user.name + '!'});
+					res.json({success: true, name: user.name });
 				}
 			})
 		} else {
