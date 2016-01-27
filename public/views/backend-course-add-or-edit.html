@@ -1,0 +1,181 @@
+<!doctype html>
+<!-- bind BECourseAddCtrl or BECourseEditCtrl -->
+<div>
+	<style>
+		.field-name {
+			text-align: right;
+		}
+		.unvalid-alert {
+			font-size: 8px;
+			color: #a94442;
+		}
+		.panel-heading {
+			text-align: center;
+		}
+	</style>
+
+	<div class="panel" ng-class="{'panel-info': $state.is('backend.addCourse'), 'panel-warning': $state.is('backend.editCourse') }">
+
+		<div class="panel-heading" ng-if="$state.is('backend.addCourse')">新增課程</div>
+		<div class="panel-heading" ng-if="$state.is('backend.editCourse')">編輯課程</div>
+
+		<div class="panel-body">
+			<form class="form-horizontal" role="form" name="myForm">
+				<div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="category">單位</label>
+			    <div class="col-md-3">
+			      <select class="form-control" id="category" ng-model="category">
+			      	<option ng-repeat="cat in categoryList" value="{{cat._id}}">{{cat.name}}</option>
+					  </select>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2">課號</label>
+			    <div class="col-md-8">
+			      <input type="text" class="form-control" id="no" name="no" placeholder="" ng-model="no" required>
+			      <span class="unvalid-alert" ng-hide="myForm.no.$valid">必填欄位</span>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="name">課程名稱</label>
+			    <div class="col-md-8"> 
+			      <input type="text" class="form-control" id="name" name="name" placeholder="" ng-model="name" required>
+			      <span class="unvalid-alert" ng-hide="myForm.name.$valid">必填欄位</span>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-2 col-md-1" for="startdate">開始日期</label>
+			    <div class="col-md-3">
+				    <div class="input-group date datetimepicker" data-provide="datepicker" id="">
+					    <input type="text" class="form-control" id="startdate" name="startdate" ng-model="startdate" required>
+					    <div class="input-group-addon">
+					      <span class="glyphicon glyphicon-calendar"></span>
+					    </div>
+						</div>
+		      	<span class="unvalid-alert" ng-hide="myForm.startdate.$valid">必填欄位</span>
+					</div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-2 col-md-1" for="enddate">結束日期</label>
+			    <div class="col-md-3">
+				    <div class="input-group date" data-provide="datepicker">
+					    <input type="text" class="form-control" id="enddate" name="enddate" ng-model="enddate" required>
+					    <div class="input-group-addon">
+					      <span class="glyphicon glyphicon-calendar"></span>
+					    </div>
+						</div>
+		      	<span class="unvalid-alert" ng-hide="myForm.enddate.$valid">必填欄位</span>
+					</div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="confirmdate">開課確認日期</label>
+			    <div class="col-md-3">
+				    <div class="input-group date" data-provide="datepicker">
+					    <input type="text" class="form-control" id="confirmdate" name="confirmdate" ng-model="confirmdate" required>
+					    <div class="input-group-addon">
+					      <span class="glyphicon glyphicon-calendar"></span>
+					    </div>
+						</div>
+		      	<span class="unvalid-alert" ng-hide="myForm.confirmdate.$valid">必填欄位</span>
+					</div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="duration">天數</label>
+			    <div class="col-md-3"> 
+			    	<div class="input-group">
+			      	<input type="number" class="form-control" id="duration" name="duration" placeholder="" ng-model="duration" min="0" max="9999" required>
+				      <span class="input-group-addon">天</span>
+			    	</div>
+		      	<div class="unvalid-alert" ng-hide="myForm.duration.$valid">必填欄位，請輸入數字</div>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="time">時段</label>
+			    <div class="col-md-8">
+			      <input type="text" class="form-control" id="time" name="time" placeholder="" ng-model="time" required>
+		      	<div class="unvalid-alert" ng-hide="myForm.time.$valid">必填欄位</div>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="area">地區</label>
+			    <div class="col-md-3"> 
+			      <select class="form-control" id="area" ng-model="area">
+			      	<option ng-repeat="option in areaList.options" value="{{option.id}}">{{option.name}}</option>
+					  </select>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="location">地點</label>
+			    <div class="col-md-8"> 
+			      <input type="text" class="form-control" id="location" name="location" placeholder="" ng-model="location" required>
+		      	<span class="unvalid-alert" ng-hide="myForm.location.$valid">必填欄位</span>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="target">對象</label>
+			    <div class="col-md-8"> 
+			      <input type="text" class="form-control" id="target" name="target" placeholder="" ng-model="target" required>
+		      	<span class="unvalid-alert" ng-hide="myForm.target.$valid">必填欄位</span>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="meal">是否供午餐</label>
+			    <div class="col-md-8"> 
+			      <div class="input-group">
+			      	<label class="radio-inline">
+			      		<input type="radio" name="meal_radio" value="yes" ng-model="meal">是
+			      	</label>
+			      	<label class="radio-inline">
+			      		<input type="radio" name="meal_radio" value="no" ng-model="meal">否
+			      	</label>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="price">費用</label>
+			    <div class="col-md-8"> 
+			      <input type="number" class="form-control" id="price" name="price" min="0" ng-model="price" required>
+		      	<span class="unvalid-alert" ng-hide="myForm.price.$valid">必填欄位，請輸入數字</span>
+			    </div>
+			  </div>
+				<div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="note">備註</label>
+			    <div class="col-md-8"> 
+			      <textarea class="form-control" style="resize:vertical;" id="note" name="note" rows="5" ng-model="note"></textarea>
+		      	<span class="unvalid-alert" ng-hide="myForm.note.$valid">必填欄位</span>
+			    </div>
+			  </div>
+				<div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="contact">聯絡資訊</label>
+			    <div class="col-md-8"> 
+			      <textarea class="form-control" style="resize:vertical;" id="contact" name="contact" rows="3" ng-model="contact" required></textarea>
+		      	<span class="unvalid-alert" ng-hide="myForm.contact.$valid">必填欄位</span>
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <div class="col-md-offset-3 col-sm-9">
+			      <button ng-show="$state.is('backend.addCourse')" class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="add()">新增</button>
+			      <button ng-show="$state.is('backend.editCourse')" class="btn btn-warning" ng-disabled="!myForm.$valid" ng-click="save()">儲存</button>
+			      <button class="btn btn-default" ng-click="cancel()">取消</button>
+			    </div>
+			  </div>
+
+			</form>
+			<br>
+			<br>
+			<br>
+			<br>
+		</div>
+	</div>
+	
+
+	<script>
+		$(function(){
+			$('.date').datepicker({
+				format: "yyyy/mm/dd",
+				language: "zh-TW"
+			});
+		})
+	</script>
+</div>

@@ -53,13 +53,29 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 			templateUrl: 'views/backend-login.html',
 			controller: 'LoginCtrl'
 		})
-		.state('backend.inside', {
-			url: '/inside',
-			templateUrl: 'views/backend-inside.html',
-			controller: 'InsideCtrl'
+		.state('backend.course', {
+			url: '/course',
+			templateUrl: 'views/backend-course.html',
+			// controller: 'BECourseCtrl'
 			// data: {
 			// 	needLogin: true
 			// }
+		})
+		.state('backend.addCourse', {
+			url: '/addCourse',
+			templateUrl: 'views/backend-course-add-or-edit.html',
+			controller: 'BECourseAddCtrl'
+		})
+		.state('backend.editCourse', {
+			url: '/editCourse',
+			templateUrl: 'views/backend-course-add-or-edit.html',
+			params: { 'course_id': null },
+			controller: 'BECourseEditCtrl'
+		})
+		.state('backend.news', {
+			url: '/news',
+			templateUrl: 'views/backend-news.html',
+			controller: 'BENewsCtrl'
 		})
 
 		;
@@ -68,20 +84,15 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 })
 
 .run(function($rootScope, $state, AuthService){
-	// $rootScope.$on('$stateChangeStart', function(e, to) {
-	// 	if (to.data && to.data.needLogin) {
-	// 		if (!AuthService.isAuthenticated()) {
-	// 			e.preventDefault();
-	// 			$state.go('backend.login');
-	// 		}
-	// 	}
-	// });
 
 	$rootScope.$on('$stateChangeStart', function(event, next, nextParams, fromState) {
 		if (!AuthService.isAuthenticated()) {
 			console.log("current state: " + next.name);
 			if (next.name === 'backend' ||
-					next.name === 'backend.inside') {
+					next.name === 'backend.course' ||
+					next.name === 'backend.addCourse' ||
+					next.name === 'backend.editCourse' ||
+					newx.name === 'backend.news') {
 				event.preventDefault();
 				$state.go('backend.login');
 			}

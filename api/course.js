@@ -104,8 +104,8 @@ var CourseProto = {
 	},
 
 	'removeOne': function(req, callback) {
-		CourseModel.remove({ _id: req.body.course_id}, function (err, data) {
-			res.json(data);
+		CourseModel.remove({ _id: req.body.course_id }, function (err, data) {
+			callback(data);
 		});
 	},
 
