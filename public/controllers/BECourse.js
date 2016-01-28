@@ -1,31 +1,22 @@
 var myApp = angular.module('myApp');
 
-myApp.controller('BECourseCtrl', function($scope, AuthService, $http, $state, $window){
-	// $scope.destroySession = function() {
-	// 	AuthService.logout();
-	// };
+myApp.controller('BECourseCtrl', function(CourseService, $scope, $http, $state, $window){
+	
 	$scope.currentCategory = '';
 
-	$http.get('/api/getCategory').then(function(result) {
-		$scope.categoryList = result.data;
-		if($scope.categoryList != null) {
-			$scope.currentCategory = $scope.categoryList[0];
-		}
+	CourseService.getCourseCategoryList().then(function(data) {
+		$scope.categoryList = data;
+		$scope.currentCategory = $scope.categoryList[0];
+	}, function(err) {
+		// err handling
 	});
 
-	$http.get('/api/getAllCourse').then(function(result) {
-		$scope.courses = course_date_transform(result.data);
+	CourseService.getAllCourse().then(function(data) {
+		$scope.courses = data;
+	}, function(err) {
+		// err handling
 	});
 
-	function course_date_transform (courses) {
-		for(id in courses) {
-			console.log();
-			courses[id].startdate 	= courses[id].startdate.substring(0, 10).replace(/-/g, "/");
-			courses[id].enddate			= courses[id].enddate.substring(0, 10).replace(/-/g, "/");
-			courses[id].confirmdate	= courses[id].confirmdate.substring(0, 10).replace(/-/g, "/");
-		}
-		return courses;
-	};
 
 	// show course on list when a category is clicked
 	$scope.showCourse = function (abbr) {
@@ -48,19 +39,19 @@ myApp.controller('BECourseCtrl', function($scope, AuthService, $http, $state, $w
 
 	$scope.delete = function() {
 		var course_id = this.course._id;
-		var removeCourseReq = {
-			method: 'POST',
-			url: 		'/api/removeCourse',
-			data : {
-				course_id: course_id
+		var category_id = this.course.category._id;
+		if($window.confirm("被刪除的課程無法被復原\n是否確定要刪除此課程？")){
+			var data = {
+				course_id		: course_id,
+				category_id	: category_id
 			}
-		};
-		$http(removeCourseReq).then(function(result){
-			console.log('remove succeeded!');
-			$state.go('backend.course', null, { reload: true });
-		}, function(err) {
-			// err handling ...
-		});
+			CourseService.removeCourse(data).then(function(result){
+				console.log('remove succeeded!');
+				$state.go('backend.course', null, { reload: true });
+			}, function(err) {
+				// err handling ...
+			});
+		}
 	};
 
 });
