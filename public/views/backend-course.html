@@ -1,17 +1,15 @@
 <!-- <h4>{{userinfo}}</h4> -->
 <div ng-controller="BECourseCtrl">
-	<h4>course page</h4>
-	<p>under construction</p>
 	<button class="btn btn-default" ng-click="goAdd()">
 		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增課程
 	</button>
 	<br>
 	<div class="col-md-3">
-		<h3>category</h3>
+		<h3>單位</h3>
 		<div class="list-group">
 			<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showCourse(cat.abbr)">
 				{{cat.name}}
-				<span class="badge"></span>
+				<span class="badge">{{cat.course.length}}</span>
 			</a>
 		</div>
 	</div>
@@ -35,7 +33,7 @@
 		  		<tr ng-if="course.category.abbr==currentCategory.abbr" ng-repeat="course in courses" id="{{course._id}}">
 		  			<td><span class="label label-primary">{{course.area.name}}</span></td>
 		  			<td>{{course.no}}</td>
-		  			<td>{{course.name}}</td>
+		  			<td><a href="/backend/course/{{course._id}}">{{course.name}}</a></td>
 		  			<td>{{course.startdate}}</td>
 		  			<td>{{course.enddate}}</td>
 		  			<td>{{course.confirmdate}}</td>
