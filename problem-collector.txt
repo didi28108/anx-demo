@@ -1,8 +1,32 @@
 problem collector
 
 - 後台無法自動登出
+
 - 首頁image slider有時不會自己滑
+
 - 其他頁面切換回首頁時image slider 的 image顯示不出來
+
 - 網頁需要支援強國及國際通用語言
-- 後端的所有api related routes都應該要有驗證機制，連postman都不能亂po的那種
+
+- 後端的所有api related routes都應該要有驗證機制
+	連postman都不能亂po的那種
+
+- 後台課程編輯模式載入時datepicker input的value由ng-model設定好
+	但datepicker api不會catch到val
+	也就是說點開datepicker是在沒有任何日期被選擇的狀態
+	**應該可改用UI bootstrap for angular解決
+
+- 課程列表點選左側類別時
+	應該要有相對應的url顯示在網址列
+	即要能用url選擇要瀏覽的類別
+
+- angularjs眾controller中有重複的$http request
+	都應該make成service or factory
+
+- 極優先!!!
+	目前取課程資料都是直接取全部
+	應該要分頁或者一次只取一部分
+
+
 - PM太屌
+	*無解
