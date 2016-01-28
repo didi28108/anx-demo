@@ -1,3 +1,6 @@
+var CategoryApi = require('./category');
+var Category = new CategoryApi();
+
 var CourseModel = require('./model/course');
 
 var CourseProto = {
@@ -52,9 +55,20 @@ var CourseProto = {
 			newCourse.contact_info 	= req.body.contact_info;
 			newCourse.createdate 		= current_date;
 
+			// save course
 			newCourse.save(function (err, data) {
-				if (err) throw err;
-				else callback(data);
+				if (err) {
+					throw err;
+				}	else {
+					// push course id into category's course field
+					var course_data = {
+						course_id			: data._id,
+						category_id		: data.category
+					};
+					Category.pushCourse(course_data, function (data) {
+						callback(data);
+					});	
+				}
 			});
 			
 		// }
@@ -105,7 +119,16 @@ var CourseProto = {
 
 	'removeOne': function(req, callback) {
 		CourseModel.remove({ _id: req.body.course_id }, function (err, data) {
-			callback(data);
+			if (err) throw err;
+			else {
+				var course_data = {
+					category_id		: req.body.category_id,
+					course_id			: req.body.course_id
+				};
+				Category.pullCourse(course_data, function (data) {
+					callback(data);
+				});
+			}
 		});
 	},
 

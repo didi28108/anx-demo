@@ -13,7 +13,8 @@ var CategoryProto = {
 	'getAll': function (req, callback) {
 		CategoryModel
 			.find({})
-			.select('name abbr')
+			.sort('abbr')
+			// .select('name abbr')
 			.exec(function (err, data) {
 			callback(data);
 		});
@@ -23,7 +24,28 @@ var CategoryProto = {
 		CategoryModel.remove({}, function (err, data) {
 			callback(data);
 		});
+	},
+
+	'pushCourse': function (data_from_courseapi, callback) {
+		CategoryModel
+			.update({ _id: data_from_courseapi.category_id }, 
+							{$push: {course: [data_from_courseapi.course_id]}},
+							function (err, course) {
+								if (err) throw err;
+								else callback(course);
+							});
+	},
+
+	'pullCourse': function (data_from_courseapi, callback) {
+		CategoryModel
+			.update({ _id: data_from_courseapi.category_id },
+							{$pull: { course: [data_from_courseapi.course_id]}},
+							function (err, course) {
+								if (err) throw err;
+								else callback(course);
+							});
 	}
+
 }
 
 
