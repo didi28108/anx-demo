@@ -55,11 +55,12 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		})
 		.state('backend.course', {
 			url: '/course',
-			templateUrl: 'views/backend-course.html',
-			// controller: 'BECourseCtrl'
-			// data: {
-			// 	needLogin: true
-			// }
+			templateUrl: 'views/backend-course.html'
+		})
+		.state('backend.viewCourse', {
+			url: '/course/:id',
+			templateUrl: 'views/backend-course-view.html',
+			controller: 'BECourseViewCtrl'
 		})
 		.state('backend.addCourse', {
 			url: '/addCourse',
