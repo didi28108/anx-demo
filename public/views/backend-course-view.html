@@ -1,0 +1,144 @@
+<!doctype html>
+<style>
+	.field-name {
+		text-align: right;
+		font-weight: bold;
+	}
+	.panel-heading {
+		text-align: center;
+	}
+</style>
+<br>
+<div class="col-md-3">
+	<h3>單位</h3>
+	<div class="list-group">
+		<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showCourse(cat.abbr)">
+			{{cat.name}}
+			<span class="badge">{{cat.course.length}}</span>
+		</a>
+	</div>
+</div>
+<div class="col-md-9">
+	<h3>{{categoryName}} － {{name}}</h3>
+	<div class="panel panel-default">
+		<div class="panel-heading">課程資料</div>
+		<div class="panel-body">
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>單位 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{name}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>課號 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{no}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>課程名稱 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{name}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>開始日期 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{startdate}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>結束日期 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{enddate}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>開課確認日期 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{confirmdate}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>天數 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{duration}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>時段 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{time}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>地區 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p><span class="label label-primary">{{area}}</span></p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>地點 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{location}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>對象 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{target}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>費用 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{price}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>備註 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{note}}</p>
+	    	</div>
+			</div>
+			<div class="row">
+	    	<div class="field-name col-md-offset-1 col-md-2">
+	    		<p>聯絡資訊 :</p>
+	    	</div>
+	    	<div class="col-md-9">
+	    		<p>{{contact}}</p>
+	    	</div>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+		</div>
+	</div>
+</div>
