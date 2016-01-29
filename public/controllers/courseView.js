@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp');
 
-myApp.controller('BECourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams){
+myApp.controller('CourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams){
 	
 	// 取得開課單位
 	CourseService.getCourseCategoryList().then(function(result) {

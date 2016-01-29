@@ -1,33 +1,5 @@
 var myApp = angular.module('myApp', ['ui.router']);
 
-// myApp.config(function($routeProvider, $locationProvider) {
-// 	$locationProvider.html5Mode(true);
-
-// 	$routeProvider
-// 		.when('/', {
-// 			templateUrl: 'views/home.html'
-// 		})
-// 		.when('/course', {
-// 			templateUrl: 'views/course.html'
-// 		})
-// 		.when('/news', {
-// 			templateUrl: 'views/news.html'
-// 		})
-// 		.when('/backend', {
-// 			templateUrl: 'views/backend-home.html'
-// 		})
-// 		.when('/backend/login', {
-// 			templateUrl: 'views/backend-login.html'
-// 		})
-// 		.when('/backend/test',  {
-// 			templateUrl: 'views/test.html'
-// 		})
-// 		.otherwise({
-// 			redirectTo: '/'
-// 		});
-
-// });
-
 myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 
@@ -38,7 +10,14 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		})
 		.state('course', {
 			url: '/course',
-			templateUrl: 'views/course.html'
+			templateUrl: 'views/course.html',
+			params: { 'default_category': null },
+			controller: 'CourseCtrl'
+		})
+		.state('viewCourse', {
+			url: '/course/:id',
+			templateUrl: 'views/course-view.html',
+			controller: 'CourseViewCtrl'
 		})
 		.state('news', {
 			url: '/news',
@@ -55,7 +34,9 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		})
 		.state('backend.course', {
 			url: '/course',
-			templateUrl: 'views/backend-course.html'
+			templateUrl: 'views/backend-course.html',
+			params: { 'default_category': null },
+			controller: 'BECourseCtrl'
 		})
 		.state('backend.viewCourse', {
 			url: '/course/:id',
@@ -91,9 +72,10 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 			console.log("current state: " + next.name);
 			if (next.name === 'backend' ||
 					next.name === 'backend.course' ||
+					next.name === 'backend.viewCourse' ||
 					next.name === 'backend.addCourse' ||
 					next.name === 'backend.editCourse' ||
-					newx.name === 'backend.news') {
+					next.name === 'backend.news') {
 				event.preventDefault();
 				$state.go('backend.login');
 			}

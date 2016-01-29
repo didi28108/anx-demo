@@ -1,12 +1,16 @@
 var myApp = angular.module('myApp');
 
-myApp.controller('BECourseCtrl', function(CourseService, $scope, $http, $state, $window){
+myApp.controller('BECourseCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window){
 	
 	$scope.currentCategory = '';
 
 	CourseService.getCourseCategoryList().then(function(data) {
 		$scope.categoryList = data;
-		$scope.currentCategory = $scope.categoryList[0];
+		if($stateParams.default_category == null) {
+			$scope.currentCategory = $scope.categoryList[0];
+		} else {
+			$scope.currentCategory = $stateParams.default_category;
+		}
 	}, function(err) {
 		// err handling
 	});
