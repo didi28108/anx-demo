@@ -6,6 +6,9 @@ myApp.controller('BENewsCtrl', function(NewsService, $scope, $http, $state, $sta
 
 	$scope.currentCategory = '';
 
+	$scope.sortType = '';
+	$scope.sortReverse = false;
+
 	// 從Service取得消息公告類別
 	NewsService.getNewsCategory().then(function(data) {
 		$scope.categoryList = data;
@@ -27,6 +30,7 @@ myApp.controller('BENewsCtrl', function(NewsService, $scope, $http, $state, $sta
 
 	// 點選類別列表上的類別時顯示該類別的消息公告在右側
 	$scope.showNews = function (news_id) {
+		$scope.sortType = '';
 		for(id in $scope.categoryList) {
 			if($scope.categoryList[id]._id == news_id) {
 				$scope.currentCategory = $scope.categoryList[id];

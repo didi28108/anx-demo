@@ -23,14 +23,22 @@
 			  	<thead>
 			  		<tr>
 			  			<th>地區</th>
-			  			<th>課程名稱</th>
-			  			<th>開始日期</th>
+			  			<th>
+								<a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">課程名稱</a>
+			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'name' && !sortReverse"></span>
+								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'name' && sortReverse"></span>
+			  			</th>
+			  			<th>
+			  				<a href="#" ng-click="sortType = 'startdate'; sortReverse = !sortReverse">開始日期</a>
+			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'startdate' && !sortReverse"></span>
+								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'startdate' && sortReverse"></span>
+			  			</th>
 			  			<th>結束日期</th>
 			  			<th>開課確認日期</th>
 			  		</tr>
 			  	</thead>
 			  	<tbody>
-			  		<tr ng-if="course.category.abbr==currentCategory.abbr" ng-repeat="course in courses" id="{{course._id}}">
+			  		<tr ng-if="course.category.abbr==currentCategory.abbr" ng-repeat="course in courses | orderBy:sortType:sortReverse" id="{{course._id}}">
 			  			<td><span class="label label-primary">{{course.area.name}}</span></td>
 			  			<td><a href="/course/{{course._id}}">{{course.name}}</a></td>
 			  			<td>{{course.startdate}}</td>

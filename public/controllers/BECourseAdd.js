@@ -10,7 +10,7 @@ myApp.controller('BECourseAddCtrl', function($scope, $http, $state, $window){
 	$scope.area = '6';		// 預設雲林地區
 
 	// 取得開課單位
-	$http.get('/api/getCategory').then(function(result) {
+	$http.get('/api/getCourseCategory').then(function(result) {
 		$scope.categoryList = result.data;
 
 		// 將第一筆category資料設定為預設選項

@@ -4,6 +4,9 @@ myApp.controller('BECourseCtrl', function(CourseService, $scope, $http, $state, 
 	
 	$scope.currentCategory = '';
 
+	$scope.sortType = '';
+	$scope.sortReverse = false;
+
 	CourseService.getCourseCategoryList().then(function(data) {
 		$scope.categoryList = data;
 		if($stateParams.default_category == null) {
@@ -24,6 +27,7 @@ myApp.controller('BECourseCtrl', function(CourseService, $scope, $http, $state, 
 
 	// show course on list when a category is clicked
 	$scope.showCourse = function (abbr) {
+		$scope.sortType = '';
 		for(id in $scope.categoryList) {
 			if($scope.categoryList[id].abbr == abbr) {
 				$scope.currentCategory = $scope.categoryList[id];

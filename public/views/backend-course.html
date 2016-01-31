@@ -20,17 +20,41 @@
 		  <table class="table table-striped table-hover">
 		  	<thead>
 		  		<tr>
-		  			<th>地區</th>
-		  			<th>計劃案編號</th>
-		  			<th>課程名稱</th>
-		  			<th>開始日期</th>
-		  			<th>結束日期</th>
-		  			<th>開課確認日期</th>
+		  			<th>
+							<a href="#" ng-click="sortType = 'area.name'; sortReverse = !sortReverse">地區</a>
+		  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'area.name' && !sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'area.name' && sortReverse"></span>
+		  			</th>
+		  			<th>
+		  				<a href="#" ng-click="sortType = 'no'; sortReverse = !sortReverse">計劃案編號</a>
+		  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'no' && !sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'no' && sortReverse"></span>
+		  			</th>
+		  			<th>
+		  				<a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">課程名稱</a>
+		  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'name' && !sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'name' && sortReverse"></span>
+						</th>
+		  			<th>
+		  				<a href="#" ng-click="sortType = 'startdate'; sortReverse = !sortReverse">開始日期</a>
+		  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'startdate' && !sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'startdate' && sortReverse"></span>
+						</th>
+		  			<th>
+		  				<a href="#" ng-click="sortType = 'enddate'; sortReverse = !sortReverse">結束日期</a>
+		  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'enddate' && !sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'enddate' && sortReverse"></span>
+						</th>
+		  			<th>
+							<a href="#" ng-click="sortType = 'confirmdate'; sortReverse = !sortReverse">開課確認日期</a>
+		  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'confirmdate' && !sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'confirmdate' && sortReverse"></span>
+		  			</th>
 		  			<th>options</th>
 		  		</tr>
 		  	</thead>
 		  	<tbody>
-		  		<tr ng-if="course.category.abbr==currentCategory.abbr" ng-repeat="course in courses" id="{{course._id}}">
+		  		<tr ng-if="course.category.abbr==currentCategory.abbr" ng-repeat="course in courses | orderBy:sortType:sortReverse" id="{{course._id}}">
 		  			<td><span class="label label-primary">{{course.area.name}}</span></td>
 		  			<td>{{course.no}}</td>
 		  			<td><a href="/backend/course/{{course._id}}">{{course.name}}</a></td>

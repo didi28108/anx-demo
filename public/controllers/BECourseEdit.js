@@ -9,7 +9,7 @@ myApp.controller('BECourseEditCtrl', function($scope, $http, $state, $stateParam
 	}
 
 	// 取得開課單位
-	$http.get('/api/getCategory').then(function(result) {
+	$http.get('/api/getCourseCategory').then(function(result) {
 		$scope.categoryList = result.data;
 
 	}, function(err) {
