@@ -77,8 +77,11 @@ var CourseProto = {
 								enroll_link		: req.body.enroll_link,
 								contact_info 	: req.body.contact_info }, 
 							function (err, course) {
-								if(err) throw err;
-								else callback(course);
+								if(err) console.log(err);
+								// if(err) throw err;
+								// else callback(course);
+								console.log(course);
+								callback(course);
 							});
 	},
 

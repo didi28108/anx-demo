@@ -5,7 +5,7 @@ myApp.service('CourseService', function($q, $http){
 	// 取得所有課程分類
 	var getCourseCategoryList = function () {
 		return $q(function(resolve, reject) {
-			$http.get('/api/getCategory').then(function(result) {
+			$http.get('/api/getCourseCategory').then(function(result) {
 				if(result.data) {
 					resolve(result.data);
 				} else {

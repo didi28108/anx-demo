@@ -71,13 +71,13 @@ module.exports = function (app, passport, root_dir) {
 
 
 	// course category
-	app.get('/api/getCategory', function (req, res) {
+	app.get('/api/getCourseCategory', function (req, res) {
 		Category.getAll(req, function (data) {
 			res.json(data);
 		});
 	});
 
-	app.post('/api/addCategory', function (req, res) {
+	app.post('/api/addCourseCategory', function (req, res) {
 		Category.create(req, function (data) {
 			res.json(data);
 		});
