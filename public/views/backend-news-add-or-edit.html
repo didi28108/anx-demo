@@ -1,0 +1,106 @@
+<!doctype html>
+<div>
+	<style>
+		.unvalid-alert {
+			font-size: 8px;
+			color: #a94442;
+		}
+		.panel-heading {
+			text-align: center;
+		}
+	</style>
+
+	<div class="panel" ng-class="{'panel-info': $state.is('backend.addNews'), 'panel-warning': $state.is('backend.editNews') }">
+
+		<div class="panel-heading" ng-if="$state.is('backend.addNews')">新增公告</div>
+		<div class="panel-heading" ng-if="$state.is('backend.editNews')">編輯公告</div>
+
+		<div class="panel-body">
+			<br>
+			<form class="form-horizontal" role="form" name="myForm">
+				<div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="category">類別</label>
+			    <div class="col-md-3">
+			      <select class="form-control" id="category" ng-model="category">
+			      	<option ng-repeat="cat in categoryList" value="{{cat._id}}">{{cat.name}}</option>
+					  </select>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2">標題</label>
+			    <div class="col-md-8">
+			      <input type="text" class="form-control" id="title" name="title" placeholder="" ng-model="title" required>
+			      <span class="unvalid-alert" ng-hide="myForm.title.$valid">必填欄位</span>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2">內容</label>
+			    <div class="col-md-8"> 
+			      <textarea class="form-control" style="resize:vertical;" id="content" name="content" rows="5" ng-model="content" required></textarea>
+		      	<span class="unvalid-alert" ng-hide="myForm.content.$valid">必填欄位</span>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="startdate">公告發布日期</label>
+			    <div class="col-md-3">
+				    <div class="input-group date datetimepicker" data-provide="datepicker" id="">
+					    <input type="text" class="form-control" id="startdate" name="startdate" ng-model="startdate" required>
+					    <div class="input-group-addon">
+					      <span class="glyphicon glyphicon-calendar"></span>
+					    </div>
+						</div>
+		      	<span class="unvalid-alert" ng-hide="myForm.startdate.$valid">必填欄位</span>
+					</div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="enddate">公告結束日期<br>(不含)</label>
+			    <div class="col-md-3">
+				    <div class="input-group date" data-provide="datepicker">
+					    <input type="text" class="form-control" id="enddate" name="enddate" ng-model="enddate" required>
+					    <div class="input-group-addon">
+					      <span class="glyphicon glyphicon-calendar"></span>
+					    </div>
+						</div>
+		      	<span class="unvalid-alert" ng-hide="myForm.enddate.$valid">必填欄位</span>
+					</div>
+			  </div>
+			  <!-- <div class="form-group">
+			    <label class="control-label col-md-offset-1 col-md-2" for="">是否設定為置頂公告<br>(最多三則)</label>
+			    <div class="col-md-8"> 
+			      <div class="input-group">
+			      	<label class="radio-inline">
+			      		<input type="radio" name="pintotop_radio" value="yes" ng-model="pintotop">是
+			      	</label>
+			      	<label class="radio-inline">
+			      		<input type="radio" name="pintotop_radio" value="no" ng-model="pintotop">否
+			      	</label>
+				    </div>
+			    </div>
+			  </div> -->
+
+			  <div class="form-group">
+			    <div class="col-md-offset-3 col-sm-9">
+			      <button ng-show="$state.is('backend.addNews')" class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="add()">新增</button>
+			      <button ng-show="$state.is('backend.editNews')" class="btn btn-warning" ng-disabled="!myForm.$valid" ng-click="save()">儲存</button>
+			      <button class="btn btn-default" ng-click="cancel()">取消</button>
+			    </div>
+			  </div>
+
+			</form>
+			<br>
+			<br>
+			<br>
+			<br>
+		</div>
+	</div>
+	
+
+	<script>
+		$(function(){
+			$('.date').datepicker({
+				format: "yyyy/mm/dd",
+				language: "zh-TW"
+			});
+		})
+	</script>
+</div>

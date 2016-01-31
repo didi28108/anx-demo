@@ -21,7 +21,14 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		})
 		.state('news', {
 			url: '/news',
-			templateUrl: 'views/news.html'
+			templateUrl: 'views/news.html',
+			params: { 'default_category': null },
+			controller: 'NewsCtrl'
+		})
+		.state('viewNews', {
+			url: '/news/:id',
+			templateUrl: 'views/news-view.html',
+			controller: 'NewsViewCtrl'
 		})
 		.state('backend', {
 			url: '/backend',
@@ -57,7 +64,24 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		.state('backend.news', {
 			url: '/news',
 			templateUrl: 'views/backend-news.html',
+			params: { 'default_category': null },
 			controller: 'BENewsCtrl'
+		})
+		.state('backend.viewNews', {
+			url: '/news/:id',
+			templateUrl: 'views/backend-news-view.html',
+			controller: 'BENewsViewCtrl'
+		})
+		.state('backend.addNews', {
+			url: '/addNews',
+			templateUrl: 'views/backend-news-add-or-edit.html',
+			controller: 'BENewsAddCtrl'
+		})
+		.state('backend.editNews', {
+			url: '/editNews',
+			templateUrl: 'views/backend-news-add-or-edit.html',
+			params: { 'news_id': null },
+			controller: 'BENewsEditCtrl'
 		})
 
 		;
@@ -68,14 +92,17 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 .run(function($rootScope, $state, AuthService){
 
 	$rootScope.$on('$stateChangeStart', function(event, next, nextParams, fromState) {
+		// console.log('current state: ', next.name);
 		if (!AuthService.isAuthenticated()) {
-			console.log("current state: " + next.name);
 			if (next.name === 'backend' ||
 					next.name === 'backend.course' ||
 					next.name === 'backend.viewCourse' ||
 					next.name === 'backend.addCourse' ||
 					next.name === 'backend.editCourse' ||
-					next.name === 'backend.news') {
+					next.name === 'backend.news' ||
+					next.name === 'backend.viewNews' ||
+					next.name === 'backend.addNews' ||
+					next.name === 'backend.editNews') {
 				event.preventDefault();
 				$state.go('backend.login');
 			}

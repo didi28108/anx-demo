@@ -53,6 +53,8 @@ myApp.controller('BECourseViewCtrl', function(CourseService, $scope, $http, $sta
 		$scope.price					= course.price;
 		$scope.note						= course.note;
 		$scope.contact				= course.contact_info;
+		$scope.link						= course.enroll_link;
+
 	});
 
 	$scope.showCourse = function(abbr) {

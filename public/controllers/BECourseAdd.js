@@ -61,7 +61,8 @@ myApp.controller('BECourseAddCtrl', function($scope, $http, $state, $window){
 				meal_offer		: meal_offer,
 				price					: $scope.price,
 				note					: $scope.note,
-				contact_info	: $scope.contact
+				contact_info	: $scope.contact,
+				enroll_link		: $scope.link
 			}
 		};
 

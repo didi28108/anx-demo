@@ -56,6 +56,8 @@ myApp.controller('BECourseEditCtrl', function($scope, $http, $state, $stateParam
 		$scope.price					= course.price;
 		$scope.note						= course.note;
 		$scope.contact				= course.contact_info;
+		$scope.link						= course.enroll_link;
+
 	});
 
 
@@ -101,7 +103,8 @@ myApp.controller('BECourseEditCtrl', function($scope, $http, $state, $stateParam
 				meal_offer		: meal_offer,
 				price					: $scope.price,
 				note					: $scope.note,
-				contact_info	: $scope.contact
+				contact_info	: $scope.contact,
+				enroll_link		: $scope.link
 			}
 		};
 

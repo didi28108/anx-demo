@@ -1,12 +1,13 @@
 <!doctype html>
 
-<div id="includedNav"></div>
+<!-- <div id="includedNav"></div> -->
+
 
 
 <div class="container" style="min-height:500px;">
 	<div ng-controller="CourseCtrl">
 		<div class="col-md-3">
-			<h3>開課單位</h3>
+			<h3>課程單位</h3>
 			<div class="list-group">
 				<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showCourse(cat.abbr)">
 					{{cat.name}}
@@ -22,7 +23,6 @@
 			  	<thead>
 			  		<tr>
 			  			<th>地區</th>
-			  			<th>課號</th>
 			  			<th>課程名稱</th>
 			  			<th>開始日期</th>
 			  			<th>結束日期</th>
@@ -32,7 +32,6 @@
 			  	<tbody>
 			  		<tr ng-if="course.category.abbr==currentCategory.abbr" ng-repeat="course in courses" id="{{course._id}}">
 			  			<td><span class="label label-primary">{{course.area.name}}</span></td>
-			  			<td>{{course.no}}</td>
 			  			<td><a href="/course/{{course._id}}">{{course.name}}</a></td>
 			  			<td>{{course.startdate}}</td>
 			  			<td>{{course.enddate}}</td>
@@ -47,7 +46,7 @@
 </div>
 
 
-<div id="includedFooter"></div>
+<!-- <div id="includedFooter"></div> -->
 
 <script>
 	$(function(){

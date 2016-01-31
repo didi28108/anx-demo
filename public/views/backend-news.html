@@ -1,4 +1,44 @@
-<div>
-	<h4>news page</h4>
-	<p>under construction</p>
+<div ng-controller="BENewsCtrl">
+	<button class="btn btn-default" ng-click="goAdd()">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增消息
+	</button>
+	<br>
+	<div class="col-md-3">
+		<h3>公告類別</h3>
+		<div class="list-group">
+			<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showNews(cat._id)">
+				{{cat.name}}
+				<span class="badge">{{cat.news.length}}</span>
+			</a>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<h3>{{currentCategory.name}}&nbsp;</h3>
+		<div class="panel panel-default">
+		  <!-- Table -->
+		  <table class="table table-striped table-hover">
+		  	<thead>
+		  		<tr>
+		  			<th>類別</th>
+		  			<th>標題</th>
+		  			<th>開始日期</th>
+		  			<th>結束日期</th>
+		  			<th>options</th>
+		  		</tr>
+		  	</thead>
+		  	<tbody>
+		  		<tr ng-if="news.category._id==currentCategory._id" ng-repeat="news in newsList" id="{{news._id}}">
+		  			<td><span class="label label-primary">{{news.category.name}}</span></td>
+		  			<td><a href="/backend/news/{{news._id}}">{{news.title}}</a></td>
+		  			<td>{{news.startdate}}</td>
+		  			<td>{{news.enddate}}</td>
+		  			<td>
+		  				<button class="btn btn-warning" ng-click="goEdit()">Edit</button>
+		  				<button class="btn btn-danger" ng-click="delete()">Delete</button>
+		  			</td>
+		  		</tr>
+		  	</tbody>
+		  </table>
+		</div>
+	</div>
 </div>

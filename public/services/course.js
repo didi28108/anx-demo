@@ -30,7 +30,6 @@ myApp.service('CourseService', function($q, $http){
 	// 取得課程後將日期格式轉為yyyy-mm-dd
 	function course_date_transform (courses) {
 		for(id in courses) {
-			console.log();
 			courses[id].startdate 	= courses[id].startdate.substring(0, 10).replace(/-/g, "/");
 			courses[id].enddate			= courses[id].enddate.substring(0, 10).replace(/-/g, "/");
 			courses[id].confirmdate	= courses[id].confirmdate.substring(0, 10).replace(/-/g, "/");
