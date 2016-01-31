@@ -23,6 +23,7 @@ var CourseSchema = new Schema({
 	price					: { type: Number },
 	note					: {	type: String },	// 備註
 	contact_info	: {	type: String },
+	enroll_link		: {	type: String },
 	createdate		: Date
 });
 

@@ -4,12 +4,71 @@ var config = require('../config/db_conn');
 var User = require('../api/model/user');
 var CourseApi = require('../api/course');
 var CategoryApi = require('../api/category');
+var NewsApi = require('../api/news');
 
 var Course = new CourseApi();
 var Category = new CategoryApi();
+var News = new NewsApi();
 
 
 module.exports = function (app, passport, root_dir) {
+
+// news category related routes
+	app.get('/api/getNewsCategory', function (req, res) {
+		News.findAllCategory(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/addNewsCategory', function (req, res) {
+		News.addCategory(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/updateNewsCategory', function (req, res) {
+		News.updateCategory(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/removeNewsCategory', function (req, res) {
+		News.removeCategory(req, function (data) {
+			res.json(data);
+		});
+	});
+
+// news related routes
+	app.post('/api/getNews', function (req, res) {
+		News.findOne(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.get('/api/getAllNews', function (req, res) {
+		News.findAll(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/addNews', function (req, res) {
+		News.add(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/updateNews', function (req, res) {
+		News.update(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/removeNews', function (req, res) {
+		News.remove(req, function (data) {
+			res.json(data);
+		});
+	});
+
 
 	// course category
 	app.get('/api/getCategory', function (req, res) {
