@@ -27,7 +27,7 @@
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label class="control-label col-md-offset-1 col-md-2">課號</label>
+			    <label class="control-label col-md-offset-1 col-md-2">計劃案編號</label>
 			    <div class="col-md-8">
 			      <input type="text" class="form-control" id="no" name="no" placeholder="" ng-model="no" required>
 			      <span class="unvalid-alert" ng-hide="myForm.no.$valid">必填欄位</span>
@@ -138,7 +138,7 @@
 				<div class="form-group">
 			    <label class="control-label col-md-offset-1 col-md-2" for="note">備註</label>
 			    <div class="col-md-8"> 
-			      <textarea class="form-control" style="resize:vertical;" id="note" name="note" rows="5" ng-model="note"></textarea>
+			      <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="note" name="note" ng-model="note"></textarea>
 		      	<span class="unvalid-alert" ng-hide="myForm.note.$valid">必填欄位</span>
 			    </div>
 			  </div>
@@ -178,7 +178,8 @@
 		$(function(){
 			$('.date').datepicker({
 				format: "yyyy/mm/dd",
-				language: "zh-TW"
+				language: "zh-TW",
+				autoclose: true
 			});
 		})
 	</script>

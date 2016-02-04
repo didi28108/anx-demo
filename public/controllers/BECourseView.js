@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('BECourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams){
+.controller('BECourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams, $sce){
 	
 	// 取得開課單位
 	CourseService.getCourseCategoryList().then(function(result) {
@@ -51,7 +51,7 @@ myApp.controller('BECourseViewCtrl', function(CourseService, $scope, $http, $sta
 		$scope.target					= course.enroll_target;
 		$scope.meal						= meal;
 		$scope.price					= course.price;
-		$scope.note						= course.note;
+		$scope.note						= $sce.trustAsHtml(course.note);
 		$scope.contact				= course.contact_info;
 		$scope.link						= course.enroll_link;
 

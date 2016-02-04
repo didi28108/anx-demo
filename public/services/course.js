@@ -78,12 +78,32 @@ myApp.service('CourseService', function($q, $http){
 		});
 	}
 
+	var clicks = function (id) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method: 'POST',
+				url: 		'/api/courseClicked',
+				data : {
+					course_id		: id
+				}
+			};
+			$http(req).then(function(result){
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject('nope');
+				}
+			});
+		});
+	}
+
 
 	return {
 		getCourseCategoryList		: getCourseCategoryList,
 		getAllCourse						: getAllCourse,
 		getCourse 							: getCourse,
-		removeCourse						: removeCourse
+		removeCourse						: removeCourse,
+		clicks									: clicks
 	}
 
 });

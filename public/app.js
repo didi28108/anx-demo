@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp', ['ui.router']);
+angular.module('myApp', ['ui.router', 'ngCkeditor'])
 
-myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 
 	$stateProvider

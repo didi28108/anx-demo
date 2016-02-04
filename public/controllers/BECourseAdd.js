@@ -1,13 +1,17 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('BECourseAddCtrl', function($scope, $http, $state, $window){
+.controller('BECourseAddCtrl', function($scope, $http, $state, $window){
 	// 將目前的$state注入$scope中，供views使用
 	$scope.$state = $state;
 
 	// 設定表單預設值	
-
 	$scope.meal = 'no';		// 預設不供餐
 	$scope.area = '6';		// 預設雲林地區
+
+	// ng-ckeditor configs
+	$scope.editorOptions = {
+		language: 'zh',
+	}
 
 	// 取得開課單位
 	$http.get('/api/getCourseCategory').then(function(result) {

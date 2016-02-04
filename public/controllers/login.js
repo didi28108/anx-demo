@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('LoginCtrl', function($scope, AuthService, $state){
+.controller('LoginCtrl', function($scope, AuthService, $state){
 	$scope.msg = '';
 	$scope.user = {name: '', password: ''};
 

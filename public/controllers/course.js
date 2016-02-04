@@ -1,15 +1,17 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('CourseCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window){
+.controller('CourseCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window){
 	
 	$scope.currentCategory = '';
 
 	$scope.sortType			= '';
 	$scope.sortReverse	= false;
+	$scope.searchFish		= '';
 
 	CourseService.getCourseCategoryList().then(function(data) {
 		$scope.categoryList = data;
 		if($stateParams.default_category == null) {
+			console.log($scope.categoryList);
 			$scope.currentCategory = $scope.categoryList[0];
 		} else {
 			$scope.currentCategory = $stateParams.default_category;

@@ -48,8 +48,12 @@ myApp.service('NewsService', function($q, $http){
 			}
 			$http(req).then(function(result) {
 				if(result.data) {
-					var transformed = news_date_transform(result.data);
-					resolve(transformed[0]);
+					if(result.data.notfound) {
+						resolve(result.data);
+					} else {
+						var transformed = news_date_transform(result.data);
+						resolve(transformed[0]);
+					}
 				} else {
 					reject('nope'); 
 				}
@@ -138,6 +142,25 @@ myApp.service('NewsService', function($q, $http){
 		});
 	}
 
+	var clicks = function (id) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method: 'POST',
+				url: 		'/api/newsClicked',
+				data : {
+					news_id: id
+				}
+			};
+			$http(req).then(function(result){
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject('nope');
+				}
+			});
+		});
+	}
+
 
 	return {
 		getNewsCategory		: getNewsCategory,
@@ -145,7 +168,8 @@ myApp.service('NewsService', function($q, $http){
 		getNews 					: getNews,
 		addNews						: addNews,
 		updateNews				: updateNews,
-		removeNews				: removeNews
+		removeNews				: removeNews,
+		clicks						: clicks
 	}
 
 });

@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('BECourseEditCtrl', function($scope, $http, $state, $stateParams, $window){
+.controller('BECourseEditCtrl', function($scope, $http, $state, $stateParams, $window){
 	$scope.$state = $state;
 
 	// 如果無法從$stateParams取得課程_id的話就導向課程清單

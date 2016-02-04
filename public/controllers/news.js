@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('NewsCtrl', function(NewsService, $scope, $http, $state, $stateParams, $window){
+.controller('NewsCtrl', function(NewsService, $scope, $http, $state, $stateParams, $window){
 
 	$scope.$state = $state;
 
@@ -8,6 +8,7 @@ myApp.controller('NewsCtrl', function(NewsService, $scope, $http, $state, $state
 
 	$scope.sortType			= 'startdate';
 	$scope.sortReverse	= true;
+	$scope.searchFish		= '';
 
 	// 從Service取得消息公告類別
 	NewsService.getNewsCategory().then(function(data) {

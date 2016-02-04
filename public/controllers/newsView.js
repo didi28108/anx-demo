@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-.controller('BENewsViewCtrl', function(NewsService, $scope, $http, $state, $stateParams, $sce){
+.controller('NewsViewCtrl', function(NewsService, $scope, $http, $state, $stateParams, $sce){
 	
 	NewsService.getNewsCategory().then(function(data) {
 		$scope.categoryList = data;
@@ -9,11 +9,13 @@ angular.module('myApp')
 	});
 
 	NewsService.getNews($stateParams.id).then(function(data) {
-		$scope.title			= data.title;
-		$scope.content		= $sce.trustAsHtml(data.content);
-		$scope.startdate	= data.startdate;
-		$scope.enddate		= data.enddate;
-		$scope.category 	= data.category;
+		if(data.notfound) {
+			$state.go('^.news');
+		} else {
+			NewsService.clicks(data._id);
+			$scope.news	= data;
+			$scope.news.content = $sce.trustAsHtml($scope.news.content);
+		}
 	});
 
 

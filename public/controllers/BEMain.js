@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('BackendMainCtrl', function($scope, AuthService, $state, $http, $window){
+.controller('BackendMainCtrl', function($scope, AuthService, $state, $http, $window){
 	$scope.isLogin = AuthService.isAuthenticated();
 
 	$http.get('/api/userinfo').then(function(result) {

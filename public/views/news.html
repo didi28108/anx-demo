@@ -14,6 +14,13 @@
 		</div>
 		<div class="col-md-9">
 			<h3>{{currentCategory.name}}&nbsp;</h3>
+			<div class="input-group">
+				<span class="input-group-addon" id="sizing-addon1">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+				</span>
+				<input type="text" class="form-control" placeholder="搜尋公告" aria-describedby="sizing-addon1" ng-model="searchFish">
+			</div>
+			<br>
 			<div class="panel panel-default">
 			  <!-- Table -->
 			  <table class="table table-striped table-hover">
@@ -30,13 +37,20 @@
 			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'startdate' && !sortReverse"></span>
 								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'startdate' && sortReverse"></span>
 			  			</th>
+			  			<th style="text-align:center;">
+			  				<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+			  				<a href="#" ng-click="sortType = 'clicks'; sortReverse = !sortReverse">點閱</a>
+			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'clicks' && !sortReverse"></span>
+								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'clicks' && sortReverse"></span>
+			  			</th>
 			  		</tr>
 			  	</thead>
 			  	<tbody>
-			  		<tr ng-if="news.category._id==currentCategory._id" ng-repeat="news in newsList | orderBy:sortType:sortReverse" id="{{news._id}}">
+			  		<tr ng-if="news.category._id==currentCategory._id" ng-repeat="news in newsList | orderBy:sortType:sortReverse | filter:searchFish" id="{{news._id}}">
 			  			<td><span class="label label-primary">{{news.category.name}}</span></td>
-			  			<td><a href="/backend/news/{{news._id}}">{{news.title}}</a></td>
+			  			<td><a href="/news/{{news._id}}">{{news.title}}</a></td>
 			  			<td>{{news.startdate}}</td>
+			  			<td style="text-align:center;">{{news.clicks}}</td>
 			  		</tr>
 			  	</tbody>
 			  </table>

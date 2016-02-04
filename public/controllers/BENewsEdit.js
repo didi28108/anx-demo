@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('BENewsEditCtrl', function(NewsService, $scope, $http, $state, $stateParams, $window){
+.controller('BENewsEditCtrl', function(NewsService, $scope, $http, $state, $stateParams, $window){
 
 	$scope.$state = $state;
 
@@ -19,7 +19,7 @@ myApp.controller('BENewsEditCtrl', function(NewsService, $scope, $http, $state, 
 		$scope.content		= data.content;
 		$scope.startdate	= data.startdate;
 		$scope.enddate		= data.enddate;
-		$scope.category 	= data.category;
+		$scope.category 	= data.category._id;
 	}, function(err) {
 		// err handling ...
 	});

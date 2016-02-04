@@ -1,0 +1,74 @@
+<!doctype html>
+<div class="container" style="min-height:500px;">
+	<style>
+		.field-name {
+			text-align: right;
+			font-weight: bold;
+		}
+		.panel-heading {
+			text-align: center;
+		}
+	</style>
+	<br>
+	<div class="col-md-3">
+		<h3>公告類別</h3>
+		<div class="list-group">
+			<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showNews(cat._id)">
+				{{cat.name}}
+				<span class="badge">{{cat.news.length}}</span>
+			</a>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<h3>{{news.category.name}} － {{news.title}}</h3>
+		<div class="panel panel-default">
+			<div class="panel-heading">消息公告</div>
+			<div class="panel-body">
+				<div class="row">
+		    	<div class="field-name col-md-offset-1 col-md-2">
+		    		<p>類別 :</p>
+		    	</div>
+		    	<div class="col-md-9">
+		    		<p>{{news.category.name}}</p>
+		    	</div>
+				</div>
+				<div class="row">
+		    	<div class="field-name col-md-offset-1 col-md-2">
+		    		<p>標題 :</p>
+		    	</div>
+		    	<div class="col-md-9">
+		    		<p>{{news.title}}</p>
+		    	</div>
+				</div>
+				<div class="row">
+		    	<div class="field-name col-md-offset-1 col-md-2">
+		    		<p>內容 :</p>
+		    	</div>
+		    	<div class="col-md-9">
+		    		<div ng-bind-html="news.content"></div>
+		    	</div>
+				</div>
+				<div class="row">
+		    	<div class="field-name col-md-offset-1 col-md-2">
+		    		<p>公告發布日期 :</p>
+		    	</div>
+		    	<div class="col-md-9">
+		    		<p>{{news.startdate}}</p>
+		    	</div>
+				</div>
+				<div class="row">
+		    	<div class="field-name col-md-offset-1 col-md-2">
+		    		<p>公告結束日期 :</p>
+		    	</div>
+		    	<div class="col-md-9">
+		    		<p>{{news.enddate}}</p>
+		    	</div>
+				</div>
+				<br>
+				<br>
+				<br>
+				<br>
+			</div>
+		</div>
+	</div>
+</div>

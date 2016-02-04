@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('BENewsAddCtrl', function(NewsService, $scope, $http, $state, $stateParams){
+.controller('BENewsAddCtrl', function(NewsService, $scope, $http, $state, $stateParams){
 
 	$scope.$state = $state;
 

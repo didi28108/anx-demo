@@ -1,11 +1,12 @@
-var myApp = angular.module('myApp');
+angular.module('myApp')
 
-myApp.controller('BECourseCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window){
+.controller('BECourseCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window){
 	
 	$scope.currentCategory = '';
 
 	$scope.sortType = '';
 	$scope.sortReverse = false;
+	$scope.searchFish = '';
 
 	CourseService.getCourseCategoryList().then(function(data) {
 		$scope.categoryList = data;

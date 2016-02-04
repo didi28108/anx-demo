@@ -36,7 +36,7 @@
 			  <div class="form-group">
 			    <label class="control-label col-md-offset-1 col-md-2">內容</label>
 			    <div class="col-md-8"> 
-			      <textarea class="form-control" style="resize:vertical;" id="content" name="content" rows="5" ng-model="content" required></textarea>
+			      <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="content" name="content" ng-model="content" required></textarea>
 		      	<span class="unvalid-alert" ng-hide="myForm.content.$valid">必填欄位</span>
 			    </div>
 			  </div>
@@ -99,7 +99,8 @@
 		$(function(){
 			$('.date').datepicker({
 				format: "yyyy/mm/dd",
-				language: "zh-TW"
+				language: "zh-TW",
+				autoclose: true
 			});
 		})
 	</script>
