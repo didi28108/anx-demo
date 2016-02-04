@@ -69,6 +69,12 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
+	app.post('/api/newsClicked', function (req, res) {
+		News.addClick(req, function (data) {
+			res.json(data);
+		});
+	});
+
 
 	// course category
 	app.get('/api/getCourseCategory', function (req, res) {
@@ -124,6 +130,13 @@ module.exports = function (app, passport, root_dir) {
 
 	app.get('/api/removeAllCourse', function (req, res) {
 		Course.removeAll(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	// 課程點擊次數+1
+	app.post('/api/courseClicked', function (req, res) {
+		Course.addClick(req, function (data) {
 			res.json(data);
 		});
 	});

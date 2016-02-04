@@ -46,7 +46,11 @@ var NewsProto = {
 			.find({ _id: req.body.news_id })
 			.populate('category')
 			.exec(function (err, news) {
-			callback(news);
+				if(news==null) {
+					callback({ notfound: true });
+				} else {
+					callback(news);
+				}
 		});
 	},
 
@@ -114,6 +118,15 @@ var NewsProto = {
 						callback(newsCategory);
 				});
 		});
+	},
+
+	'addClick': function(req, callback) {
+		NewsModel
+			.update({ _id: req.body.news_id },
+							{ $inc: { clicks: 1 }},
+							function (err, news) {
+								callback(news);
+			});
 	}
 
 

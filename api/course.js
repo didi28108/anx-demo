@@ -18,8 +18,6 @@ var CourseProto = {
 		var current_date = new Date();
 		current_date.addHours(8);
 
-		console.log(req.body);
-
 		var newCourse = new CourseModel();
 		newCourse.no 						= req.body.no;
 		newCourse.category			= req.body.category;
@@ -37,6 +35,7 @@ var CourseProto = {
 		newCourse.note 					= req.body.note;
 		newCourse.contact_info 	= req.body.contact_info;
 		newCourse.enroll_link		= req.body.enroll_link;
+		newCourse.clicks				= '0';
 		newCourse.createdate 		= current_date;
 
 		// save course
@@ -80,7 +79,6 @@ var CourseProto = {
 								if(err) console.log(err);
 								// if(err) throw err;
 								// else callback(course);
-								console.log(course);
 								callback(course);
 							});
 	},
@@ -89,7 +87,7 @@ var CourseProto = {
 		CourseModel
 			.find()
 			.populate('category')
-			.select('no category area name startdate enddate confirmdate')
+			.select('no category area name startdate enddate confirmdate clicks')
 			.exec(function (err, data) {
 				callback(data);
 			});
@@ -100,7 +98,11 @@ var CourseProto = {
 			.findOne({_id: req.body.course_id})
 			.populate('category')
 			.exec(function (err, data) {
-				callback(data);
+				if(data==null) {
+					callback({notfound: true});
+				} else {
+					callback(data);
+				}
 			});
 	},
 
@@ -123,6 +125,15 @@ var CourseProto = {
 		CourseModel.remove({}, function (err, data) {
 			callback(data);
 		});
+	},
+
+	'addClick': function(req, callback) {
+		CourseModel
+			.update({ _id: req.body.course_id },
+							{ $inc: { clicks: 1 }},
+							function (err, course) {
+								callback(course);
+			});
 	}
 
 }

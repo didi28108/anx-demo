@@ -24,6 +24,7 @@ var CourseSchema = new Schema({
 	note					: {	type: String },	// 備註
 	contact_info	: {	type: String },
 	enroll_link		: {	type: String },
+	clicks				: { type: Number, default: 0 },
 	createdate		: Date
 });
 
