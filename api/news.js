@@ -1,3 +1,5 @@
+var config = require('../config/db_conn');
+
 var NewsModel = require('./model/news');
 var NewsCategoryModel = require('./model/news_category');
 
@@ -70,7 +72,7 @@ var NewsProto = {
 			return this;   
 		};
 		var current_date = new Date();
-		current_date.addHours(8);
+		current_date.addHours(config.timeZoneDiff);
 
 		var newNews = new NewsModel();
 		newNews.title 		= req.body.title;

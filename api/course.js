@@ -1,3 +1,5 @@
+var config = require('../config/db_conn');
+
 var CategoryApi = require('./category');
 var Category = new CategoryApi();
 
@@ -16,7 +18,7 @@ var CourseProto = {
 			return this;   
 		};
 		var current_date = new Date();
-		current_date.addHours(8);
+		current_date.addHours(config.timeZoneDiff);
 
 		var newCourse = new CourseModel();
 		newCourse.no 						= req.body.no;
@@ -76,10 +78,28 @@ var CourseProto = {
 								enroll_link		: req.body.enroll_link,
 								contact_info 	: req.body.contact_info }, 
 							function (err, course) {
-								if(err) console.log(err);
-								// if(err) throw err;
-								// else callback(course);
-								callback(course);
+								// get previous category of the course
+								Category.getPrevious({course_id: req.body.course_id}, function (previousCategory) {
+									// check whether the course category has changed
+									if (req.body.category != previousCategory._id) {
+										// pull course id from previous category.course[]
+										var course_data = {
+											course_id			: req.body.course_id,
+										};
+										Category.pullCourse(course_data, function (data) {
+											// push course id into new category.course[]
+											var course_data = {
+												course_id			: req.body.course_id,
+												category_id		: req.body.category
+											};
+											Category.pushCourse(course_data, function (data) {
+												callback(data);
+											});
+										});
+									} else {
+										callback();
+									}
+								});
 							});
 	},
 

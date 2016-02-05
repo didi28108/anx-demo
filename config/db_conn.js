@@ -3,5 +3,6 @@ var local = 'mongodb://localhost:27017/bfbs';
 
 module.exports = {
 	'url'	: mongolab,
-	'secret' : 'idontknowwhatisgoingon'
+	'secret' : 'idontknowwhatisgoingon',
+	'timeZoneDiff' : 8
 }

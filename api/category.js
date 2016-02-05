@@ -26,24 +26,30 @@ var CategoryProto = {
 		});
 	},
 
-	'pushCourse': function (data_from_courseapi, callback) {
+	'pushCourse': function (data, callback) {
 		CategoryModel
-			.update({ _id: data_from_courseapi.category_id }, 
-							{$push: {course: [data_from_courseapi.course_id]}},
+			.update({ _id: data.category_id }, 
+							{$push: {course: [data.course_id]}},
 							function (err, course) {
 								if (err) throw err;
 								else callback(course);
 							});
 	},
 
-	'pullCourse': function (data_from_courseapi, callback) {
+	'pullCourse': function (data, callback) {
 		CategoryModel
-			.update({ _id: data_from_courseapi.category_id },
-							{$pull: { course: [data_from_courseapi.course_id]}},
+			.update({ course: [data.course_id] },
+							{$pull: { course: [data.course_id]}},
 							function (err, course) {
 								if (err) throw err;
 								else callback(course);
 							});
+	},
+
+	'getPrevious': function (data, callback) {
+		CategoryModel.findOne({ course: [ data.course_id ] }, function (err, cat) {
+			callback(cat);
+		});
 	}
 
 }
