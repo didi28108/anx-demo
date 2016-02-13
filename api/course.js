@@ -108,6 +108,7 @@ var CourseProto = {
 			.find()
 			.populate('category')
 			.select('no category area name startdate enddate confirmdate clicks')
+			.sort('-createdate')
 			.exec(function (err, data) {
 				callback(data);
 			});

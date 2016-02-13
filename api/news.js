@@ -60,6 +60,7 @@ var NewsProto = {
 		NewsModel
 			.find({})
 			.populate('category')
+			.sort('-createdate')
 			.exec(function (err, news) {
 			callback(news);
 		});
