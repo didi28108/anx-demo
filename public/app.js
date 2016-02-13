@@ -1,4 +1,4 @@
-angular.module('myApp', ['ui.router', 'ngCkeditor'])
+angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate'])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
@@ -7,6 +7,14 @@ angular.module('myApp', ['ui.router', 'ngCkeditor'])
 		.state('anx', {
 			url: '/',
 			templateUrl: 'views/home.html'
+		})
+		.state('about', {
+			url: '/about',
+			templateUrl: 'views/about.html'
+		})
+		.state('duties', {
+			url: '/duties',
+			templateUrl: 'views/duties.html'
 		})
 		.state('course', {
 			url: '/course',

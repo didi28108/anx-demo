@@ -46,14 +46,13 @@
 		<nav class="navbar navbar-default" ng-hide="isInBackend()">
 			<div class="container">
 		    <div class="navbar-header">
-		      <a class="navbar-brand" href="/" ui-sref="anx">Anx</a>
+		      <a class="navbar-brand" href="/" ui-sref="anx">推廣教育中心</a>
 		    </div>
 
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      <ul class="nav navbar-nav navbar-right">
 		        <li><a href="/course" ui-sref="course">課程資訊</a></li>
 		        <li><a href="/news" ui-sref="news">消息公告</a></li>
-		        <li><a href="/backend/course" ui-sref="backend.course">管理後台</a></li>
 		      </ul>
 		    </div>
 		  </div>
@@ -72,10 +71,11 @@
 				<div class="col-md-1"></div>
 				<div class="col-md-2">
 					<p class="footer-title">中心介紹</p>
-					<p><a href="">中心簡介</a></p>
-					<p><a href="">業務職掌</a></p>
+					<p><a href="/about">中心簡介</a></p>
+					<p><a href="/duties">業務職掌</a></p>
 					<!-- <p><a href="">相關法規</a></p>
 					<p><a href="">訓練政策</a></p> -->
+					<p><a href="/backend/course">管理後台</a></p>
 				</div>
 				<div class="col-md-2">
 					<p class="footer-title">TTQS專區</p>
@@ -97,13 +97,13 @@
 				</div>
 				<div class="col-md-1"></div>
 				<div class="row">
-					<div class="col-md-12" style="text-align:center; font-size:13px;">
+					<div class="col-md-12 text-center" style="font-size:13px;">
 						<br>
 						<br>
 						<br>
 						<br>
 						<br>
-						<span>Copyright © 2016 國立雲林科技大學 推廣教育中心 National Yunlin University of Science and Technology Center of Continuing Education<br></span>
+						<span>© 2016 國立雲林科技大學 推廣教育中心 National Yunlin University of Science and Technology Center of Continuing Education<br></span>
 						<span>64002 雲林縣斗六市大學路3段123號 | Tel: 05-534-2601#2281~#2284 | Fax: 05-5312037 | E-mail: anx@yuntech.edu.tw</span>
 						<br>
 						<br>
@@ -134,6 +134,7 @@
 		<script src="./controllers/courseView.js"></script>
 		<script src="./controllers/news.js"></script>
 		<script src="./controllers/newsView.js"></script>
+		<script src="./modules/ClientPaginate.js"></script>
 		<!-- backend related -->
 		<script src="./controllers/login.js"></script>
 		<script src="./controllers/BEMain.js"></script>

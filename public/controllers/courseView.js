@@ -1,7 +1,6 @@
 angular.module('myApp')
 
 .controller('CourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams, $sce){
-	
 	// 取得開課單位
 	CourseService.getCourseCategoryList().then(function(result) {
 		$scope.categoryList = result;
@@ -16,6 +15,7 @@ angular.module('myApp')
 		method: 'POST',
 		url: '/api/getCourse',
 		data: {
+			// category_abbr: $stateParams.category_abbr,
 			course_id: $stateParams.id
 		}
 	};

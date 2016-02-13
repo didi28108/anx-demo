@@ -11,7 +11,12 @@ angular.module('myApp')
 	CourseService.getCourseCategoryList().then(function(data) {
 		$scope.categoryList = data;
 		if($stateParams.default_category == null) {
-			$scope.currentCategory = $scope.categoryList[0];
+			var categoryIndex = getIndexByCourseCategoryAbbr($scope.categoryList, 'anx');
+			if(categoryIndex != null) {
+				$scope.currentCategory = $scope.categoryList[categoryIndex];
+			} else {
+				$scope.currentCategory = $scope.categoryList[0];
+			}
 		} else {
 			$scope.currentCategory = $stateParams.default_category;
 		}
@@ -63,4 +68,13 @@ angular.module('myApp')
 		}
 	};
 
+	function getIndexByCourseCategoryAbbr (array, abbr) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i].abbr == abbr) {
+				return i;
+			}
+		}
+		return null;
+	}
+	
 });
