@@ -10,6 +10,8 @@ angular.module('myApp')
 	$scope.sortReverse	= true;
 	$scope.searchFish		= '';
 
+	$scope.rowsPerPage = 20;
+
 	// 從Service取得消息公告類別
 	NewsService.getNewsCategory().then(function(data) {
 		$scope.categoryList = data;

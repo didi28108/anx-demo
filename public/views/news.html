@@ -46,7 +46,7 @@
 			  		</tr>
 			  	</thead>
 			  	<tbody>
-			  		<tr ng-if="news.category._id==currentCategory._id" ng-repeat="news in newsList | orderBy:sortType:sortReverse | filter:searchFish" id="{{news._id}}">
+			  		<tr ng-if="news.category._id==currentCategory._id" ng-repeat="news in newsList | orderBy:sortType:sortReverse | filter:searchFish | paginate:rowsPerPage" id="{{news._id}}">
 			  			<td><span class="label label-primary">{{news.category.name}}</span></td>
 			  			<td><a href="/news/{{news._id}}">{{news.title}}</a></td>
 			  			<td>{{news.startdate}}</td>
@@ -54,6 +54,13 @@
 			  		</tr>
 			  	</tbody>
 			  </table>
+			  <!-- <div>
+			  	<select class="form-control" id="rows-per-page" ng-model="rowsPerPage">
+            <option>20</option>
+            <option>50</option>
+          </select>
+			  </div> -->
+				<paginator></paginator>
 			</div>
 		</div>
 	</div>
