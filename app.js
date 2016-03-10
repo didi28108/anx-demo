@@ -31,7 +31,10 @@ require('./config/passport')(passport);
 // routes
 require('./routes/index.js')(app, passport, __dirname);
 
+var ipConfig = require('./config/app_config');
+var ip = ipConfig.ip;
+
 var server = require('http').createServer(app);
-server.listen(port, function () {
-	console.log('Anx-demo server running on port ' + port);
+server.listen(port, ip, function () {
+	console.log('Anx-demo server running on ' + ip + ":" +port);
 });

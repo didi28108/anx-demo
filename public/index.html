@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" href="/public/css/bootstrap-datepicker3.min.css">
 		<link rel="stylesheet" href="/bower_components/ng-ckeditor/ng-ckeditor.css">
+		<link rel="stylesheet" href="/bower_components/angular-xeditable/dist/css/xeditable.min.css">
 
 		<base href="/">
 	</head>
@@ -53,6 +54,7 @@
 		      <ul class="nav navbar-nav navbar-right">
 		        <li><a href="/course" ui-sref="course">課程資訊</a></li>
 		        <li><a href="/news" ui-sref="news">消息公告</a></li>
+		        <li><a href="/backend/course">管理後台</a></li>
 		      </ul>
 		    </div>
 		  </div>
@@ -68,38 +70,39 @@
 		<!-- footer -->
 		<div class="footer" ng-hide="isInBackend()">
 			<div class="container">
-				<div class="col-md-1"></div>
-				<div class="col-md-2">
-					<p class="footer-title">中心介紹</p>
-					<p><a href="/about">中心簡介</a></p>
-					<p><a href="/duties">業務職掌</a></p>
-					<!-- <p><a href="">相關法規</a></p>
-					<p><a href="">訓練政策</a></p> -->
-					<p><a href="/backend/course">管理後台</a></p>
+				<div class="row" ng-repeat="rows in chunkedData">
+					<div class="col-md-2"></div>
+					<div class="col-md-2" ng-repeat="category in rows">
+						<p class="footer-title">{{category.name}}</p>
+						<p ng-repeat="page in category.pages"><a href="/pages/{{page.abbr}}">{{page.title}}</a></p>
+					</div>
+					<div class="col-md-2"></div>
+
+					<!-- <div class="col-md-2">
+						<p class="footer-title">TTQS專區</p>
+						<p><a href="">目標與政策</a></p>
+						<p><a href="">計畫</a></p>
+						<p><a href="">設計</a></p>
+						<p><a href="">執行</a></p>
+						<p><a href="">查核</a></p>
+						<p><a href="">成果</a></p>
+						<p><a href="">訓練品質手冊</a></p>
+					</div>
+					<div class="col-md-2">
+						<p class="footer-title">相關網站</p>
+						<p><a href="http://www.yuntech.edu.tw/" target="_blank">國立雲林科技大學</a></p>
+						<p><a href="https://www.facebook.com/yuntechtcx" target="_blank">推廣教育中心臉書專頁</a></p>
+					</div>
+					<div class="col-md-2">
+						<p class="footer-title"></p>
+					</div>
+					<div class="col-md-2">
+						<p class="footer-title"></p>
+					</div>
+					<div class="col-md-1"></div> -->
 				</div>
-				<div class="col-md-2">
-					<p class="footer-title">TTQS專區</p>
-					<!-- <p><a href="">目標與政策</a></p>
-					<p><a href="">計畫</a></p>
-					<p><a href="">設計</a></p>
-					<p><a href="">執行</a></p>
-					<p><a href="">查核</a></p>
-					<p><a href="">成果</a></p>
-					<p><a href="">訓練品質手冊</a></p> -->
-				</div>
-				<div class="col-md-2">
-					<p class="footer-title">相關網站</p>
-					<p><a href="http://www.yuntech.edu.tw/" target="_blank">國立雲林科技大學</a></p>
-					<p><a href="https://www.facebook.com/yuntechtcx" target="_blank">推廣教育中心臉書專頁</a></p>
-				</div>
-				<div class="col-md-4">
-					<!-- <p class="footer-title">聯絡我們</p> -->
-				</div>
-				<div class="col-md-1"></div>
 				<div class="row">
 					<div class="col-md-12 text-center" style="font-size:13px;">
-						<br>
-						<br>
 						<br>
 						<br>
 						<br>
@@ -123,10 +126,12 @@
 		<script src="/public/js/bootstrap-datepicker.js"></script>
 		<script src="/bower_components/ng-ckeditor/libs/ckeditor/ckeditor.js"></script>
 		<script src="/bower_components/ng-ckeditor/ng-ckeditor.js"></script>
+		<script src="/bower_components/angular-xeditable/dist/js/xeditable.min.js"></script>
 
 		<script src="./app.js"></script>
 		<script src="./services/auth.js"></script>
 		<script src="./services/constant.js"></script>
+		<script src="./services/pages.js"></script>
 		<script src="./services/course.js"></script>
 		<script src="./services/news.js"></script>
 		<script src="./controllers/main.js"></script>
@@ -138,6 +143,7 @@
 		<!-- backend related -->
 		<script src="./controllers/login.js"></script>
 		<script src="./controllers/BEMain.js"></script>
+		<script src="./controllers/BEPages.js"></script>
 		<script src="./controllers/BECourse.js"></script>
 		<script src="./controllers/BECourseView.js"></script>
 		<script src="./controllers/BECourseAdd.js"></script>

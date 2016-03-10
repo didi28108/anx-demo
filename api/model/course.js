@@ -8,23 +8,23 @@ var CourseSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Category'
 	},
-	no 						: { type: String },	// 課號
-	name					: { type: String },
-	startdate			: { type: Date },
-	enddate				: { type: Date },
+	no 				: { type: String },	// 課號
+	name			: { type: String },
+	startdate		: { type: Date },
+	enddate			: { type: Date },
 	confirmdate		: { type: Date }, // 課程確定開課與否之日期
-	duration			: {	type: Number },
-	time					: { type: String },
-	area					: {	id: 	Number, 
-										name: String },
-	location			: {	type: String },
+	duration		: {	type: Number },
+	time			: { type: String },
+	area			: {	id: 	Number, 
+						name: String },
+	location		: {	type: String },
 	enroll_target	: { type: String },	// 課程招生對象
 	meal_offer		: {	type: Boolean	},
-	price					: { type: Number },
-	note					: {	type: String },	// 備註
+	price			: { type: Number },
+	note			: {	type: String },	// 備註
 	contact_info	: {	type: String },
 	enroll_link		: {	type: String },
-	clicks				: { type: Number, default: 0 },
+	clicks			: { type: Number, default: 0 },
 	createdate		: Date
 });
 

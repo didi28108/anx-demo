@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-.controller('BENewsAddCtrl', function(NewsService, $scope, $http, $state, $stateParams){
+.controller('BENewsAddCtrl', function(NewsService, $scope, $http, $state, $stateParams, $window){
 
 	$scope.$state = $state;
 
@@ -29,9 +29,13 @@ angular.module('myApp')
 		}, function(err) {
 			// err handling ... 
 		});
-	}
+	};
 
-
+	$scope.cancel = function () {
+		if($window.confirm("若取消編輯此公告，您的更動將不會被儲存。\n是否捨棄編輯公告？")){
+			$state.go('^.news');
+		}
+	};
 
 
 });

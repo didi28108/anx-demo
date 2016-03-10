@@ -2,18 +2,135 @@ var jwt = require('jwt-simple');
 var config = require('../config/db_conn');
 
 var User = require('../api/model/user');
+var PagesApi = require('../api/pages');
 var CourseApi = require('../api/course');
 var CategoryApi = require('../api/category');
 var NewsApi = require('../api/news');
 
+var Pages = new PagesApi();
 var Course = new CourseApi();
 var Category = new CategoryApi();
 var News = new NewsApi();
 
+// var mongoose = require('mongoose');
+// var Schema = mongoose.Schema;
+
+// var parentSchema = new Schema({
+// 	name: String,
+// 	children: [{type: Schema.Types.ObjectId, ref: 'Child'}]
+// });
+
+// var childSchema = new Schema({
+// 	name: String, 
+// 	parent: {type: Schema.Types.ObjectId, ref: 'Parent'}
+// });
+
+// var Parent = mongoose.model('Parent', parentSchema);
+// var Child = mongoose.model('Child', childSchema);
 
 module.exports = function (app, passport, root_dir) {
 
-// news category related routes
+	// app.get('/api/test', function (req, res) {
+		// Parent.
+		// 	find({}).
+		// 	// populate('children').
+		// 	exec(function (err, parents) {
+		// 		res.json(parents);
+		// });
+
+		// Child.find({}).exec(function (err, child) {
+		// 	res.json(child);
+		// });
+
+		// var parent = new Parent();
+		// parent.name = 'joe';
+		// parent.save(function (err, parent) {
+		// 	res.json(parent);
+		// });
+
+		// var child = new Child();
+		// child.name = 'kcid';
+		// child.save(function (err, child) {
+		// 	res.json(child);
+		// });
+
+		// Parent.update({_id:'56d71a4a18d6c2b40c6047aa'},{$push: {children: ['56d71a9c36824f6c1ddb6ed5']}}, function (err, parent) {
+		// 	res.json(parent);
+		// });
+
+		// Parent.update({_id:'56d71a4a18d6c2b40c6047aa'},{children: []}, function (err, parent) {
+		// 	res.json(parent);
+		// });
+	// });
+
+	// pages routes
+	app.get('/api/getPageCategory', function (req, res) {
+		Pages.getAllCategory(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/addPageCategory', function (req, res) {
+		Pages.addCategory(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/editPageCategory', function (req, res) {
+		Pages.editCategory(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/removePageCategory', function (req, res) {
+		Pages.removeCategory(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.get('/api/getAllPages', function (req, res) {
+		Pages.getAllPages(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.get('/api/getPagesWithoutContent', function (req, res) {
+		Pages.getPagesWithoutContent(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/getPages', function (req, res) {
+		Pages.getPages(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/getPage', function (req, res) {
+		Pages.getPage(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/addPage', function (req, res) {
+		Pages.addPage(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/editPage', function (req, res) {
+		Pages.editPage(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/removePage', function (req, res) {
+		Pages.removePage(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	// news category related routes
 	app.get('/api/getNewsCategory', function (req, res) {
 		News.findAllCategory(req, function (data) {
 			res.json(data);
@@ -38,7 +155,7 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
-// news related routes
+	// news related routes
 	app.post('/api/getNews', function (req, res) {
 		News.findOne(req, function (data) {
 			res.json(data);

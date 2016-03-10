@@ -1,4 +1,4 @@
-angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate'])
+angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable'])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
@@ -8,14 +8,14 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate'])
 			url: '/',
 			templateUrl: 'views/home.html'
 		})
-		.state('about', {
-			url: '/about',
-			templateUrl: 'views/about.html'
-		})
-		.state('duties', {
-			url: '/duties',
-			templateUrl: 'views/duties.html'
-		})
+		// .state('about', {
+		// 	url: '/about',
+		// 	templateUrl: 'views/about.html'
+		// })
+		// .state('duties', {
+		// 	url: '/duties',
+		// 	templateUrl: 'views/duties.html'
+		// })
 		.state('course', {
 			url: '/course',
 			templateUrl: 'views/course.html',
@@ -46,6 +46,12 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate'])
 			url: '/login', 
 			templateUrl: 'views/backend-login.html',
 			controller: 'LoginCtrl'
+		})
+		.state('backend.pages', {
+			url: '/pages',
+			templateUrl: 'views/backend-pages.html',
+			params: { 'default_category': null },
+			controller: 'BEPagesCtrl'
 		})
 		.state('backend.course', {
 			url: '/course',
@@ -97,12 +103,13 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate'])
 	  $urlRouterProvider.otherwise('/');
 })
 
-.run(function($rootScope, $state, AuthService){
+.run(function($rootScope, $state, AuthService, editableOptions){
 
 	$rootScope.$on('$stateChangeStart', function(event, next, nextParams, fromState) {
 		// console.log('current state: ', next.name);
 		if (!AuthService.isAuthenticated()) {
 			if (next.name === 'backend' ||
+					next.name === 'backend.pages' ||
 					next.name === 'backend.course' ||
 					next.name === 'backend.viewCourse' ||
 					next.name === 'backend.addCourse' ||
@@ -116,4 +123,7 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate'])
 			}
 		}
 	});
+
+	editableOptions.theme = 'bs3';
+
 });

@@ -107,7 +107,26 @@ var NewsProto = {
 					// pintotop	: req.body.pintotop 
 				},
 				function (err, news) {
-					callback(news);
+					NewsCategoryModel.findOne({news: [req.body.news_id]}, function (err, newsCat) {
+						if(newsCat._id != req.body.category_id) {
+							NewsCategoryModel
+								.update(
+									{_id: newsCat._id},
+									{$pull: {news: [req.body.news_id]}},
+									function (err, newsCat) {
+										NewsCategoryModel
+											.update(
+												{_id: req.body.category_id},
+												{$push: {news: [req.body.news_id]}},
+												function (err, newsCat) {
+													callback(newsCat);
+												});
+									});
+
+						} else {
+							callback();
+						}
+					});
 			});
 	},
 
