@@ -5,6 +5,7 @@
 		<link rel="icon" href="./image/anx_ico.png">
 		<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" href="/public/css/bootstrap-datepicker3.min.css">
+		<link rel="stylesheet" href="/public/css/font-awesome.min.css">
 		<link rel="stylesheet" href="/bower_components/ng-ckeditor/ng-ckeditor.css">
 		<link rel="stylesheet" href="/bower_components/angular-xeditable/dist/css/xeditable.min.css">
 
@@ -12,8 +13,17 @@
 	</head>
 
 	<style>
+		html {
+			position: relative;
+			min-height: 100%;
+		}
 		body {
 			background-color: #f5f5f5;
+			margin-bottom: 475px;
+			font-family: Microsoft JhengHei;
+		}
+		.main, .container, .footer {
+			min-width: 1170px;
 		}
 		.navbar {
 			z-index: 9999;
@@ -24,17 +34,22 @@
 			border-radius: 0px;
 		}
 		.footer {
+			position: absolute;
+			display: block;
 			bottom: 0;
 			width: 100%;
 			background-color: #fff;
 			border-top: 1px solid #d8d8d8;
-			font-family: Microsoft JhengHei;
+			text-align: center;
 		}
 		.footer-title {
 			display: inline-block;
-			font-size: 24px;
+			/*width: 80%;*/
+			font-size: 22px;
 			margin-top: 20px;
 			margin-bottom: 15px;
+			margin-right: auto;
+			margin-left: auto;
 			padding-bottom: 5px;
 			border-bottom: 3px solid #444;
 		}
@@ -62,44 +77,20 @@
 
 
 
-
-		<div ui-view></div>
+		<div class="main" ui-view></div>
 
 
 
 		<!-- footer -->
-		<div class="footer" ng-hide="isInBackend()">
+		<footer class="footer" ng-hide="isInBackend()">
 			<div class="container">
 				<div class="row" ng-repeat="rows in chunkedData">
-					<div class="col-md-2"></div>
+					<div class="col-md-1"></div>
 					<div class="col-md-2" ng-repeat="category in rows">
 						<p class="footer-title">{{category.name}}</p>
 						<p ng-repeat="page in category.pages"><a href="/pages/{{page.abbr}}">{{page.title}}</a></p>
 					</div>
-					<div class="col-md-2"></div>
-
-					<!-- <div class="col-md-2">
-						<p class="footer-title">TTQS專區</p>
-						<p><a href="">目標與政策</a></p>
-						<p><a href="">計畫</a></p>
-						<p><a href="">設計</a></p>
-						<p><a href="">執行</a></p>
-						<p><a href="">查核</a></p>
-						<p><a href="">成果</a></p>
-						<p><a href="">訓練品質手冊</a></p>
-					</div>
-					<div class="col-md-2">
-						<p class="footer-title">相關網站</p>
-						<p><a href="http://www.yuntech.edu.tw/" target="_blank">國立雲林科技大學</a></p>
-						<p><a href="https://www.facebook.com/yuntechtcx" target="_blank">推廣教育中心臉書專頁</a></p>
-					</div>
-					<div class="col-md-2">
-						<p class="footer-title"></p>
-					</div>
-					<div class="col-md-2">
-						<p class="footer-title"></p>
-					</div>
-					<div class="col-md-1"></div> -->
+					<div class="col-md-1"></div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 text-center" style="font-size:13px;">
@@ -114,8 +105,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
+		</footer>
 
 
 		<script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -124,6 +114,7 @@
 		<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 		<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="/public/js/bootstrap-datepicker.js"></script>
+		<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<script src="/bower_components/ng-ckeditor/libs/ckeditor/ckeditor.js"></script>
 		<script src="/bower_components/ng-ckeditor/ng-ckeditor.js"></script>
 		<script src="/bower_components/angular-xeditable/dist/js/xeditable.min.js"></script>
@@ -134,13 +125,15 @@
 		<script src="./services/pages.js"></script>
 		<script src="./services/course.js"></script>
 		<script src="./services/news.js"></script>
+		<script src="./services/home.js"></script>
 		<script src="./controllers/main.js"></script>
+		<script src="./controllers/home.js"></script>
 		<script src="./controllers/course.js"></script>
 		<script src="./controllers/courseView.js"></script>
 		<script src="./controllers/news.js"></script>
 		<script src="./controllers/newsView.js"></script>
+		<script src="./controllers/page.js"></script>
 		<script src="./modules/ClientPaginate.js"></script>
-		<!-- backend related -->
 		<script src="./controllers/login.js"></script>
 		<script src="./controllers/BEMain.js"></script>
 		<script src="./controllers/BEPages.js"></script>
