@@ -46,7 +46,12 @@ var PagesProto = {
 	'getPage': function (req, callback) {
 		PagesModel
 			.findOne({abbr: req.body.abbr})
-			.populate('category')
+			.populate({
+				path: 'category',
+				populate: {
+					path: 'pages._id'
+				}
+			})
 			.exec(function (err, page) {
 				callback(page);
 			});
@@ -54,10 +59,13 @@ var PagesProto = {
 
 	// create cat
 	'addCategory': function (req, callback) {
-		var newCat = new PagesCategoryModel();
-		newCat.name = req.body.name;
-		newCat.save(function (err, category) {
-			callback(category);
+		PagesCategoryModel.count({}, function (err, count) {
+			var newCat = new PagesCategoryModel();
+			newCat.name = req.body.name;
+			newCat.order = count;
+			newCat.save(function (err, category) {
+				callback(category);
+			});
 		});
 	},
 

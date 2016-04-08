@@ -1,0 +1,32 @@
+<!doctype html>
+<div class="container" style="min-height:500px;">
+	<style>
+		.field-name {
+			text-align: right;
+			font-weight: bold;
+		}
+		.panel-heading {
+			text-align: center;
+		}
+	</style>
+	<br>
+	<div class="col-md-3">
+		<h3>{{page.category.name}}</h3>
+		<div class="list-group">
+			<a ng-repeat="cat in categoryList" href="/pages/{{cat.abbr}}" class="list-group-item">
+				{{cat.title}}
+			</a>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<h3>{{page.title}}</h3>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+			    	<div class="col-md-12" ng-bind-html="page.content"></div>
+		    	</div>
+			</div>
+			<!-- <div class="panel-footer"></div> -->
+		</div>
+	</div>
+</div>

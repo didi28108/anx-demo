@@ -1,12 +1,61 @@
 angular.module('myApp')
 
-.controller('BECourseAddCtrl', function($scope, $http, $state, $window){
+.controller('BECourseAddCtrl', function(CourseService, $scope, $http, $state, $window){
+	
 	// 將目前的$state注入$scope中，供views使用
 	$scope.$state = $state;
 
-	// 設定表單預設值	
-	$scope.meal = 'no';		// 預設不供餐
-	$scope.area = '6';		// 預設雲林地區
+	// loading spinner default false
+	$scope.loading = {
+		showSpinner: false,
+		msg: "",
+		success: false,
+		fail: false
+	};
+
+	// 設定time picker預設起始、結束時間
+	var defaultDate1 = new Date("Apr 5, 2016 08:30:00");
+	var defaultDate2 = new Date("Apr 5, 2016 17:00:00");
+	// 設定表單預設值
+	$scope.course = {
+		year: 105,					// 預設年度
+		startTime: defaultDate1,
+		endTime: defaultDate2,
+		launchOffer: "不包含",		// 預設不供餐
+		area: "雲林",				// 預設雲林地區
+		state: "未處理"				// 預設課程狀態
+	}
+
+	// 設定time picker 小時與分鐘間隔
+	$scope.timePicker = {
+		hstep: 1,
+		mstep: 15,
+		timePicker: true
+	}
+
+	// datetimepicker setup
+	// start date 預設關閉與開啟function
+	$scope.startDatePopup = {
+		opened: false
+	};
+	$scope.startDateOpen = function () {
+		$scope.startDatePopup.opened = true;
+	};
+	// end date 預設關閉與開啟function
+	$scope.endDatePopup = {
+		opened: false
+	};
+	$scope.endDateOpen = function () {
+		$scope.endDatePopup.opened = true;
+	};
+
+	// confirm date 預設關閉與開啟function
+	$scope.confirmDatePopup = {
+		opened: false
+	};
+	$scope.confirmDateOpen = function () {
+		$scope.confirmDatePopup.opened = true;
+	};
 
 	// ng-ckeditor configs
 	$scope.editorOptions = {
@@ -14,68 +63,105 @@ angular.module('myApp')
 	}
 
 	// 取得開課單位
-	$http.get('/api/getCourseCategory').then(function(result) {
-		$scope.categoryList = result.data;
-
+	CourseService.getCourseCategoryList().then(function(result) {
+		$scope.categoryList = result;
+		
 		// 將第一筆category資料設定為預設選項
 		if($scope.categoryList != null) {
-			$scope.category = $scope.categoryList[0]._id;
+			$scope.course.category = $scope.categoryList[0]._id;
 		}
 	}, function(err) {
 		// err handling
 	});
 
-	$scope.add = function () {
+	$scope.getCourseDataFromYT = function () {
+		$scope.loading.success = false;
+		$scope.loading.fail = false;
+		$scope.course.enrollLink = "";
 
+		$scope.loading.showSpinner = true;
+		$scope.loading.msg = "資料取得中";
+		var data = {
+			year: $scope.course.year,
+			no: $scope.course.no
+		};
+		CourseService.getCourseDataFromYT(data).then(function (res) {
+			if (res.success) {
+				loadUpDataFromYuntech(res);
+				$scope.loading.msg = "帶入成功";
+				$scope.course.enrollLink = "https://140.125.251.180/CRISWeb/Home/SignUp?courseYear="+$scope.course.year+"&courseId="+$scope.course.no;
+			} else {
+				$scope.loading.msg = res.msg;
+			}
+		}, function (err) {
+			// err handling
+		}).finally(function() {
+			$scope.loading.showSpinner = false;
+			if ($scope.loading.msg == "帶入成功") {
+				$scope.loading.success = true;
+			} else {
+				$scope.loading.fail = true;
+			}
+		});
+	}
+
+	var loadUpDataFromYuntech = function (res) {
+		$scope.course.name = res.data.CourseName;
+		$scope.categoryList.forEach(function (element, index, array) {
+			if(element.deptCode == res.data.CourseDeptCode) {
+				$scope.course.category = element._id;
+			}
+		});
+		$scope.course.startDate 	= new Date(res.data.CourseStartDate);
+		$scope.course.endDate 		= new Date(res.data.CourseEndDate);
+		$scope.course.startTime 	= new Date(res.data.CourseStartDate.substring(0,11)+res.data.CourseStartTime+":00+08:00");
+		$scope.course.endTime 		= new Date(res.data.CourseEndDate.substring(0,11)+res.data.CourseEndTime+":00+08:00");
+		$scope.course.location 		= res.data.CourseLocation;
+		$scope.course.confirmDate	= new Date(res.data.CourseOfferedConfirmDate);
+		$scope.course.enrollDueDate = dateAddDays(new Date(res.data.CourseOfferedConfirmDate), -2);
+		$scope.course.enrollTarget	= res.data.CourseTargetStudent;
+		$scope.course.launchOffer	= res.data.CourseIncludeLunch;
+		$scope.course.price			= res.data.CoursePrice;
+		$scope.course.maxEnroll		= res.data.MaxSignUp;
+		$scope.course.remark		= res.data.remark;
+		$scope.course.helpline		= res.data.CourseHelpline;
+		$scope.course.state 		= res.data.CourseState;
+	}
+
+	var dateAddDays = function (date, days) {
+		date.setDate(date.getDate() + days);
+		return date;
+	}
+
+	$scope.add = function () {
 		// 將表單上
 		// startdate, enddate, confirmdate
 		// 的value格式由string轉為date
-		var startdate_str = $scope.startdate.replace(/\//g, "-");
-		var startdate_date = new Date(startdate_str);
-		var enddate_str = $scope.enddate.replace(/\//g, "-");
-		var enddate_date = new Date(enddate_str);
-		var confirmdate_str = $scope.confirmdate.replace(/\//g, "-");
-		var confirmdate_date = new Date(confirmdate_str);
+		$scope.course.startDate = new Date($scope.course.startDate.toString().replace(/\//g, "-"));
+		$scope.course.endDate = new Date($scope.course.endDate.toString().replace(/\//g, "-"));
+		$scope.course.confirmDate = new Date($scope.course.confirmDate.toString().replace(/\//g, "-"));
+		$scope.course.enrollDueDate = new Date(dateAddDays($scope.course.confirmDate, -2));
+		$scope.course.fullNo = $scope.course.year + "-" + $scope.course.no;
 
-		// 將表單上meal的value轉換成boolean
-		var meal_offer;
-		if($scope.meal == 'yes') {
-			meal_offer = true;
-		} else {
-			meal_offer = false;
-		}
-
-		// $http request content
-		var req = {
-			method: 'POST',
-			url: '/api/addCourse',
-			data: {
-				category			: $scope.category,
-				no 						: $scope.no,
-				name					: $scope.name,
-				startdate			: startdate_date,
-				enddate				: enddate_date,
-				confirmdate		: confirmdate_date,
-				duration			: $scope.duration,
-				time					: $scope.time,
-				area					: { id: $scope.areaList.options[$scope.area].id,
-													name: $scope.areaList.options[$scope.area].name },
-				location			: $scope.location,
-				enroll_target	: $scope.target,
-				meal_offer		: meal_offer,
-				price					: $scope.price,
-				note					: $scope.note,
-				contact_info	: $scope.contact,
-				enroll_link		: $scope.link
+		CourseService.addCourse($scope.course).then(function(result) {
+			if (result.success) {
+				$state.go('^.course');
+			} else {
+				if (result.err.code == 11000) {
+					$window.alert("課程新增失敗！\n課號 " + $scope.course.fullNo + " 已被使用");
+				} else {
+					$window.alert("發生錯誤！\n" + result.err);
+				}
 			}
-		};
-
-		$http(req).then(function(result) {
-			$state.go('^.course');
 		}, function(err) {
 			// err handling
 		});
 	};
+
+	var dateAddDays = function (date, days) {
+		date.setDate(date.getDate() + days);
+		return date;
+	}
 
 	$scope.test = function () {
 		console.log($scope.areaList.options[$scope.area].id, $scope.areaList.options[$scope.area].name);
@@ -88,26 +174,27 @@ angular.module('myApp')
 	};
 
 	// 課程地區清單
-	$scope.areaList = {
-		options: [
-			{id: '0', name: '基隆'},
-			{id: '1', name: '台北'},
-			{id: '2', name: '新竹'},
-			{id: '3', name: '苗栗'},
-			{id: '4', name: '台中'},
-			{id: '5', name: '彰化'},
-			{id: '6', name: '雲林'},
-			{id: '7', name: '嘉義'},
-			{id: '8', name: '台南'},
-			{id: '9', name: '高雄'},
-			{id: '10', name: '屏東'},
-			{id: '11', name: '宜蘭'},
-			{id: '12', name: '花蓮'},
-			{id: '13', name: '台東'},
-			{id: '14', name: '澎湖'},
-			{id: '15', name: '馬祖'},
-			{id: '16', name: '金門'}
-		]
-	};
+	$scope.areaList = [
+		"基隆",
+		"台北",
+		"新竹",
+		"苗栗",
+		"台中",
+		"彰化",
+		"雲林",
+		"嘉義",
+		"台南",
+		"高雄",
+		"屏東",
+		"宜蘭",
+		"花蓮",
+		"台東",
+		"澎湖",
+		"馬祖",
+		"金門"
+	];
+
+	// 課程狀態清單
+	$scope.courseStateList = ["開課", "未處理", "不開課"];
 
 });

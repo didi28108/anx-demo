@@ -7,144 +7,98 @@
 	.panel-heading {
 		text-align: center;
 	}
+	.table th, .table td {
+		border-top: none !important;
+	}
 </style>
 <br>
+
 <div class="col-md-3">
-	<h3>單位</h3>
+	<h3>課程單位 <span class="label label-success">雲科大</span></h3>
 	<div class="list-group">
-		<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showCourse(cat.abbr)">
-			{{cat.name}}
+		<a ng-repeat="cat in categoryList | filter:{class:classes[0]}" href="" class="list-group-item" ng-click="showCourse()">
+			<span ng-if="!cat.show" class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+			{{cat.deptName}}
+			<span class="badge">{{cat.course.length}}</span>
+		</a>
+	</div>
+	<hr>
+	<h3>課程單位 <span class="label label-primary">政府單位</span></h3>
+	<div class="list-group">
+		<a ng-repeat="cat in categoryList | filter:{class:classes[1]}" href="" class="list-group-item" ng-click="showCourse()">
+			{{cat.deptName}}
 			<span class="badge">{{cat.course.length}}</span>
 		</a>
 	</div>
 </div>
+
 <div class="col-md-9">
-	<h3>{{categoryName}} － {{name}}</h3>
+	<h3>{{course.category.deptName}} － {{course.name}}</h3>
 	<div class="panel panel-default">
 		<div class="panel-heading">課程資料</div>
 		<div class="panel-body">
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>單位 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{name}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>計劃案編號 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{no}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>課程名稱 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{name}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>開始日期 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{startdate}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>結束日期 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{enddate}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>開課確認日期 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{confirmdate}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>天數 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{duration}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>時段 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{time}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>地區 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p><span class="label label-primary">{{area}}</span></p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>地點 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{location}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>對象 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{target}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>費用 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{price}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>備註 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<div ng-bind-html="note"></div>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>聯絡資訊 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{contact}}</p>
-	    	</div>
-			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>報名連結 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<a href="{{link}}" target="_blank">{{link}}</a>
-	    	</div>
-			</div>
-			<br>
-			<br>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td width="130"><b>課號：</b></td>
+						<td width="266">{{course.fullNo}}</td>
+						<td width="130"><b>課程起始日期：</b></td>
+						<td width="267">{{course.startDate}}</td>
+					</tr>
+					<tr>
+						<td><b>課程名稱：</b></td>
+						<td>{{course.name}}</td>
+						<td><b>課程結束日期：</b></td>
+						<td>{{course.endDate}}</td>
+					</tr>
+					<tr>
+						<td><b>開課單位：</b></td>
+						<td>{{course.category.deptName}}</td>
+						<td><b>開始時間：</b></td>
+						<td>{{course.startTime}}</td>
+					</tr>
+					<tr>
+						<td><b>上課地點：</b></td>
+						<td>{{course.location}}</td>
+						<td><b>結束時間：</b></td>
+						<td>{{course.endTime}}</td>
+					</tr>
+					<tr>
+						<td><b>課程原價：</b></td>
+						<td>{{course.price}}</td>
+						<td><b>開課確認日期：</b></td>
+						<td>{{course.confirmDate}}</td>
+					</tr>
+					<tr>
+						<td><b>招生對象：</b></td>
+						<td>{{course.enrollTarget}}</td>
+						<td><b>報名截止日：</b></td>
+						<td>{{course.enrollDueDate}}</td>
+					</tr>
+					<tr>
+						<td><b>是否包含午餐：</b></td>
+						<td>{{course.launchOffer}}</td>
+						<td><b>報名人數限制：</b></td>
+						<td>{{course.maxEnroll}}</td>
+					</tr>
+					<tr>
+						<td><b>諮詢專線：</b></td>
+						<td>{{course.helpline}}</td>
+						<td><b>課程狀態：</b></td>
+						<td>{{course.state}}</td>
+					</tr>
+					<tr>
+						<td><b>備註：</b></td>
+						<td colspan="3" ng-bind-html="course.remark"></td>
+					</tr>
+					<tr>
+						<td><b>報名連結：</b></td>
+						<td colspan="3">
+							<a href="{{course.enrollLink}}" target="_blank">{{course.enrollLink}}</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			<br>
 			<br>
 		</div>

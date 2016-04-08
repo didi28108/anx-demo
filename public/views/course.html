@@ -1,24 +1,32 @@
-<!doctype html>
-
 <style>
 	.catActive {
 		background-color: #f5f5f5;
 	}
+	.list-group-item {
+		overflow: auto;
+	}
 </style>
-<div class="container" style="min-height:700px;">
+<div class="container">
 	<div ng-controller="CourseCtrl">
 		<!-- <img src="http://placehold.it/1170x150" alt=""> -->
 		<div class="col-md-3">
-			<h3>課程單位</h3>
+			<h3>課程單位 <span class="label label-success">雲科大</span></h3>
 			<div class="list-group">
-				<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showCourse(cat.abbr)" ng-class="{'catActive': currentCategory.name == cat.name}">
-					{{cat.name}}
+				<a ng-repeat="cat in categoryList | filter:{class:classes[0]} | filter:{show:true}" href="" class="list-group-item" ng-click="showCourse(cat.deptCode)" ng-class="{'catActive': currentCategory.deptName == cat.deptName}">
+					{{cat.deptName}}
+					<span class="badge">{{cat.course.length}}</span>
+				</a>
+			</div>
+			<h3>課程單位 <span class="label label-primary">政府單位</span></h3>
+			<div class="list-group">
+				<a ng-repeat="cat in categoryList | filter:{class:classes[1]}" href="" class="list-group-item" ng-click="showCourse(cat.deptCode)" ng-class="{'catActive': currentCategory.deptName == cat.deptName}">
+					{{cat.deptName}}
 					<span class="badge">{{cat.course.length}}</span>
 				</a>
 			</div>
 		</div>
 		<div class="col-md-9">
-			<h3>{{currentCategory.name}} &nbsp;</h3>
+			<h3>{{currentCategory.deptName}} &nbsp;</h3>
 			<!-- search bar -->
 			<div class="input-group">
 				<span class="input-group-addon" id="sizing-addon1">
@@ -34,32 +42,34 @@
 			  		<tr>
 			  			<th>地區</th>
 			  			<th>
-								<a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">課程名稱</a>
+							<a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">課程名稱</a>
 			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'name' && !sortReverse"></span>
-								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'name' && sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'name' && sortReverse"></span>
 			  			</th>
 			  			<th>
 			  				<a href="#" ng-click="sortType = 'startdate'; sortReverse = !sortReverse">開始日期</a>
 			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'startdate' && !sortReverse"></span>
-								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'startdate' && sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'startdate' && sortReverse"></span>
 			  			</th>
 			  			<th>結束日期</th>
 			  			<th>開課確認日期</th>
+			  			<th>開課狀態</th>
 			  			<th style="text-align:center;">
 			  				<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-			  				<a href="#" ng-click="sortType = 'clicks'; sortReverse = !sortReverse">點閱</a>
+			  				<a href="#" ng-click="sortType = 'clicks'; sortReverse = !sortReverse">點閱量</a>
 			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'clicks' && !sortReverse"></span>
-								<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'clicks' && sortReverse"></span>
+							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'clicks' && sortReverse"></span>
 			  			</th>
 			  		</tr>
 			  	</thead>
 			  	<tbody>
-			  		<tr ng-if="course.category.abbr==currentCategory.abbr" ng-repeat="course in courses | orderBy:sortType:sortReverse | filter:searchFish | paginate:rowsPerPage" id="{{course._id}}">
-			  			<td><span class="label label-primary">{{course.area.name}}</span></td>
+			  		<tr ng-if="course.category.deptCode==currentCategory.deptCode" ng-repeat="course in courses | orderBy:sortType:sortReverse | filter:searchFish | paginate:rowsPerPage" id="{{course._id}}">
+			  			<td><span class="label label-primary">{{course.area}}</span></td>
 			  			<td><a href="/course/{{course._id}}">{{course.name}}</a></td>
-			  			<td>{{course.startdate}}</td>
-			  			<td>{{course.enddate}}</td>
-			  			<td>{{course.confirmdate}}</td>
+			  			<td>{{course.startDate}}</td>
+			  			<td>{{course.endDate}}</td>
+			  			<td>{{course.confirmDate}}</td>
+			  			<td>{{course.state}}</td>
 			  			<td style="text-align:center;">{{course.clicks}}</td>
 			  		</tr>
 			  	</tbody>

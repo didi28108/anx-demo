@@ -1,4 +1,4 @@
-angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable'])
+angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable', 'ui.bootstrap'])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
@@ -38,6 +38,11 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable
 			templateUrl: 'views/news-view.html',
 			controller: 'NewsViewCtrl'
 		})
+		.state('pages', {
+			url: '/pages/:abbr',
+			templateUrl: 'views/page.html',
+			controller: 'PageCtrl'
+		})
 		.state('backend', {
 			url: '/backend',
 			templateUrl: 'views/backend-home.html'
@@ -56,7 +61,8 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable
 		.state('backend.course', {
 			url: '/course',
 			templateUrl: 'views/backend-course.html',
-			params: { 'default_category': null },
+			params: { 'default_category': null,
+					  'mode': null },
 			controller: 'BECourseCtrl'
 		})
 		.state('backend.viewCourse', {
@@ -103,7 +109,7 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable
 	  $urlRouterProvider.otherwise('/');
 })
 
-.run(function($rootScope, $state, AuthService, editableOptions){
+.run(function($rootScope, $state, AuthService, editableOptions, $window){
 
 	$rootScope.$on('$stateChangeStart', function(event, next, nextParams, fromState) {
 		// console.log('current state: ', next.name);
@@ -121,6 +127,9 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable
 				event.preventDefault();
 				$state.go('backend.login');
 			}
+		}
+		if (next.name === 'pages') {
+			$window.scrollTo(0, 0);
 		}
 	});
 

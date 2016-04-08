@@ -1,70 +1,35 @@
 angular.module('myApp')
 
 .controller('CourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams, $sce){
+	$scope.classes = ['雲科大', '政府單位'];
+
 	// 取得開課單位
 	CourseService.getCourseCategoryList().then(function(result) {
+		console.log(result);
 		$scope.categoryList = result;
-
 	}, function(err) {
 		// err handling
 	});
 
-
 	// 用課程_id取得課程
-	var getCourseReq = {
-		method: 'POST',
-		url: '/api/getCourse',
-		data: {
-			// category_abbr: $stateParams.category_abbr,
-			course_id: $stateParams.id
-		}
-	};
-	$http(getCourseReq).then(function(result) {
-
-		// if沒有找到此課程，state導向至course
-		if(result.data.notfound) {
+	CourseService.getCourse($stateParams.id).then(function(result) {
+		if (result.notfound) {
 			$state.go('^.course');
 		} else {
+			CourseService.clicks($stateParams.id);
 
-			var course = result.data;
-
-			CourseService.clicks(course._id);
-
-			// 是否供餐由boolean轉換為text(yes/no)
-			var meal;
-			if(course.meal_offer) {
-				meal = 'yes';
-			} else {
-				meal = 'no';
-			}
-
-			// 日期由Date轉換為符合datepicker input的string格式
-			var startdate 	= course.startdate.toString().substring(0,10).replace(/-/g, "/");
-			var enddate			= course.enddate.toString().substring(0,10).replace(/-/g, "/");
-			var confirmdate	= course.confirmdate.toString().substring(0,10).replace(/-/g, "/");
-
-			// 資料塞進$scope
-			$scope.category				= course.category._id;
-			$scope.categoryName		= course.category.name;
-			$scope.no 						= course.no;
-			$scope.name						= course.name;
-			$scope.startdate			= startdate;
-			$scope.enddate				= enddate;
-			$scope.confirmdate		= confirmdate;
-			$scope.duration				= course.duration;
-			$scope.time						= course.time;
-			$scope.area						= course.area.name.toString();	// 地區id要特別轉換為string
-			$scope.location				= course.location;
-			$scope.target					= course.enroll_target;
-			$scope.meal						= meal;
-			$scope.price					= course.price;
-			$scope.note						= $sce.trustAsHtml(course.note);
-			$scope.contact				= course.contact_info;
-			$scope.link						= course.enroll_link;
+			$scope.course = result;
+			$scope.course.startDate = $scope.course.startDate.substring(0,10);
+			$scope.course.endDate = $scope.course.endDate.substring(0,10);
+			$scope.course.confirmDate = $scope.course.confirmDate.substring(0,10);
+			$scope.course.startTime = $scope.course.startTime;
+			$scope.course.endTime = $scope.course.endTime;
+			$scope.course.enrollDueDate = $scope.course.enrollDueDate.substring(0,10);
+			$scope.course.remark = $sce.trustAsHtml($scope.course.remark);
 		}
-
+	}, function (err) {
+		// err handling
 	});
-
 
 	$scope.showCourse = function(abbr) {
 		for(id in $scope.categoryList) {

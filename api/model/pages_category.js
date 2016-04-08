@@ -7,7 +7,8 @@ var PageCategorySchema = new Schema({
 	pages: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Page'
-	}]
+	}],
+	order: { type: Number, unique: true }
 });
 
 module.exports = mongoose.model('PageCategory', PageCategorySchema);

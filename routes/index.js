@@ -1,4 +1,5 @@
 var jwt = require('jwt-simple');
+var request = require('request');
 var config = require('../config/db_conn');
 
 var User = require('../api/model/user');
@@ -12,56 +13,7 @@ var Course = new CourseApi();
 var Category = new CategoryApi();
 var News = new NewsApi();
 
-// var mongoose = require('mongoose');
-// var Schema = mongoose.Schema;
-
-// var parentSchema = new Schema({
-// 	name: String,
-// 	children: [{type: Schema.Types.ObjectId, ref: 'Child'}]
-// });
-
-// var childSchema = new Schema({
-// 	name: String, 
-// 	parent: {type: Schema.Types.ObjectId, ref: 'Parent'}
-// });
-
-// var Parent = mongoose.model('Parent', parentSchema);
-// var Child = mongoose.model('Child', childSchema);
-
 module.exports = function (app, passport, root_dir) {
-
-	// app.get('/api/test', function (req, res) {
-		// Parent.
-		// 	find({}).
-		// 	// populate('children').
-		// 	exec(function (err, parents) {
-		// 		res.json(parents);
-		// });
-
-		// Child.find({}).exec(function (err, child) {
-		// 	res.json(child);
-		// });
-
-		// var parent = new Parent();
-		// parent.name = 'joe';
-		// parent.save(function (err, parent) {
-		// 	res.json(parent);
-		// });
-
-		// var child = new Child();
-		// child.name = 'kcid';
-		// child.save(function (err, child) {
-		// 	res.json(child);
-		// });
-
-		// Parent.update({_id:'56d71a4a18d6c2b40c6047aa'},{$push: {children: ['56d71a9c36824f6c1ddb6ed5']}}, function (err, parent) {
-		// 	res.json(parent);
-		// });
-
-		// Parent.update({_id:'56d71a4a18d6c2b40c6047aa'},{children: []}, function (err, parent) {
-		// 	res.json(parent);
-		// });
-	// });
 
 	// pages routes
 	app.get('/api/getPageCategory', function (req, res) {
@@ -168,6 +120,12 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
+	app.get('/api/getTenNews', function (req, res) {
+		News.findTen(req, function (data) {
+			res.json(data);
+		});
+	});
+
 	app.post('/api/addNews', function (req, res) {
 		News.add(req, function (data) {
 			res.json(data);
@@ -206,15 +164,73 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
+	app.post('/api/editCourseCategory', function (req, res) {
+		Category.update(req, function (data) {
+			res.json(data);
+		});
+	});
+
 	app.get('/api/removeAllCats', function (req, res) {
 		Category.removeAll(req, function (data) {
 			res.json(data);
 		});
 	});
 
+	// POST course data from Yuntech
+	app.post('/getCourseDataFromYuntech', function (req, res) {
+		request({
+			"rejectUnauthorized": false,
+			"url": 'https://140.125.251.180/CRISWeb/CRISService/GetCourseData',
+			"method": "POST",
+			"form": {
+				"pCourseYear": req.body.year,
+				"pCourseId": req.body.no
+			}
+		}, function (error, response, body) {
+			if(!error && response.statusCode == 200) {
+				res.json(JSON.parse(body));
+			} else if (!error && response.statusCode == 500) {
+				res.json({msg: "查無此課程"});
+			} else {
+				res.json({msg: "連線失敗，請稍後再試"});
+			}
+		});
+	});
 
+	// GET all categories from Yuntech then save them in local db
+	app.post('/api/createAllCategoriesFromYuntech', function (req, res) {
+		if (req.body.auth) {
+			// GET category data from Yuntech
+			request({
+				"rejectUnauthorized": false,
+				"url": 'https://140.125.251.180/CRISWeb/CRISService/GetDepartmentDataList',
+				"method": "GET"
+			}, function (error, response, body) {
+				if (response.statusCode == 200) {
+					var parsed_data = JSON.parse(body).data;
+					Category.createAllFromYuntech(parsed_data, function (data) {
+						res.json(data);
+					});
+				}
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
+	});
 
 	// course
+	app.get('/api/getPopularCourse', function (req, res) {
+		Course.getPopular(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.get('/api/getPinTopCourse', function (req, res) {
+		Course.getPinTop(req, function (data) {
+			res.json(data);
+		});
+	});
+
 	app.get('/api/getAllCourse', function (req, res) {
 		Course.getAll(req, function (data) {
 			res.json(data);
@@ -235,6 +251,18 @@ module.exports = function (app, passport, root_dir) {
 
 	app.post('/api/updateCourse', function (req, res) {
 		Course.update(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/updateCourseState', function (req, res) {
+		Course.updateState(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/coursePinTop', function (req, res) {
+		Course.pinTop(req, function (data) {
 			res.json(data);
 		});
 	});

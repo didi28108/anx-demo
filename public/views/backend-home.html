@@ -3,8 +3,15 @@
 	.link-wrap {
 		margin-top: 10px;
 	}
-	#logout-wrap {
+	.float-right {
 		float: right;
+	}
+	.unvalid-alert {
+		font-size: 8px;
+		color: #a94442;
+	}
+	.panel-heading {
+		text-align: center;
 	}
 </style>
 
@@ -23,7 +30,7 @@
 			<a href="/backend/pages" ui-sref="backend.pages">其他頁面管理</a>
 		</span>
 		<!-- <a href="/backend/login" ui-sref="backend.login" ng-hide="{{isLogin}}">登入</a> -->
-		<div id="logout-wrap">
+		<div class="float-right">
 			<span>{{userinfo}} &nbsp;</span>
 			<button class="btn btn-default" ng-show="{{isLogin}}" ng-click="logout()">登出</button>	
 		</div>

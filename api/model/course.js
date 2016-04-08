@@ -8,24 +8,30 @@ var CourseSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Category'
 	},
-	no 				: { type: String },	// 課號
-	name			: { type: String },
-	startdate		: { type: Date },
-	enddate			: { type: Date },
-	confirmdate		: { type: Date }, // 課程確定開課與否之日期
-	duration		: {	type: Number },
-	time			: { type: String },
-	area			: {	id: 	Number, 
-						name: String },
-	location		: {	type: String },
-	enroll_target	: { type: String },	// 課程招生對象
-	meal_offer		: {	type: Boolean	},
-	price			: { type: Number },
-	note			: {	type: String },	// 備註
-	contact_info	: {	type: String },
-	enroll_link		: {	type: String },
+	year 			: Number,
+	no 				: String,	// 課號
+	fullNo			: { type: String, unique: true },
+	name			: String,
+	startDate		: Date,
+	endDate			: Date,
+	startTime		: String,
+	endTime			: String,
+	location		: String,
+	confirmDate		: Date, // 課程確定開課與否之日期
+	enrollDueDate	: Date,
+	enrollTarget	: String,	// 課程招生對象
+	launchOffer		: String,
+	price			: Number,
+	state 			: String,
+	maxEnroll		: Number,
+	remark			: String,	// 備註
+	helpline		: String,
+	area			: String,
+	enrollLink		: String,
 	clicks			: { type: Number, default: 0 },
-	createdate		: Date
+	pinTop			: { type: Boolean },
+	createDate		: Date,
+	updateDate		: Date
 });
 
 module.exports = mongoose.model('Course', CourseSchema);

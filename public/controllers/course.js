@@ -4,16 +4,18 @@ angular.module('myApp')
 	
 	$scope.currentCategory = '';
 
-	$scope.sortType			= '';
+	$scope.classes = ['雲科大', '政府單位'];
+
+	$scope.sortType	= '';
 	$scope.sortReverse	= false;
-	$scope.searchFish		= '';
+	$scope.searchFish = '';
 
 	$scope.rowsPerPage = 20;
 
 	CourseService.getCourseCategoryList().then(function(data) {
 		$scope.categoryList = data;
 		if($stateParams.default_category == null) {
-			var categoryIndex = getIndexByCourseCategoryAbbr($scope.categoryList, 'anx');
+			var categoryIndex = getIndexByCourseCategoryDeptCode($scope.categoryList, 'ANX');
 			if(categoryIndex != null) {
 				$scope.currentCategory = $scope.categoryList[categoryIndex];
 			} else {
@@ -34,18 +36,18 @@ angular.module('myApp')
 
 
 	// show course on list when a category is clicked
-	$scope.showCourse = function (abbr) {
+	$scope.showCourse = function () {
 		$scope.sortType = '';
 		for(id in $scope.categoryList) {
-			if($scope.categoryList[id].abbr == abbr) {
+			if($scope.categoryList[id].deptCode == this.cat.deptCode) {
 				$scope.currentCategory = $scope.categoryList[id];
 			}
 		}
 	};
 
-	function getIndexByCourseCategoryAbbr (array, abbr) {
+	function getIndexByCourseCategoryDeptCode (array, deptCode) {
 		for (var i = 0; i < array.length; i++) {
-			if (array[i].abbr == abbr) {
+			if (array[i].deptCode == deptCode) {
 				return i;
 			}
 		}

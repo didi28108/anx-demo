@@ -30,19 +30,76 @@ myApp.service('CourseService', function($q, $http){
 	// 取得課程後將日期格式轉為yyyy-mm-dd
 	function course_date_transform (courses) {
 		for(id in courses) {
-			courses[id].startdate 	= courses[id].startdate.substring(0, 10).replace(/-/g, "/");
-			courses[id].enddate			= courses[id].enddate.substring(0, 10).replace(/-/g, "/");
-			courses[id].confirmdate	= courses[id].confirmdate.substring(0, 10).replace(/-/g, "/");
+			courses[id].startDate 	= courses[id].startDate.substring(0, 10).replace(/-/g, "/");
+			courses[id].endDate		= courses[id].endDate.substring(0, 10).replace(/-/g, "/");
+			courses[id].confirmDate	= courses[id].confirmDate.substring(0, 10).replace(/-/g, "/");
 		}
 		return courses;
 	};
+
+	var addCourse = function (course) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method	: 'POST',
+				url		: '/api/addCourse',
+				data 	: {
+					course: course
+				}
+			}
+			$http(req).then(function(result) {
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject("nope");
+				}
+			});
+		});
+	};
+
+	var updateCourse = function (course) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method	: 'POST',
+				url		: '/api/updateCourse',
+				data 	: {
+					course: course
+				}
+			}
+			$http(req).then(function(result) {
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject("nope");
+				}
+			});
+		});
+	}
+
+	var updateCourseState = function (course) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method	: 'POST',
+				url		: '/api/updateCourseState',
+				data 	: {
+					course: course
+				}
+			}
+			$http(req).then(function(result) {
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject("nope");
+				}
+			});
+		});
+	}
 
 	// 用_id取得課程
 	var getCourse = function (id) {
 		return $q(function(resolve, reject) {
 			var req = {
 				method: 'POST',
-				url: 		'/api/getCourse',
+				url: '/api/getCourse',
 				data: {
 					course_id: id
 				}
@@ -62,10 +119,10 @@ myApp.service('CourseService', function($q, $http){
 		return $q(function(resolve, reject) {
 			var req = {
 				method: 'POST',
-				url: 		'/api/removeCourse',
+				url: '/api/removeCourse',
 				data : {
 					category_id	: data.category_id,
-					course_id		: data.course_id
+					course_id	: data.course_id
 				}
 			};
 			$http(req).then(function(result){
@@ -82,12 +139,12 @@ myApp.service('CourseService', function($q, $http){
 		return $q(function(resolve, reject) {
 			var req = {
 				method: 'POST',
-				url: 		'/api/courseClicked',
-				data : {
-					course_id		: id
+				url: '/api/courseClicked',
+				data: {
+					course_id: id
 				}
 			};
-			$http(req).then(function(result){
+			$http(req).then(function(result) {
 				if(result.data) {
 					resolve(result.data);
 				} else {
@@ -97,13 +154,104 @@ myApp.service('CourseService', function($q, $http){
 		});
 	}
 
+	var pinTop = function (course) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method: 'POST',
+				url: '/api/coursePinTop',
+				data: {
+					course: course
+				}
+			};
+			$http(req).then(function(result) {
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject('nope');
+				}
+			});
+		});
+	}
+
+	var getCourseDataFromYT = function (data) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method: 'POST',
+				url: '/getCourseDataFromYuntech',
+				data: {
+					year: data.year,
+					no: data.no
+				}
+			}
+			$http(req).then(function(result) {
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject('nope');
+				}
+			});
+		});
+	}
+
+	var addCategory = function (data) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method: 'POST',
+				url: '/api/addCourseCategory',
+				data: {
+					class: data.class,
+					deptName: data.deptName,
+					deptCode: data.deptCode,
+					show: data.show
+				}
+			}
+			$http(req).then(function(result) {
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject('nope');
+				}
+			});
+		});
+	}
+
+	var editCategory = function (data) {
+		return $q(function(resolve, reject) {
+			console.log(data);
+			var req = {
+				method: 'POST',
+				url: '/api/editCourseCategory',
+				data: {
+					category_id: data.id,
+					class: data.class,
+					deptName: data.deptName,
+					deptCode: data.deptCode,
+					show: data.show
+				}
+			}
+			$http(req).then(function(result) {
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject('nope');
+				}
+			});
+		})
+	}
 
 	return {
-		getCourseCategoryList		: getCourseCategoryList,
-		getAllCourse						: getAllCourse,
-		getCourse 							: getCourse,
-		removeCourse						: removeCourse,
-		clicks									: clicks
+		getCourseCategoryList	: getCourseCategoryList,
+		getAllCourse			: getAllCourse,
+		getCourse 				: getCourse,
+		addCourse 				: addCourse,
+		updateCourse			: updateCourse,
+		updateCourseState		: updateCourseState,
+		removeCourse			: removeCourse,
+		clicks					: clicks,
+		pinTop 					: pinTop,
+		getCourseDataFromYT		: getCourseDataFromYT,
+		addCategory				: addCategory,
+		editCategory			: editCategory
 	}
 
 });

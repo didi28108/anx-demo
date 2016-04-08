@@ -37,9 +37,8 @@ angular.module('myApp')
 					}
 					results.push(part);
 				}
-				$scope.chunkedData = callback(results, 4);
-				console.log($scope.chunkedData);
-				// console.log($scope.footerData.length);
+				$scope.chunkedData = callback(results, 5);
+				// console.log($scope.chunkedData);
 			}, function (err) {
 				// err handling ...
 			});

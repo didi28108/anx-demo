@@ -116,7 +116,7 @@ myApp.service('PagesService', function($q, $http){
 				if(result.data) {
 					resolve(result.data);
 				} else {
-					reject('nope');
+					reject({notfound: true});
 				}
 			});
 		})

@@ -1,6 +1,4 @@
-<!doctype html>
 <link rel="stylesheet" type="text/css" href="./css/anx.image.slider.css">
-
 
 <!-- image slider, image size: 1920x420-->
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -19,23 +17,94 @@
 	</a>
 </div>
 
+
 <div class="container">
-	首頁 建置中
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+	<div ng-controller="HomeCtrl">
+		<br>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel panel-primary">
+					<div class="panel-heading text-center">熱門課程</div>
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>地區</th>
+								<th>課程名稱　　　　　　　　　　　　　　　　　　</th>
+								<th>開課單位</th>
+								<th>課程時間</th>
+							</tr>
+							<tr ng-repeat="course in popularCourses">
+								<td><span class="label label-primary">{{course.area}}</span></td>
+								<td>
+									<span class="label label-success" ng-show="course.state=='開課'">確定開課</span>
+									<a href="/course/{{course._id}}">{{course.name}}</a>
+								</td>
+								<td>{{course.category.deptName}}</td>
+								<td>{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</td>
+							</tr>
+							<tr>
+								<td colspan="4" class="text-right">
+									<a href="/course">更多課程資訊 ... </a>	
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="panel panel-primary">
+					<div class="panel-heading text-center">推薦課程</div>
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>地區</th>
+								<th>課程名稱</th>
+								<th>開課單位</th>
+								<th>課程時間</th>
+							</tr>
+							<tr ng-repeat="course in pinTopCourses">
+								<td><span class="label label-primary">{{course.area}}</span></td>
+								<td>
+									<span class="label label-success" ng-show="course.state=='開課'">確定開課</span>
+									<a href="/course/{{course._id}}">{{course.name}}</a>
+								</td>
+								<td>{{course.category.deptName}}</td>
+								<td>{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</td>
+							</tr>
+							<tr>
+								<td colspan="4" class="text-right">
+									<a href="/course">更多課程資訊</a>	
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-info">
+					<div class="panel-heading text-center">最新消息 ... </div>
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>類別</th>
+								<th>標題　　　　　　　　</th>
+								<th>公告日期</th>
+							</tr>
+							<tr ng-repeat="news in newsList">
+								<td>
+									<span class="label label-info">{{news.category.name}}</span>
+								</td>
+								<td>{{news.title}}</td>
+								<td>{{news.startdate.substring(0,10)}}</td>
+							</tr>
+							<tr>
+								<td colspan="3" class="text-right"><a href="/news">更多消息</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+		<br>
+	</div>
 </div>

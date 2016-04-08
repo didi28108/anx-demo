@@ -22,7 +22,7 @@
 		<div class="col-md-3">
 			<h3>類別</h3>
 
-			<div>
+			<div ng-model="pageCategoryList">
 				<div class="my-list-item" ng-repeat="cat in pageCategoryList" ng-click="showPageList()">
 					<span editable-text="cat.name" buttons="no" e-form="textForm" onaftersave="saveCatName($data)">{{cat.name || 'empty'}}</span>
 					<button class="pull-right btn btn-default btn-xs" ng-click="removeCategory()">

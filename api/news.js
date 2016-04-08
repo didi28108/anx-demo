@@ -8,8 +8,11 @@ var NewsProto = {
 // news category 's CRUD method
 
 	'findAllCategory': function(req, callback) {
-		NewsCategoryModel.find({}, function (err, categories) {
-			callback(categories);
+		NewsCategoryModel
+			.find({})
+			.sort('order')
+			.exec(function (err, categories) {
+				callback(categories);
 		});
 	},
 
@@ -61,6 +64,19 @@ var NewsProto = {
 			.find({})
 			.populate('category')
 			.sort('-createdate')
+			.exec(function (err, news) {
+			callback(news);
+		});
+	},
+
+	'findTen': function (req, callback) {
+		var now = new Date();
+		NewsModel
+			.find({})
+			.select('title createdate startdate category')
+			.populate('category')
+			.sort('-createdate')
+			.limit(10)
 			.exec(function (err, news) {
 			callback(news);
 		});
