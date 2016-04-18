@@ -1,3 +1,7 @@
+// var CourseApi = require('./course');
+// var Course = new CourseApi();
+
+var CourseModel = require('./model/course');
 var CategoryModel = require('./model/category');
 
 var CategoryProto = {
@@ -32,6 +36,54 @@ var CategoryProto = {
 			.find({})
 			.exec(function (err, data) {
 			callback(data);
+		});
+	},
+
+	'getShown': function (req, callback) {
+		CategoryModel
+			.find({})
+			.where({show: true})
+			.exec(function (err, data) {
+			callback(data);
+		});
+	},
+
+	'countShown': function (callback) {
+		CategoryModel
+			.find({})
+			.where({show: true})
+			.exec(function (err, categories) {
+				CourseModel
+					.find({})
+					.where({show: true})
+					.select('category show')
+					.sort('-createdate')
+					.exec(function (err, courses) {
+						if (categories && courses) {
+							var categoryClone = JSON.parse(JSON.stringify(categories));
+							for (var i = 0; i < courses.length ; i++) {
+								if(courses[i].show) { // 顯示設定為true的在其對應category計數+1
+									for (var k = 0; k < categoryClone.length ; k++) {
+										console.log(courses[i].category);
+										if(courses[i].category == categoryClone[k]._id) {
+											if(categoryClone[k].shownCourseCount) categoryClone[k].shownCourseCount++;
+											else categoryClone[k].shownCourseCount = 1;
+										}
+									}
+								}
+								if(i == courses.length - 1) {
+									for (var k = 0; k < categoryClone.length ; k++) {
+										if(categoryClone[k].shownCourseCount == undefined) categoryClone[k].shownCourseCount = 0;
+										if(k == categoryClone.length - 1) {
+											callback(categoryClone);
+										}
+									}
+								}
+							}
+						} else {
+							callback({msg: "categories or courses is null!"});
+						}
+					});
 		});
 	},
 

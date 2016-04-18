@@ -17,6 +17,30 @@ angular.module('myApp')
 	$scope.classes = ["雲科大", "政府單位"];
 	$scope.courseStateList = ["開課", "未處理", "不開課"];
 
+	// 課程推薦釘選清單
+	$scope.coursePinTopList = [
+		{
+			value: false,
+			text: "無"
+		},
+		{
+			value: true,
+			text: "推薦"
+		}
+	];
+
+	// 課程顯示或隱藏清單
+	$scope.courseShowList = [
+		{
+			text: "顯示",
+			value: true
+		},
+		{
+			text: "隱藏",
+			value: false
+		}
+	];
+
 	$scope.categoryFormData = {
 		class: "雲科大",
 		deptName: "",
@@ -48,6 +72,7 @@ angular.module('myApp')
 
 	CourseService.getAllCourse().then(function(data) {
 		$scope.courses = data;
+		console.log(data);
 	}, function(err) {
 		// err handling
 	});
@@ -142,30 +167,42 @@ angular.module('myApp')
 		});
 	}
 
-	$scope.pinTop = function () {
-		var course = {
-			_id: this.$parent.course._id,
-			pinTop: !this.$parent.course.pinTop
-		}
+	$scope.pinTopChanged = function () {
 		var fullNo = this.$parent.course.fullNo;
 		var name = this.$parent.course.name;
-
+		var course = {
+			_id: this.$parent.course._id,
+			pinTop: this.$parent.course.pinTop
+		}
 		CourseService.pinTop(course).then(function (result) {
 			console.log(result);
 			if (result.nModified) {
-				var msg = course.pinTop ? "已改為推薦課程" : "已取消推薦";
-				
-				for (var i = $scope.courses.length - 1; i >= 0; i--) {
-					if ($scope.courses[i]._id == course._id) {
-						$scope.courses[i].pinTop = !$scope.courses[i].pinTop;
-					}
-				}
+				var msg = course.pinTop ? "已改為推薦課程" : "已更改為無推薦";
 
 				$window.alert("更新成功！\n\n課號: 「 " + fullNo + " 」  課程名稱: 「" + name + " 」\n" + msg);
 			} else {
 				$window.alert("發生錯誤，請再試一次！");
 			}
 		});
+	}
+
+	$scope.showChanged = function () {
+		var fullNo = this.$parent.course.fullNo;
+		var name = this.$parent.course.name;
+		var course = {
+			_id: this.$parent.course._id,
+			show: this.$parent.course.show
+		}
+		CourseService.setShow(course).then(function(result) {
+			console.log(result);
+			if (result.nModified) {
+				var msg = course.show ? "已更改為顯示" : "已更改為隱藏";
+
+				$window.alert("更新成功！\n\n課號: 「 " + fullNo + " 」  課程名稱: 「" + name + " 」\n" + msg);
+			} else {
+				$window.alert("發生錯誤，請再試一次！");
+			}
+		})
 	}
 
 

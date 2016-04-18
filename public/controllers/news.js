@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-.controller('NewsCtrl', function(NewsService, $scope, $http, $state, $stateParams, $window){
+.controller('NewsCtrl', function(GuestHTTPService, NewsService, $scope, $http, $state, $stateParams, $window){
 
 	$scope.$state = $state;
 
@@ -15,6 +15,23 @@ angular.module('myApp')
 	// 從Service取得消息公告類別
 	NewsService.getNewsCategory().then(function(data) {
 		$scope.categoryList = data;
+
+		// 從Service取得所有消息公告
+		GuestHTTPService.getAllShownNews().then(function(data) {
+			$scope.newsList = data;
+
+			GuestHTTPService.getShownNewsCount().then(function (data) {
+				for (var i = 0; i < data.length; i++) {
+					$scope.categoryList[i].shownNewsCount = data[i].shownNewsCount;
+				}
+			}, function(err) {
+				// err handling
+			});
+
+		}, function(err) {
+			// err handling
+		});
+
 		if($stateParams.default_category == null) {
 			$scope.currentCategory = $scope.categoryList[0];
 		} else {
@@ -24,12 +41,6 @@ angular.module('myApp')
 		// err handling
 	});
 
-	// 從Service取得所有消息公告
-	NewsService.getAllNews().then(function(data) {
-		$scope.newsList = data;
-	}, function(err) {
-		// err handling
-	});
 
 	// 點選類別列表上的類別時顯示該類別的消息公告在右側
 	$scope.showNews = function (news_id) {
@@ -40,6 +51,5 @@ angular.module('myApp')
 			}
 		}
 	};
-
 
 });

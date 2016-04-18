@@ -8,14 +8,6 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable
 			url: '/',
 			templateUrl: 'views/home.html'
 		})
-		// .state('about', {
-		// 	url: '/about',
-		// 	templateUrl: 'views/about.html'
-		// })
-		// .state('duties', {
-		// 	url: '/duties',
-		// 	templateUrl: 'views/duties.html'
-		// })
 		.state('course', {
 			url: '/course',
 			templateUrl: 'views/course.html',
@@ -128,7 +120,11 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable
 				$state.go('backend.login');
 			}
 		}
-		if (next.name === 'pages') {
+		if (next.name === 'pages' || 
+			next.name === 'viewCourse' ||
+			next.name === 'viewNews' ||
+			next.name === 'course' ||
+			next.name === 'news') {
 			$window.scrollTo(0, 0);
 		}
 	});

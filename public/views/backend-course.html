@@ -58,47 +58,42 @@
 			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'no' && !sortReverse"></span>
 							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'no' && sortReverse"></span>
 			  			</th>
-			  			<th>
+			  			<th>課程資訊</th>
+			  			<!-- <th>
 			  				<a href="#" ng-click="sortType = 'deptName'; sortReverse = !sortReverse">課程名稱</a>
 			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'deptName' && !sortReverse"></span>
 							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'deptName' && sortReverse"></span>
 						</th>
-			  			<!-- <th>
-			  				<a href="#" ng-click="sortType = 'startdate'; sortReverse = !sortReverse">開始日期</a>
-			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'startdate' && !sortReverse"></span>
-							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'startdate' && sortReverse"></span>
-						</th>
-			  			<th>
-			  				<a href="#" ng-click="sortType = 'enddate'; sortReverse = !sortReverse">結束日期</a>
-			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'enddate' && !sortReverse"></span>
-							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'enddate' && sortReverse"></span>
-						</th> -->
 						<th>
-			  				<a href="#" ng-click="sortType = 'course.startDate'; sortReverse = !sortReverse">課程期間</a>
+			  				<a href="#" ng-click="sortType = 'startDate'; sortReverse = !sortReverse">課程期間</a>
 			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'course.startDate' && !sortReverse"></span>
 							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'course.startDate' && sortReverse"></span>
-						</th>
+						</th> -->
 			  			<th>
-							<a href="#" class="text-nowrap" ng-click="sortType = 'confirmdate'; sortReverse = !sortReverse">開課確認日期</a>
+							<a href="#" class="text-nowrap" ng-click="sortType = 'confirmDate'; sortReverse = !sortReverse">開課確認日期</a>
 			  				<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" ng-show="sortType == 'confirmdate' && !sortReverse"></span>
 							<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" ng-show="sortType == 'confirmdate' && sortReverse"></span>
 			  			</th>
 			  			<th>課程狀態</th>
 			  			<th>選項</th>
 			  			<th>推薦</th>
+			  			<th>顯示</th>
 			  		</tr>
 			  	</thead>
 			  	<tbody>
 			  		<tr ng-if="course.category.deptCode==currentCategory.deptCode" ng-repeat="course in courses | orderBy:sortType:sortReverse | filter:searchFish" id="{{course._id}}">
 			  			<td><span class="label label-primary">{{course.area}}</span></td>
 			  			<td class="text-nowrap">{{course.fullNo}}</td>
-			  			<td><a href="/backend/course/{{course._id}}">{{course.name}}</a></td>
-			  			<!-- <td>{{course.startDate}}</td>
-			  			<td>{{course.endDate}}</td> -->
-			  			<td class="text-nowrap">
+			  			<td>
+			  				<a href="/backend/course/{{course._id}}">{{course.name}}</a>
+			  				<div class="text-nowrap">
+			  					{{course.startDate}} - {{course.endDate}}
+			  				</div>
+			  			</td>
+			  			<!-- <td class="text-nowrap">
 			  				{{course.startDate}} - <br>
 			  				{{course.endDate}}
-			  			</td>
+			  			</td> -->
 
 			  			<td>{{course.confirmDate}}</td>
 			  			<td>
@@ -111,10 +106,10 @@
 			  				<button class="btn btn-danger btn-sm" ng-click="delete()">刪除</button>
 			  			</td>
 			  			<td>
-			  				<button type="button" class="btn btn-default btn-sm" ng-click="pinTop()">
-			  					<span class="glyphicon glyphicon-pushpin" aria-hidden="true" ng-show="course.pinTop"></span>
-			  					<span ng-hide="course.pinTop">─</span>
-							</button>
+			  				<select class="form-control" ng-options="option.value as option.text for option in coursePinTopList" ng-model="course.pinTop" ng-change="pinTopChanged()"></select>
+			  			</td>
+			  			<td>
+			  				<select class="form-control" ng-options="option.value as option.text for option in courseShowList" ng-model="course.show" ng-change="showChanged()"></select>
 			  			</td>
 			  		</tr>
 			  	</tbody>

@@ -25,11 +25,13 @@ var CourseSchema = new Schema({
 	state 			: String,
 	maxEnroll		: Number,
 	remark			: String,	// 備註
+	moreInfo		: String,
 	helpline		: String,
 	area			: String,
 	enrollLink		: String,
 	clicks			: { type: Number, default: 0 },
-	pinTop			: { type: Boolean },
+	pinTop			: Boolean,
+	show			: Boolean,
 	createDate		: Date,
 	updateDate		: Date
 });

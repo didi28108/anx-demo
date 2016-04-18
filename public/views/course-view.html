@@ -19,9 +19,9 @@
 	<div class="col-md-3">
 		<h3>課程單位 <span class="label label-success">雲科大</span></h3>
 		<div class="list-group">
-			<a ng-repeat="cat in categoryList | filter:{class:classes[0]} | filter:{show:true}" href="" class="list-group-item" ng-click="showCourse(cat.deptCode)" ng-class="{'catActive': currentCategory.deptName == cat.deptName}">
+			<a ng-repeat="cat in categoryList | filter:{class:classes[0]} | filter:{show:true}" href="" class="list-group-item" ng-click="showCourse()" ng-class="{'catActive': currentCategory.deptName == cat.deptName}">
 				{{cat.deptName}}
-				<span class="badge">{{cat.course.length}}</span>
+				<span class="badge">{{cat.shownCourseCount}}</span>
 			</a>
 		</div>
 		<h3>課程單位 <span class="label label-primary">政府單位</span></h3>
@@ -73,7 +73,7 @@
 							<td><b>招生對象：</b></td>
 							<td>{{course.enrollTarget}}</td>
 							<td><b>報名截止日：</b></td>
-							<td>{{}}</td>
+							<td>{{course.enrollDueDate}}</td>
 						</tr>
 						<tr>
 							<td><b>是否包含午餐：</b></td>
@@ -83,9 +83,9 @@
 						</tr>
 						<tr>
 							<td><b>諮詢專線：</b></td>
-							<td>{{course.helpline}}</td>
+							<td class="pre-content">{{course.helpline}}</td>
 							<td><b>課程狀態：</b></td>
-							<td></td>
+							<td>{{course.state}}</td>
 						</tr>
 						<tr>
 							<td><b>備註：</b></td>

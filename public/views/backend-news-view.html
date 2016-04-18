@@ -19,54 +19,52 @@
 	</div>
 </div>
 <div class="col-md-9">
-	<h3>{{categoryName}} － {{name}}</h3>
+	<h3>{{news.category.name}} － {{news.name}}</h3>
 	<div class="panel panel-default">
 		<div class="panel-heading">消息公告</div>
 		<div class="panel-body">
 			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>類別 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{category.name}}</p>
-	    	</div>
+				<div class="field-name col-md-offset-1 col-md-2">
+					<p>類別 :</p>
+				</div>
+				<div class="col-md-9">
+					<p>{{news.category.name}}</p>
+				</div>
 			</div>
 			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>標題 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{title}}</p>
-	    	</div>
+				<div class="field-name col-md-offset-1 col-md-2">
+					<p>標題 :</p>
+				</div>
+				<div class="col-md-9">
+					<p>{{news.title}}</p>
+				</div>
 			</div>
 			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>內容 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<div ng-bind-html="content"></div>
-	    	</div>
+				<div class="field-name col-md-offset-1 col-md-2">
+					<p>內容 :</p>
+				</div>
+				<div class="col-md-9">
+					<div ng-bind-html="news.content"></div>
+				</div>
 			</div>
 			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>公告發布日期 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{startdate}}</p>
-	    	</div>
+				<div class="field-name col-md-offset-1 col-md-2">
+					<p>公告日期 :</p>
+				</div>
+				<div class="col-md-9">
+					<p>{{news.createdate}}</p>
+				</div>
 			</div>
-			<div class="row">
-	    	<div class="field-name col-md-offset-1 col-md-2">
-	    		<p>公告結束日期 :</p>
-	    	</div>
-	    	<div class="col-md-9">
-	    		<p>{{enddate}}</p>
-	    	</div>
-			</div>
-			<br>
-			<br>
-			<br>
-			<br>
+		</div>
+		<div class="panel-footer">
+			<p>管理動作：</p>
+			<button class="btn btn-warning btn-sm" ng-click="goEdit()">編輯</button>
+			<button class="btn btn-danger btn-sm" ng-click="delete()">刪除</button>
+
+			<span>&nbsp;&nbsp;&nbsp;顯示：</span>
+			<select class="inline-content form-control" ng-options="option.value as option.text for option in newsShowList" ng-model="news.show" ng-change="showChanged()"></select>
+
+		</div>
 		</div>
 	</div>
 </div>

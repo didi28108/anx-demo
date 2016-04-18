@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-.controller('CourseCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window){
+.controller('CourseCtrl', function(GuestHTTPService, $scope, $http, $state, $stateParams, $window){
 	
 	$scope.currentCategory = '';
 
@@ -12,8 +12,9 @@ angular.module('myApp')
 
 	$scope.rowsPerPage = 20;
 
-	CourseService.getCourseCategoryList().then(function(data) {
+	GuestHTTPService.getShownCourseCount().then(function(data) {
 		$scope.categoryList = data;
+
 		if($stateParams.default_category == null) {
 			var categoryIndex = getIndexByCourseCategoryDeptCode($scope.categoryList, 'ANX');
 			if(categoryIndex != null) {
@@ -28,12 +29,12 @@ angular.module('myApp')
 		// err handling
 	});
 
-	CourseService.getAllCourse().then(function(data) {
+	GuestHTTPService.getAllShownCourse().then(function(data) {
 		$scope.courses = data;
+
 	}, function(err) {
 		// err handling
 	});
-
 
 	// show course on list when a category is clicked
 	$scope.showCourse = function () {

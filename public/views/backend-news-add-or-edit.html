@@ -21,63 +21,33 @@
 				<div class="form-group">
 			    <label class="control-label col-md-offset-1 col-md-2" for="category">類別</label>
 			    <div class="col-md-3">
-			      <select class="form-control" id="category" ng-model="category">
+			      <select class="form-control" id="category" ng-model="news.category">
 			      	<option ng-repeat="cat in categoryList" value="{{cat._id}}">{{cat.name}}</option>
-					  </select>
+				  </select>
 			    </div>
 			  </div>
 			  <div class="form-group">
 			    <label class="control-label col-md-offset-1 col-md-2">標題</label>
 			    <div class="col-md-8">
-			      <input type="text" class="form-control" id="title" name="title" placeholder="" ng-model="title" required>
+			      <input type="text" class="form-control" id="title" name="title" placeholder="" ng-model="news.title" required>
 			      <span class="unvalid-alert" ng-hide="myForm.title.$valid">必填欄位</span>
 			    </div>
 			  </div>
 			  <div class="form-group">
 			    <label class="control-label col-md-offset-1 col-md-2">內容</label>
 			    <div class="col-md-8"> 
-			      <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="content" name="content" ng-model="content" required></textarea>
-		      	<span class="unvalid-alert" ng-hide="myForm.content.$valid">必填欄位</span>
+			      <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="content" name="content" ng-model="news.content" required></textarea>
+		      	  <span class="unvalid-alert" ng-hide="myForm.content.$valid">必填欄位</span>
 			    </div>
 			  </div>
 			  <div class="form-group">
-			    <label class="control-label col-md-offset-1 col-md-2" for="startdate">公告發布日期</label>
-			    <div class="col-md-3">
-				    <div class="input-group date datetimepicker" data-provide="datepicker" id="">
-					    <input type="text" class="form-control" id="startdate" name="startdate" ng-model="startdate" required>
-					    <div class="input-group-addon">
-					      <span class="glyphicon glyphicon-calendar"></span>
-					    </div>
-						</div>
-		      	<span class="unvalid-alert" ng-hide="myForm.startdate.$valid">必填欄位</span>
-					</div>
+				<label class="control-label col-md-offset-1 col-md-2" for="show">顯示公告</label>
+				<div class="row">
+				  <div class="col-md-2">
+					<select class="form-control" ng-options="option.value as option.text for option in newsShowList" ng-model="news.show"></select>
+				  </div>
+				</div>
 			  </div>
-			  <div class="form-group">
-			    <label class="control-label col-md-offset-1 col-md-2" for="enddate">公告結束日期<br>(不含)</label>
-			    <div class="col-md-3">
-				    <div class="input-group date" data-provide="datepicker">
-					    <input type="text" class="form-control" id="enddate" name="enddate" ng-model="enddate" required>
-					    <div class="input-group-addon">
-					      <span class="glyphicon glyphicon-calendar"></span>
-					    </div>
-						</div>
-		      	<span class="unvalid-alert" ng-hide="myForm.enddate.$valid">必填欄位</span>
-					</div>
-			  </div>
-			  <!-- <div class="form-group">
-			    <label class="control-label col-md-offset-1 col-md-2" for="">是否設定為置頂公告<br>(最多三則)</label>
-			    <div class="col-md-8"> 
-			      <div class="input-group">
-			      	<label class="radio-inline">
-			      		<input type="radio" name="pintotop_radio" value="yes" ng-model="pintotop">是
-			      	</label>
-			      	<label class="radio-inline">
-			      		<input type="radio" name="pintotop_radio" value="no" ng-model="pintotop">否
-			      	</label>
-				    </div>
-			    </div>
-			  </div> -->
-
 			  <div class="form-group">
 			    <div class="col-md-offset-3 col-sm-9">
 			      <button ng-show="$state.is('backend.addNews')" class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="add()">新增</button>
@@ -87,8 +57,6 @@
 			  </div>
 
 			</form>
-			<br>
-			<br>
 			<br>
 			<br>
 		</div>

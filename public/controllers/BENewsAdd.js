@@ -4,27 +4,49 @@ angular.module('myApp')
 
 	$scope.$state = $state;
 
-	console.log('$stateParams.default_category: ', $stateParams.default_category);
-	
+	$scope.newsShowList = [
+		{
+			text: "顯示",
+			value: true
+		},
+		{
+			text: "隱藏",
+			value: false
+		}
+	];
+
+	$scope.news = {
+		show: true
+	};
+
+	// datetimepicker setup
+	// start date 預設關閉與開啟function
+	$scope.startDatePopup = {
+		opened: false
+	};
+	$scope.startDateOpen = function () {
+		$scope.startDatePopup.opened = true;
+	};
+	// end date 預設關閉與開啟function
+	$scope.endDatePopup = {
+		opened: false
+	};
+	$scope.endDateOpen = function () {
+		$scope.endDatePopup.opened = true;
+	};
+
 	NewsService.getNewsCategory().then(function(data) {
 		$scope.categoryList = data;
 		if($scope.categoryList != null) {
-			$scope.category = $scope.categoryList[0]._id;
+			$scope.news.category = $scope.categoryList[0]._id;
 		}
 	}, function(err) {
 		// err handling
 	});
 
 	$scope.add = function () {
-		var newNews = {
-			title			: $scope.title,
-			content		: $scope.content,
-			startdate	: $scope.startdate,
-			enddate		: $scope.enddate,
-			category 	: $scope.category
-			// pintotop 	: $scope.pintotop,
-		};
-		NewsService.addNews(newNews).then(function(data) {
+		NewsService.addNews($scope.news).then(function(data) {
+			console.log($scope.news);
 			$state.go('^.news');
 		}, function(err) {
 			// err handling ... 

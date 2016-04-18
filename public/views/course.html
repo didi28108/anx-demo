@@ -5,16 +5,19 @@
 	.list-group-item {
 		overflow: auto;
 	}
+	.stiff-height {
+		min-height: 480px;
+	}
 </style>
 <div class="container">
-	<div ng-controller="CourseCtrl">
+	<div class="stiff-height" ng-controller="CourseCtrl">
 		<!-- <img src="http://placehold.it/1170x150" alt=""> -->
 		<div class="col-md-3">
 			<h3>課程單位 <span class="label label-success">雲科大</span></h3>
 			<div class="list-group">
 				<a ng-repeat="cat in categoryList | filter:{class:classes[0]} | filter:{show:true}" href="" class="list-group-item" ng-click="showCourse(cat.deptCode)" ng-class="{'catActive': currentCategory.deptName == cat.deptName}">
 					{{cat.deptName}}
-					<span class="badge">{{cat.course.length}}</span>
+					<span class="badge">{{cat.shownCourseCount}}</span>
 				</a>
 			</div>
 			<h3>課程單位 <span class="label label-primary">政府單位</span></h3>

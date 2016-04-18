@@ -23,21 +23,33 @@ module.exports = function (app, passport, root_dir) {
 	});
 
 	app.post('/api/addPageCategory', function (req, res) {
-		Pages.addCategory(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Pages.addCategory(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/editPageCategory', function (req, res) {
-		Pages.editCategory(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Pages.editCategory(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/removePageCategory', function (req, res) {
-		Pages.removeCategory(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Pages.removeCategory(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.get('/api/getAllPages', function (req, res) {
@@ -65,21 +77,33 @@ module.exports = function (app, passport, root_dir) {
 	});
 
 	app.post('/api/addPage', function (req, res) {
-		Pages.addPage(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Pages.addPage(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/editPage', function (req, res) {
-		Pages.editPage(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Pages.editPage(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/removePage', function (req, res) {
-		Pages.removePage(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Pages.removePage(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	// news category related routes
@@ -90,19 +114,37 @@ module.exports = function (app, passport, root_dir) {
 	});
 
 	app.post('/api/addNewsCategory', function (req, res) {
-		News.addCategory(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			News.addCategory(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/updateNewsCategory', function (req, res) {
-		News.updateCategory(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			News.updateCategory(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/removeNewsCategory', function (req, res) {
-		News.removeCategory(req, function (data) {
+		if (checkHeaderAuth(req.headers)) {
+			News.removeCategory(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
+	});
+
+	app.get('/api/countShownNews', function (req, res) {
+		News.countShown(function (data) {
 			res.json(data);
 		});
 	});
@@ -120,6 +162,12 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
+	app.get('/api/getAllShownNews', function (req, res) {
+		News.findAllShown(function (data) {
+			res.json(data);
+		});
+	});
+
 	app.get('/api/getTenNews', function (req, res) {
 		News.findTen(req, function (data) {
 			res.json(data);
@@ -127,21 +175,43 @@ module.exports = function (app, passport, root_dir) {
 	});
 
 	app.post('/api/addNews', function (req, res) {
-		News.add(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			News.add(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/updateNews', function (req, res) {
-		News.update(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			News.update(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
+	});
+
+	app.post('/api/newsSetShow', function (req, res) {
+		if (checkHeaderAuth(req.headers)) {
+			News.show(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/removeNews', function (req, res) {
-		News.remove(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			News.remove(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/newsClicked', function (req, res) {
@@ -158,43 +228,66 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
-	app.post('/api/addCourseCategory', function (req, res) {
-		Category.create(req, function (data) {
+	app.get('/api/countShownCourse', function (req, res) {
+		Category.countShown(function (data) {
 			res.json(data);
 		});
+	});
+
+	app.post('/api/addCourseCategory', function (req, res) {
+		if (checkHeaderAuth(req.headers)) {
+			Category.create(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/editCourseCategory', function (req, res) {
-		Category.update(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Category.update(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.get('/api/removeAllCats', function (req, res) {
-		Category.removeAll(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Category.removeAll(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	// POST course data from Yuntech
 	app.post('/getCourseDataFromYuntech', function (req, res) {
-		request({
-			"rejectUnauthorized": false,
-			"url": 'https://140.125.251.180/CRISWeb/CRISService/GetCourseData',
-			"method": "POST",
-			"form": {
-				"pCourseYear": req.body.year,
-				"pCourseId": req.body.no
-			}
-		}, function (error, response, body) {
-			if(!error && response.statusCode == 200) {
-				res.json(JSON.parse(body));
-			} else if (!error && response.statusCode == 500) {
-				res.json({msg: "查無此課程"});
-			} else {
-				res.json({msg: "連線失敗，請稍後再試"});
-			}
-		});
+		if (req.body.year != undefined && req.body.no != undefined) {
+			request({
+				"rejectUnauthorized": false,
+				"url": 'https://140.125.251.180/CRISWeb/CRISService/GetCourseData',
+				"method": "POST",
+				"form": {
+					"pCourseYear": req.body.year,
+					"pCourseId": req.body.no
+				}
+			}, function (error, response, body) {
+				if(!error && response.statusCode == 200) {
+					console.log(JSON.parse(body));
+					res.json(JSON.parse(body));
+				} else if (!error && response.statusCode == 500) {
+					res.json({msg: "查無此課程"});
+				} else {
+					res.json({msg: "連線失敗，請稍後再試"});
+				}
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	// GET all categories from Yuntech then save them in local db
@@ -237,6 +330,12 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
+	app.get('/api/getAllShownCourse', function (req, res) {
+		Course.getAllShown(function (data) {
+			res.json(data);
+		});
+	});
+
 	app.post('/api/getCourse', function (req, res) {
 		Course.getOne(req, function (data) {
 			res.json(data);
@@ -244,33 +343,63 @@ module.exports = function (app, passport, root_dir) {
 	});
 	
 	app.post('/api/addCourse', function (req, res) {
-		Course.create(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Course.create(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/updateCourse', function (req, res) {
-		Course.update(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Course.update(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/updateCourseState', function (req, res) {
-		Course.updateState(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Course.updateState(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/coursePinTop', function (req, res) {
-		Course.pinTop(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Course.pinTop(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
+	});
+
+	app.post('/api/courseSetShow', function (req, res) {
+		if (checkHeaderAuth(req.headers)) {
+			Course.show(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.post('/api/removeCourse', function (req, res) {
-		Course.removeOne(req, function (data) {
-			res.json(data);
-		});
+		if (checkHeaderAuth(req.headers)) {
+			Course.removeOne(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
 	});
 
 	app.get('/api/removeAllCourse', function (req, res) {
@@ -364,5 +493,18 @@ function getToken (headers) {
 		}
 	} else {
 		return null;
+	}
+}
+
+function checkHeaderAuth (headers) {
+	if (headers && headers.authorization) {
+		var parted = headers.authorization.split(' ');
+		if (parted[0] == "JWT") {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
 	}
 }

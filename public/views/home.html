@@ -29,7 +29,7 @@
 						<tbody>
 							<tr>
 								<th>地區</th>
-								<th>課程名稱　　　　　　　　　　　　　　　　　　</th>
+								<th>課程名稱</th>
 								<th>開課單位</th>
 								<th>課程時間</th>
 							</tr>
@@ -72,7 +72,7 @@
 							</tr>
 							<tr>
 								<td colspan="4" class="text-right">
-									<a href="/course">更多課程資訊</a>	
+									<a href="/course">更多課程資訊 ... </a>	
 								</td>
 							</tr>
 						</tbody>
@@ -81,23 +81,23 @@
 			</div>
 			<div class="col-md-4">
 				<div class="panel panel-info">
-					<div class="panel-heading text-center">最新消息 ... </div>
+					<div class="panel-heading text-center">最新消息</div>
 					<table class="table">
 						<tbody>
 							<tr>
 								<th>類別</th>
-								<th>標題　　　　　　　　</th>
+								<th>標題</th>
 								<th>公告日期</th>
 							</tr>
 							<tr ng-repeat="news in newsList">
 								<td>
 									<span class="label label-info">{{news.category.name}}</span>
 								</td>
-								<td>{{news.title}}</td>
-								<td>{{news.startdate.substring(0,10)}}</td>
+								<td><a href="/news/{{news._id}}">{{news.title}}</a></td>
+								<td>{{news.createdate.substring(0,10)}}</td>
 							</tr>
 							<tr>
-								<td colspan="3" class="text-right"><a href="/news">更多消息</a></td>
+								<td colspan="3" class="text-right"><a href="/news">更多消息 ... </a></td>
 							</tr>
 						</tbody>
 					</table>

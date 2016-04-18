@@ -23,7 +23,9 @@ angular.module('myApp')
 		endTime: defaultDate2,
 		launchOffer: "不包含",		// 預設不供餐
 		area: "雲林",				// 預設雲林地區
-		state: "未處理"				// 預設課程狀態
+		state: "未處理",			// 預設課程狀態
+		pinTop: false,				// 預設課程推薦釘選
+		show: true					// 預設課程顯示
 	}
 
 	// 設定time picker 小時與分鐘間隔
@@ -60,6 +62,7 @@ angular.module('myApp')
 	// ng-ckeditor configs
 	$scope.editorOptions = {
 		language: 'zh',
+		height: 200
 	}
 
 	// 取得開課單位
@@ -123,7 +126,8 @@ angular.module('myApp')
 		$scope.course.launchOffer	= res.data.CourseIncludeLunch;
 		$scope.course.price			= res.data.CoursePrice;
 		$scope.course.maxEnroll		= res.data.MaxSignUp;
-		$scope.course.remark		= res.data.remark;
+		$scope.course.state 		= res.data.CourseState;
+		$scope.course.remark		= res.data.CourseRemark;
 		$scope.course.helpline		= res.data.CourseHelpline;
 		$scope.course.state 		= res.data.CourseState;
 	}
@@ -137,10 +141,10 @@ angular.module('myApp')
 		// 將表單上
 		// startdate, enddate, confirmdate
 		// 的value格式由string轉為date
-		$scope.course.startDate = new Date($scope.course.startDate.toString().replace(/\//g, "-"));
-		$scope.course.endDate = new Date($scope.course.endDate.toString().replace(/\//g, "-"));
-		$scope.course.confirmDate = new Date($scope.course.confirmDate.toString().replace(/\//g, "-"));
-		$scope.course.enrollDueDate = new Date(dateAddDays($scope.course.confirmDate, -2));
+		// $scope.course.startDate = new Date($scope.course.startDate.toString().replace(/\//g, "-"));
+		// $scope.course.endDate = new Date($scope.course.endDate.toString().replace(/\//g, "-"));
+		// $scope.course.confirmDate = new Date($scope.course.confirmDate.toString().replace(/\//g, "-"));
+		// $scope.course.enrollDueDate = new Date(dateAddDays($scope.course.confirmDate, -2));
 		$scope.course.fullNo = $scope.course.year + "-" + $scope.course.no;
 
 		CourseService.addCourse($scope.course).then(function(result) {
@@ -150,7 +154,8 @@ angular.module('myApp')
 				if (result.err.code == 11000) {
 					$window.alert("課程新增失敗！\n課號 " + $scope.course.fullNo + " 已被使用");
 				} else {
-					$window.alert("發生錯誤！\n" + result.err);
+					$window.alert("發生錯誤！\n" + result.err.msg);
+					console.log(result);
 				}
 			}
 		}, function(err) {
@@ -196,5 +201,29 @@ angular.module('myApp')
 
 	// 課程狀態清單
 	$scope.courseStateList = ["開課", "未處理", "不開課"];
+
+	// 課程顯示或隱藏清單
+	$scope.courseShowList = [
+		{
+			text: "顯示",
+			value: true
+		},
+		{
+			text: "隱藏",
+			value: false
+		}
+	];
+
+	// 課程推薦或無推薦清單
+	$scope.coursePinTopList = [
+		{
+			text: "推薦",
+			value: true
+		},
+		{
+			text: "無",
+			value: false
+		}
+	];
 
 });

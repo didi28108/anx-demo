@@ -1,12 +1,7 @@
 angular.module('myApp')
 
-.controller('NewsViewCtrl', function(NewsService, $scope, $http, $state, $stateParams, $sce){
+.controller('NewsViewCtrl', function(GuestHTTPService, NewsService, $scope, $http, $state, $stateParams, $sce){
 	
-	NewsService.getNewsCategory().then(function(data) {
-		$scope.categoryList = data;
-	}, function(err) {
-		// err handling
-	});
 
 	NewsService.getNews($stateParams.id).then(function(data) {
 		if(data.notfound) {
@@ -15,6 +10,20 @@ angular.module('myApp')
 			NewsService.clicks(data._id);
 			$scope.news	= data;
 			$scope.news.content = $sce.trustAsHtml($scope.news.content);
+
+			NewsService.getNewsCategory().then(function(data) {
+				$scope.categoryList = data;
+
+				GuestHTTPService.getShownNewsCount().then(function (data) {
+					for (var i = 0; i < data.length; i++) {
+						$scope.categoryList[i].shownNewsCount = data[i].shownNewsCount;
+					}
+				}, function(err) {
+					// err handling
+				});
+			}, function(err) {
+				// err handling
+			});
 		}
 	});
 

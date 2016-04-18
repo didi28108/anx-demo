@@ -7,16 +7,11 @@ var CourseModel = require('./model/course');
 
 Date.prototype.addHours = function(h) {    
 	this.setTime(this.getTime() + (h*60*60*1000)); 
-	return this;   
+	return this;
 };
 
 var CourseProto = {
 	'create': function(req, callback) {
-
-		// Date.prototype.addDays = function(days) {
-		// 	this.setDate(this.getDate() + parseInt(days));
-		// 	return this;
-		// };
 
 		var SD = new Date(req.body.course.startDate);
 		SD.addHours(config.timeZoneDiff);
@@ -28,7 +23,7 @@ var CourseProto = {
 		CD.addHours(config.timeZoneDiff);
 
 		var EnrollDueD = new Date(req.body.course.enrollDueDate);
-		EnrollDueD.addHours(config.timeZoneDiff);
+		EnrollDueD.addHours(config.timeZoneDiff-48);
 
 		var ST = new Date(req.body.course.startTime);
 		ST = ST.toString().substring(16,21);
@@ -55,10 +50,13 @@ var CourseProto = {
 		newCourse.state 		= req.body.course.state;
 		newCourse.maxEnroll		= req.body.course.maxEnroll;
 		newCourse.remark 		= req.body.course.remark;
+		newCourse.moreInfo 		= req.body.course.moreInfo;
 		newCourse.helpline 		= req.body.course.helpline;
 		newCourse.area		 	= req.body.course.area;
 		newCourse.enrollLink	= req.body.course.enrollLink;
-		newCourse.clicks		= '0';
+		newCourse.clicks		= 0;
+		newCourse.pinTop 		= req.body.course.pinTop;
+		newCourse.show			= req.body.course.show;
 		newCourse.createDate 	= getCurrentDate();
 
 		// save course
@@ -103,6 +101,9 @@ var CourseProto = {
 		var CD = new Date(req.body.course.confirmDate);
 		CD.addHours(config.timeZoneDiff);
 
+		var EnrollDueD = new Date(req.body.course.enrollDueDate);
+		EnrollDueD.addHours(config.timeZoneDiff-48);
+
 		var ST = new Date(req.body.course.startTime);
 		ST = ST.toString().substring(16,21);
 
@@ -123,7 +124,7 @@ var CourseProto = {
 						endTime			: ET,
 						location		: req.body.course.location,
 						confirmDate 	: CD,
-						enrollDueDate	: req.body.course.enrollDueDate,
+						enrollDueDate	: EnrollDueD,
 						enrollTarget	: req.body.course.enrollTarget,
 						launchOffer		: req.body.course.launchOffer,
 						price 			: req.body.course.price,
@@ -191,7 +192,19 @@ var CourseProto = {
 		CourseModel
 			.find()
 			.populate('category')
-			.select('fullNo category area name startDate endDate confirmDate state clicks pinTop')
+			.select('fullNo category area name startDate endDate confirmDate state clicks pinTop show')
+			.sort('-createdate')
+			.exec(function (err, data) {
+				callback(data);
+			});
+	},
+
+	'getAllShown': function (callback) {
+		CourseModel
+			.find()
+			.where({show: true})
+			.populate('category')
+			.select('category area name startDate endDate confirmDate state clicks pinTop show')
 			.sort('-createdate')
 			.exec(function (err, data) {
 				callback(data);
@@ -218,7 +231,7 @@ var CourseProto = {
 		var year = tmr.getFullYear;
 		var tmrDate = new Date(year+"-"+month+"-"+day);
 		CourseModel
-			.find({})
+			.find({show: true})
 			.populate('category')
 			.where('enrollDueDate').gt(tmrDate)
 			.select('category area name startDate endDate confirmDate state clicks pinTop')
@@ -236,7 +249,7 @@ var CourseProto = {
 		var year = tmr.getFullYear;
 		var tmrDate = new Date(year+"-"+month+"-"+day);
 		CourseModel
-			.find({pinTop: true})
+			.find({pinTop: true, show: true})
 			.populate('category')
 			.where('enrollDueDate').gt(tmrDate)
 			.select('category area name startDate endDate confirmDate state clicks pinTop')
@@ -282,6 +295,17 @@ var CourseProto = {
 			.update(
 				{_id: req.body.course._id},
 				{pinTop: req.body.course.pinTop},
+				function (err, course) {
+					callback(course);
+				}
+			);
+	},
+
+	'show': function (req, callback) {
+		CourseModel
+			.update(
+				{_id: req.body.course._id},
+				{show: req.body.course.show},
 				function (err, course) {
 					callback(course);
 				}

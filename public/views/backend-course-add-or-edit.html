@@ -176,17 +176,17 @@
 				<div class="form-group">
 				  <label class="control-label col-md-offset-1 col-md-2" for="remark">備註</label>
 				  <div class="col-md-8">
-				    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="remark" name="remark" rows="5" ng-model="course.remark"></textarea>
-				    <span class="unvalid-alert" ng-hide="myForm.remark.$valid">必填欄位</span>
+				    <textarea class="form-control" style="resize:vertical;" id="remark" name="remark" rows="5" ng-model="course.remark"></textarea>
 				  </div>
 				</div>
+
 				<div class="form-group">
 				  <label class="control-label col-md-offset-1 col-md-2" for="helpline">諮詢專線</label>
 				  <div class="col-md-8"> 
 				    <textarea class="form-control" style="resize:vertical;" id="helpline" name="helpline" rows="5" ng-model="course.helpline"></textarea>
-				    <span class="unvalid-alert" ng-hide="myForm.helpline.$valid">必填欄位</span>
 				  </div>
 				</div>
+
 				<div class="form-group">
 				  <label class="control-label col-md-offset-1 col-md-2" for="state">課程狀態</label>
 				  <div class="col-md-3">
@@ -198,11 +198,44 @@
 			</div><!-- end of well -->
 
 			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="moreInfo">更多資訊</label>
+			  <div class="col-md-8"> 
+			    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="moreInfo" name="moreInfo" rows="5" ng-model="course.moreInfo"></textarea>
+			  </div>
+			</div>
+
+			<div class="form-group">
 			  <label class="control-label col-md-offset-1 col-md-2" for="area">上課地區</label>
-			  <div class="col-md-3">
-				<select class="form-control" id="area" ng-model="course.area">
-			      <option ng-repeat="area in areaList" value="{{area}}">{{area}}</option>
-			    </select>
+			  <div class="row">
+				  <div class="col-md-3">
+					<select class="form-control" id="area" ng-model="course.area">
+				      <option ng-repeat="area in areaList" value="{{area}}">{{area}}</option>
+				    </select>
+				  </div>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="pinTop">推薦釘選</label>
+			  <div class="row">
+				  <div class="col-md-2">
+					<select class="form-control" ng-options="option.value as option.text for option in coursePinTopList" ng-model="course.pinTop"></select>
+				  </div>
+			  </div>
+			  <label class="control-label col-md-offset-1 col-md-2" for=""></label>
+			  <div class="row">
+			  	<div class="col-md-7">
+				  	<span>說明：設定為<b>推薦</b>之課程會顯示在首頁推薦課程列表中</span>
+			  	</div>
+			  </div>
+			</div>
+			
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="show">顯示課程</label>
+			  <div class="row">
+				  <div class="col-md-2">
+					<select class="form-control" ng-options="option.value as option.text for option in courseShowList" ng-model="course.show"></select>
+				  </div>
 			  </div>
 			</div>
 

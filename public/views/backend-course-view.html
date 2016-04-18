@@ -11,7 +11,6 @@
 		border-top: none !important;
 	}
 </style>
-<br>
 
 <div class="col-md-3">
 	<h3>課程單位 <span class="label label-success">雲科大</span></h3>
@@ -37,8 +36,17 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">課程資料</div>
 		<div class="panel-body">
+			<div>
+				
+			</div>
+			
 			<table class="table">
 				<tbody>
+					<tr>
+						<td colspan="4">
+							
+						</td>
+					</tr>
 					<tr>
 						<td width="130"><b>課號：</b></td>
 						<td width="266">{{course.fullNo}}</td>
@@ -83,13 +91,13 @@
 					</tr>
 					<tr>
 						<td><b>諮詢專線：</b></td>
-						<td>{{course.helpline}}</td>
+						<td class="pre-content">{{course.helpline}}</td>
 						<td><b>課程狀態：</b></td>
 						<td>{{course.state}}</td>
 					</tr>
 					<tr>
 						<td><b>備註：</b></td>
-						<td colspan="3" ng-bind-html="course.remark"></td>
+						<td colspan="3"><pre ng-show="{{course.remark}}">{{course.remark}}</pre></td>
 					</tr>
 					<tr>
 						<td><b>報名連結：</b></td>
@@ -101,6 +109,22 @@
 			</table>
 			<br>
 			<br>
+		</div>
+		<div class="panel-footer">
+			<p>管理動作：</p>
+			<button class="btn btn-warning btn-sm" ng-click="goEdit()">編輯</button>
+			<button class="btn btn-danger btn-sm" ng-click="delete()">刪除</button>
+
+			<span>&nbsp;&nbsp;&nbsp;課程狀態：</span>
+			<select class="inline-content form-control" ng-model="course.state" ng-change="stateChanged()">
+			<option ng-repeat="state in courseStateList" value="{{state}}">{{state}}</option>
+			</select>
+
+			<span>&nbsp;&nbsp;&nbsp;推薦：</span>
+			<select class="inline-content form-control" ng-options="option.value as option.text for option in coursePinTopList" ng-model="course.pinTop" ng-change="pinTopChanged()"></select>
+			
+			<span>&nbsp;&nbsp;&nbsp;顯示：</span>
+			<select class="inline-content form-control" ng-options="option.value as option.text for option in courseShowList" ng-model="course.show" ng-change="showChanged()"></select>
 		</div>
 	</div>
 </div>

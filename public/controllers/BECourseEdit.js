@@ -82,14 +82,15 @@ angular.module('myApp')
 		// 將表單上
 		// startdate, enddate, confirmdate
 		// 的value格式由string轉為date
-		$scope.course.startDate = new Date($scope.course.startDate.toString().replace(/\//g, "-"));
-		$scope.course.endDate = new Date($scope.course.endDate.toString().replace(/\//g, "-"));
-		$scope.course.confirmDate = new Date($scope.course.confirmDate.toString().replace(/\//g, "-"));
-		$scope.course.enrollDueDate = new Date(dateAddDays($scope.course.confirmDate, -2));
+		// $scope.course.startDate = new Date($scope.course.startDate.toString().replace(/\//g, "-"));
+		// $scope.course.endDate = new Date($scope.course.endDate.toString().replace(/\//g, "-"));
+		// $scope.course.confirmDate = new Date($scope.course.confirmDate.toString().replace(/\//g, "-"));
+		// $scope.course.enrollDueDate = new Date(dateAddDays($scope.course.confirmDate, -2));
 		$scope.course.fullNo = $scope.course.year + "-" + $scope.course.no;
 
 		CourseService.updateCourse($scope.course).then(function(result) {
 			if (result.success) {
+				$window.alert("更新成功！");
 				$state.go('^.course');
 			} else {
 				if (result.err.code == 11000) {
@@ -140,4 +141,27 @@ angular.module('myApp')
 	// 課程狀態清單
 	$scope.courseStateList = ["開課", "未處理", "不開課"];
 
+	// 課程顯示或隱藏清單
+	$scope.courseShowList = [
+		{
+			text: "顯示",
+			value: true
+		},
+		{
+			text: "隱藏",
+			value: false
+		}
+	];
+
+	$scope.coursePinTopList = [
+		{
+			text: "推薦",
+			value: true
+		},
+		{
+			text: "無",
+			value: false
+		}
+	];
+	
 });

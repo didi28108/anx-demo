@@ -4,6 +4,17 @@ angular.module('myApp')
 
 	$scope.$state = $state;
 
+	$scope.newsShowList = [
+		{
+			text: "顯示",
+			value: true
+		},
+		{
+			text: "隱藏",
+			value: false
+		}
+	];
+
 	$scope.currentCategory = '';
 
 	$scope.sortType = '';
@@ -60,6 +71,23 @@ angular.module('myApp')
 			});
 		}
 	};
+
+	$scope.showChanged = function () {
+		var title = this.$parent.news.title;
+		var news = {
+			_id: this.$parent.news._id,
+			show: this.$parent.news.show
+		}
+		NewsService.setShow(news).then(function(result) {
+			console.log(result);
+			if (result.nModified) {
+				var msg = news.show ? "已更改為顯示" : "已更改為隱藏";
+				$window.alert("更新成功！\n\n公告: 「 " + title + " 」\n" + msg);
+			} else {
+				$window.alert("發生錯誤，請再試一次！");
+			}
+		});
+	}
 
 
 });

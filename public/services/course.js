@@ -173,6 +173,25 @@ myApp.service('CourseService', function($q, $http){
 		});
 	}
 
+	var setShow = function (course) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method: 'POST',
+				url: '/api/courseSetShow',
+				data: {
+					course: course
+				}
+			};
+			$http(req).then(function(result) {
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject('nope');
+				}
+			});
+		});
+	}
+
 	var getCourseDataFromYT = function (data) {
 		return $q(function(resolve, reject) {
 			var req = {
@@ -239,6 +258,7 @@ myApp.service('CourseService', function($q, $http){
 		})
 	}
 
+
 	return {
 		getCourseCategoryList	: getCourseCategoryList,
 		getAllCourse			: getAllCourse,
@@ -249,6 +269,7 @@ myApp.service('CourseService', function($q, $http){
 		removeCourse			: removeCourse,
 		clicks					: clicks,
 		pinTop 					: pinTop,
+		setShow					: setShow,
 		getCourseDataFromYT		: getCourseDataFromYT,
 		addCategory				: addCategory,
 		editCategory			: editCategory

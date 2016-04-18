@@ -30,8 +30,7 @@ myApp.service('NewsService', function($q, $http){
 	// 取得消息公告後將日期格式轉為yyyy-mm-dd
 	function news_date_transform (news) {
 		for(id in news) {
-			news[id].startdate 	= news[id].startdate.substring(0, 10).replace(/-/g, "/");
-			news[id].enddate		= news[id].enddate.substring(0, 10).replace(/-/g, "/");
+			news[id].createdate 	= news[id].createdate.substring(0, 10).replace(/-/g, "/");
 		}
 		return news;
 	};
@@ -41,7 +40,7 @@ myApp.service('NewsService', function($q, $http){
 		return $q(function(resolve, reject) {
 			var req = {
 				method: 'POST',
-				url: 		'/api/getNews',
+				url: 	'/api/getNews',
 				data: {
 					news_id: id
 				}
@@ -51,8 +50,8 @@ myApp.service('NewsService', function($q, $http){
 					if(result.data.notfound) {
 						resolve(result.data);
 					} else {
-						var transformed = news_date_transform(result.data);
-						resolve(transformed[0]);
+						result.data.createdate = result.data.createdate.substring(0, 10).replace(/-/g, "/");
+						resolve(result.data);
 					}
 				} else {
 					reject('nope'); 
@@ -63,22 +62,11 @@ myApp.service('NewsService', function($q, $http){
 
 	var addNews = function (news) {
 		return $q(function(resolve, reject) {
-			
-			var startdate_str 	= news.startdate.replace(/\//g, "-");
-			var startdate_date	= new Date(startdate_str);
-			var enddate_str			= news.enddate.replace(/\//g, "-");
-			var enddate_date		= new Date(enddate_str);
-
 			var req = {
 				method: 'POST',
 				url: 		'/api/addNews',
 				data: {
-					title					: news.title,
-					content				: news.content,
-					startdate			: startdate_date,
-					enddate				: enddate_date,
-					category_id 	: news.category,
-					// pintotop 	: news.pintotop,
+					news: news
 				}
 			};
 			$http(req).then(function(result)	{
@@ -93,23 +81,30 @@ myApp.service('NewsService', function($q, $http){
 
 	var updateNews = function (news) {
 		return $q(function(resolve, reject) {
-			
-			var startdate_str 	= news.startdate.replace(/\//g, "-");
-			var startdate_date	= new Date(startdate_str);
-			var enddate_str			= news.enddate.replace(/\//g, "-");
-			var enddate_date		= new Date(enddate_str);
-
 			var req = {
 				method: 'POST',
 				url: 		'/api/updateNews',
 				data: {
-					news_id				: news.news_id,
-					title					: news.title,
-					content				: news.content,
-					startdate			: startdate_date,
-					enddate				: enddate_date,
-					category_id 	: news.category,
-					// pintotop 	: news.pintotop,
+					news: news
+				}
+			};
+			$http(req).then(function(result)	{
+				if(result.data) {
+					resolve(result.data);
+				} else {
+					reject('nope');
+				}
+			});
+		});
+	}
+
+	var setShow = function (news) {
+		return $q(function(resolve, reject) {
+			var req = {
+				method: 'POST',
+				url: 		'/api/newsSetShow',
+				data: {
+					news: news
 				}
 			};
 			$http(req).then(function(result)	{
@@ -164,12 +159,13 @@ myApp.service('NewsService', function($q, $http){
 
 	return {
 		getNewsCategory		: getNewsCategory,
-		getAllNews				: getAllNews,
-		getNews 					: getNews,
-		addNews						: addNews,
-		updateNews				: updateNews,
-		removeNews				: removeNews,
-		clicks						: clicks
+		getAllNews			: getAllNews,
+		getNews 			: getNews,
+		addNews				: addNews,
+		updateNews			: updateNews,
+		setShow 			: setShow,
+		removeNews			: removeNews,
+		clicks				: clicks
 	}
 
 });

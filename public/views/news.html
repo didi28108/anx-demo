@@ -1,14 +1,18 @@
 <!doctype html>
-
+<style>
+	.stiff-height {
+		min-height: 480px;
+	}
+</style>
 
 <div class="container">
-	<div ng-controller="NewsCtrl">
+	<div class="stiff-height" ng-controller="NewsCtrl">
 		<div class="col-md-3">
 			<h3>公告類別</h3>
 			<div class="list-group">
 				<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showNews(cat._id)">
 					{{cat.name}}
-					<span class="badge">{{cat.news.length}}</span>
+					<span class="badge">{{cat.shownNewsCount}}</span>
 				</a>
 			</div>
 		</div>
@@ -49,7 +53,7 @@
 			  		<tr ng-if="news.category._id==currentCategory._id" ng-repeat="news in newsList | orderBy:sortType:sortReverse | filter:searchFish | paginate:rowsPerPage" id="{{news._id}}">
 			  			<td><span class="label label-primary">{{news.category.name}}</span></td>
 			  			<td><a href="/news/{{news._id}}">{{news.title}}</a></td>
-			  			<td>{{news.startdate}}</td>
+			  			<td>{{news.createdate}}</td>
 			  			<td style="text-align:center;">{{news.clicks}}</td>
 			  		</tr>
 			  	</tbody>

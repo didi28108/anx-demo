@@ -6,7 +6,9 @@ angular.module('myApp')
 		return $state.includes("backend");
 	}
 
+	
 	getFooterData(chunk);
+
 
 	function getFooterData (callback) {
 		var categories = [];
