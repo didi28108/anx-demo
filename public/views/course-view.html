@@ -1,22 +1,20 @@
-<!doctype html>
-
-<!-- <div id="includedNav"></div> -->
-
+<style>
+	.field-name {
+		text-align: right;
+		font-weight: bold;
+	}
+	.panel-heading {
+		text-align: center;
+	}
+	.table th, .table td {
+		border-top: none !important;
+	}
+</style>
 
 <div class="container" style="min-height:500px;">
-	<style>
-		.field-name {
-			text-align: right;
-			font-weight: bold;
-		}
-		.panel-heading {
-			text-align: center;
-		}
-		.table th, .table td {
-			border-top: none !important;
-		}
-	</style>
-	<div class="col-md-3">
+  <div class="panel panel-default panel-main">
+	<div class="panel-body">
+	  <div class="col-md-3">
 		<h3>課程單位 <span class="label label-success">雲科大</span></h3>
 		<div class="list-group">
 			<a ng-repeat="cat in categoryList | filter:{class:classes[0]} | filter:{show:true}" href="" class="list-group-item" ng-click="showCourse()" ng-class="{'catActive': currentCategory.deptName == cat.deptName}">
@@ -31,10 +29,10 @@
 				<span class="badge">{{cat.course.length}}</span>
 			</a>
 		</div>
-	</div>
-	<div class="col-md-9">
+	  </div>
+	  <div class="col-md-9">
 		<h3>{{course.category.deptName}} － {{course.name}}</h3>
-	<div class="panel panel-default">
+	  <div class="panel panel-default">
 		<div class="panel-heading">課程資料</div>
 			<div class="panel-body">
 				<table class="table">
@@ -103,6 +101,7 @@
 				<br>
 			</div>
 		</div>
+	  </div>
 	</div>
-
+  </div>
 </div>

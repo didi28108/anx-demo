@@ -14,16 +14,20 @@
 
 	<style>
 		body {
-			background-color: #f5f5f5;
+			/*background-color: #f5f5f5;*/
 			font-family: Microsoft JhengHei;
 		}
 		.navbar {
-			z-index: 9999;
+			margin-top: 20px;
+			/*z-index: 9999;
 			margin-bottom: 0px;
 			background-color: #fff;
 			border-color: #fff;
 			box-shadow: 0 1px 5px #888888;
-			border-radius: 0px;
+			border-radius: 0px;*/
+		}
+		.panel-main {
+			background-color: #f5f5f5;
 		}
 		.pre-content {
 			white-space: pre;
@@ -36,13 +40,13 @@
 			display: block;
 			bottom: 0;
 			width: 100%;
-			background-color: #fff;
-			border-top: 1px solid #d8d8d8;
+			background-color: #f5f5f5;
+			border: 1px solid #d8d8d8;
 			text-align: center;
+			border-radius: 4px 4px 0px 0px ;
 		}
 		.footer-title {
 			display: inline-block;
-			/*width: 80%;*/
 			font-size: 22px;
 			margin-top: 20px;
 			margin-bottom: 15px;
@@ -58,9 +62,9 @@
 	<body ng-controller="MainCtrl">
 
 		<!-- user-end header navbar -->
-		<nav class="navbar navbar-default" ng-hide="isInBackend()">
-		  <div class="container-fluid">
-			<div class="container">
+		<div class="container">
+		  <nav class="navbar navbar-default" ng-hide="isInBackend()">
+			<div class="container-fluid">
 			  <div class="navbar-header">
 			  	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 			        <span class="sr-only">Toggle navigation</span>
@@ -77,10 +81,10 @@
 				  <li><a href="/news" ui-sref="news">消息公告</a></li>
 				  <li><a href="/backend/course">管理後台</a></li>
 				</ul>
-			  </div>
-		  	</div>
-		  </div>
-		</nav>
+		  	  </div>
+			</div>
+		  </nav>
+		</div>
 
 
 
@@ -89,8 +93,8 @@
 
 
 		<!-- footer -->
-		<footer class="footer" ng-hide="isInBackend()">
-			<div class="container">
+		<div class="container">
+			<footer class="footer" ng-hide="isInBackend()">
 				<div class="row" ng-repeat="rows in chunkedData">
 					<div class="col-md-1"></div>
 					<div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="category in rows">
@@ -111,8 +115,8 @@
 						<br>
 					</div>
 				</div>
-			</div>
-		</footer>
+			</footer>
+		</div>
 
 
 		<script src="/bower_components/jquery/dist/jquery.js"></script>

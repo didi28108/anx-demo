@@ -1,16 +1,17 @@
-<!doctype html>
+<style>
+	.field-name {
+		text-align: right;
+		font-weight: bold;
+	}
+	.panel-heading {
+		text-align: center;
+	}
+</style>
+
 <div class="container" style="min-height:500px;">
-	<style>
-		.field-name {
-			text-align: right;
-			font-weight: bold;
-		}
-		.panel-heading {
-			text-align: center;
-		}
-	</style>
-	<br>
-	<div class="col-md-3">
+  <div class="panel panel-default panel-main">
+	<div class="panel-body">
+	  <div class="col-md-3">
 		<h3>公告類別</h3>
 		<div class="list-group">
 			<a ng-repeat="cat in categoryList" href="" class="list-group-item" ng-click="showNews(cat._id)">
@@ -18,8 +19,8 @@
 				<span class="badge">{{cat.shownNewsCount}}</span>
 			</a>
 		</div>
-	</div>
-	<div class="col-md-9">
+	  </div>
+	  <div class="col-md-9">
 		<h3>{{news.category.name}} － {{news.title}}</h3>
 		<div class="panel panel-default">
 			<div class="panel-heading">消息公告</div>
@@ -58,5 +59,7 @@
 				</div>
 			</div>
 		</div>
+	  </div>
 	</div>
+  </div>
 </div>
