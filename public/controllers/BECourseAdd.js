@@ -92,7 +92,7 @@ angular.module('myApp')
 			if (res.success) {
 				loadUpDataFromYuntech(res);
 				$scope.loading.msg = "帶入成功";
-				$scope.course.enrollLink = "https://140.125.251.180/CRISWeb/Home/SignUp?courseYear="+$scope.course.year+"&courseId="+$scope.course.no;
+				$scope.course.enrollLink = "https://webapp.yuntech.edu.tw/CRISWeb/Home/SignUp?courseYear="+$scope.course.year+"&courseId="+$scope.course.no;
 			} else {
 				$scope.loading.msg = res.msg;
 			}

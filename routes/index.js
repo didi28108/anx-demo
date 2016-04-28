@@ -269,7 +269,7 @@ module.exports = function (app, passport, root_dir) {
 		if (req.body.year != undefined && req.body.no != undefined) {
 			request({
 				"rejectUnauthorized": false,
-				"url": 'https://140.125.251.180/CRISWeb/CRISService/GetCourseData',
+				"url": 'https://webapp.yuntech.edu.tw/CRISWeb/CRISService/GetCourseData',
 				"method": "POST",
 				"form": {
 					"pCourseYear": req.body.year,
@@ -277,7 +277,6 @@ module.exports = function (app, passport, root_dir) {
 				}
 			}, function (error, response, body) {
 				if(!error && response.statusCode == 200) {
-					console.log(JSON.parse(body));
 					res.json(JSON.parse(body));
 				} else if (!error && response.statusCode == 500) {
 					res.json({msg: "查無此課程"});
@@ -296,7 +295,7 @@ module.exports = function (app, passport, root_dir) {
 			// GET category data from Yuntech
 			request({
 				"rejectUnauthorized": false,
-				"url": 'https://140.125.251.180/CRISWeb/CRISService/GetDepartmentDataList',
+				"url": 'https://webapp.yuntech.edu.tw/CRISWeb/CRISService/GetDepartmentDataList',
 				"method": "GET"
 			}, function (error, response, body) {
 				if (response.statusCode == 200) {
