@@ -58,6 +58,9 @@
 			padding-bottom: 5px;
 			border-bottom: 3px solid #444;
 		}
+		.footer-item {
+			font-size: 16px;
+		}
 		.footer a {
 			text-decoration: none;
 		}
@@ -102,7 +105,7 @@
 					<div class="col-md-1"></div>
 					<div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="category in rows">
 						<p class="footer-title">{{category.name}}</p>
-						<p ng-repeat="page in category.pages"><a href="/pages/{{page.abbr}}">{{page.title}}</a></p>
+						<p class="footer-item" ng-repeat="page in category.pages"><a href="/pages/{{page.abbr}}">{{page.title}}</a></p>
 					</div>
 					<div class="col-md-1"></div>
 				</div>
