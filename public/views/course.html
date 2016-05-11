@@ -65,7 +65,7 @@
 			  		</tr>
 			  	</thead>
 			  	<tbody>
-			  		<tr ng-if="course.category.deptCode==currentCategory.deptCode" ng-repeat="course in courses | orderBy:sortType:sortReverse | filter:searchFish | paginate:rowsPerPage" id="{{course._id}}">
+			  		<tr ng-repeat="course in courses | orderBy:sortType:sortReverse | filter:searchFish | filter:{ category : { deptCode : currentCategory.deptCode } } | paginate:rowsPerPage" id="{{course._id}}">
 			  			<td><span class="label label-primary">{{course.area}}</span></td>
 			  			<td><a href="/course/{{course._id}}">{{course.name}}</a></td>
 			  			<td>{{course.startDate}}</td>

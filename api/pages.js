@@ -53,7 +53,11 @@ var PagesProto = {
 				}
 			})
 			.exec(function (err, page) {
-				callback(page);
+				if(page==null) {
+					callback({ notfound: true });
+				} else {
+					callback(page);
+				}
 			});
 	},
 

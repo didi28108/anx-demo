@@ -25,6 +25,49 @@
 			border-color: #fff;
 			box-shadow: 0 1px 5px #888888;
 			border-radius: 0px;*/
+			background-image: url("image/top.png");
+			background-repeat: no-repeat;
+			min-height: 130px;
+		}
+		@media (max-width: 767px) {
+			.navbar-nav {
+				background-color: #f5f5f5;
+			}
+			.navbar-header {
+				margin-bottom: 80px;
+			}
+		}
+		.navbar-item-divider {
+			display: none;
+		}
+		@media (min-width: 768px) {
+			.navbar-nav > li > a {
+				color: #f2f2f2 !important;
+				font-size: 16px;
+				padding-top: 25px;
+				padding-bottom: 25px;
+			}
+			.navbar-nav > li > a:hover {
+				color: #fff !important;
+			}
+			.navbar-item-divider {
+				float: left;
+				display: block;
+				color: #f2f2f2;
+				padding-top: 25px;
+				padding-bottom: 25px;
+			}
+		}
+		.navbar-toggle {
+			color: #ddd;
+		}
+		.navbar-toggle:hover, .navbar-toggle:active, .navbar-toggle:focus  {
+			color: #333;
+		}
+		#hamburger-btn {
+			padding-left: 5px;
+			padding-right: 5px;
+			float: right
 		}
 		.panel-main {
 			background-color: #f5f5f5;
@@ -39,30 +82,72 @@
 			width: auto;
 			display: inline-block;
 		}
+		/*@media (min-width: 768px) {
+			.my-clear-fix:after {
+				display: none;
+			}
+		}*/
+		@media (max-width: 991px) {
+			.my-clear-fix:after {
+				content: " ";
+				display: table;
+				clear: both;
+			}
+		}
 		.footer {
 			display: block;
 			bottom: 0;
 			width: 100%;
-			background-color: #f5f5f5;
-			border: 1px solid #d8d8d8;
+			background-color: #DCF0EF;
 			text-align: center;
 			border-radius: 4px 4px 0px 0px ;
 		}
 		.footer-title {
 			display: inline-block;
 			font-size: 22px;
+			font-weight: bold;
 			margin-top: 20px;
 			margin-bottom: 15px;
 			margin-right: auto;
 			margin-left: auto;
 			padding-bottom: 5px;
-			border-bottom: 3px solid #444;
+			/*border-bottom: 3px solid #444;*/
 		}
 		.footer-item {
 			font-size: 16px;
 		}
 		.footer a {
 			text-decoration: none;
+		}
+		
+		.footer-title-bg {
+			background-repeat: no-repeat;
+			background-position: center 30px;
+			min-height: 80px;
+		}
+		#anx-intro {
+			background-image: url("image/中心介紹.png");
+		}
+		#anx-class-flow {
+			background-image: url("image/開班流程.png");
+		}
+		#anx-ttqs {
+			background-image: url("image/ttqs專區.png");
+		}
+		#anx-training {
+			background-image: url("image/教育訓練.png");
+		}
+		#anx-learning {
+			background-image: url("image/學習專區.png");
+		}
+		#anx-service {
+			background-image: url("image/服務.png");
+		}
+		#anx-wanted {
+			background-image: url("image/菁英招募.png");
+		}
+		#anx-purchase {
+			background-image: url("image/採購專區.png");
 		}
 	</style>
 	<body ng-controller="MainCtrl">
@@ -74,17 +159,22 @@
 			  <div class="navbar-header">
 			  	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 			        <span class="sr-only">Toggle navigation</span>
+			        <!-- <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span> -->
+			        <span class="glyphicon glyphicon-menu-hamburger" id="hamburger-btn" aria-hidden="true"></span>
 			      </button>
-				  <a class="navbar-brand" href="/" ui-sref="anx">推廣教育中心</a>
+				  <!-- <a class="navbar-brand" href="/" ui-sref="anx"></a> -->
 			  </div>
 
 			  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
+				  <li><a href="/">首頁</a></li>
+				  <div class="navbar-item-divider">|</div>
 				  <li><a href="/course" ui-sref="course">課程資訊</a></li>
+				  <div class="navbar-item-divider">|</div>
 				  <li><a href="/news" ui-sref="news">消息公告</a></li>
+				  <div class="navbar-item-divider">|</div>
 				  <li><a href="/backend/course">管理後台</a></li>
 				</ul>
 		  	  </div>
@@ -101,14 +191,71 @@
 		<!-- footer -->
 		<div class="container">
 			<footer class="footer" ng-hide="isInBackend()">
-				<div class="row" ng-repeat="rows in chunkedData">
+				<!-- original footer content, all data are retrieved from database -->
+				<!-- <div class="row" ng-repeat="rows in chunkedData">
 					<div class="col-md-1"></div>
 					<div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="category in rows">
 						<p class="footer-title">{{category.name}}</p>
 						<p class="footer-item" ng-repeat="page in category.pages"><a href="/pages/{{page.abbr}}">{{page.title}}</a></p>
 					</div>
 					<div class="col-md-1"></div>
+				</div> -->
+
+				<!-- static footer content, didn't use data in database -->
+				<div class="row">
+					<div class="col-md-3 col-sm-6 footer-title-bg" id="anx-intro">
+						<p class="footer-title">中心介紹</p>
+						<p class="footer-item"><a href="/pages/goals">中心宗旨</a></p>
+						<p class="footer-item"><a href="/pages/tasks">業務執掌</a></p>
+						<p class="footer-item"><a href="/pages/history">歷史沿革</a></p>
+						<p class="footer-item"><a href="/pages/coursepolicies">開班政策</a></p>
+					</div>
+					<div class="col-md-3 col-sm-6 footer-title-bg" id="anx-class-flow">
+						<p class="footer-title">開班流程</p>
+						<p class="footer-item"><a href="/pages/courserules">開班法規</a></p>
+						<p class="footer-item"><a href="/pages/projectform">計劃書格式</a></p>
+						<p class="footer-item"><a href="/pages/tasksop">推廣業務SOP</a></p>
+					</div>
+					<div class="my-clear-fix"></div>
+					<div class="col-md-3 col-sm-6 footer-title-bg" id="anx-ttqs">
+						<p class="footer-title">&nbsp;TTQS專區</p>
+						<p class="footer-item"><a href="/pages/TTQSgoalsnpolicies">目標與政策</a></p>
+						<p class="footer-item"><a href="/pages/TTQSplans">計畫</a></p>
+						<p class="footer-item"><a href="/pages/TTQSaction">執行</a></p>
+						<p class="footer-item"><a href="/pages/TTQSdesign">設計</a></p>
+						<p class="footer-item"><a href="/pages/TTQScheck">查核</a></p>
+						<p class="footer-item"><a href="/pages/TTQSoutcome">成果</a></p>
+						<p class="footer-item"><a href="/pages/TTQStrainingmanual">訓練品質手冊</a></p>
+					</div>
+					<div class="col-md-3 col-sm-6 footer-title-bg" id="anx-training">
+						<p class="footer-title">教育訓練</p>
+						<p class="footer-item"><a href="/pages"></a></p>
+					</div>
+					<div class="my-clear-fix"></div>
 				</div>
+				<div class="row">
+					<div class="col-md-3 col-sm-6 footer-title-bg" id="anx-learning">
+						<p class="footer-title">學習專區</p>
+						<p class="footer-item"><a href="/pages"></a></p>
+					</div>
+					<div class="col-md-3 col-sm-6 footer-title-bg" id="anx-service">
+						<p class="footer-title">服務　　</p>
+						<p class="footer-item"><a href="/pages/servicelocation">服務據點</a></p>
+						<p class="footer-item"><a href="/pages/customerservice">客戶服務</a></p>
+					</div>
+					<div class="my-clear-fix"></div>
+					<div class="col-md-3 col-sm-6 footer-title-bg" id="anx-wanted">
+						<p class="footer-title">菁英招募</p>
+						<p class="footer-item"><a href="/pages"></a></p>
+					</div>
+					<div class="col-md-3 col-sm-6 footer-title-bg" id="anx-purchase">
+						<p class="footer-title">採購專區</p>
+						<p class="footer-item"><a href="/pages"></a></p>
+					</div>
+					<div class="my-clear-fix"></div>
+				</div>
+
+
 				<div class="row">
 					<div class="col-md-12 text-center" style="font-size:13px;">
 						<br>
