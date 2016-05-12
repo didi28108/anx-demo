@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-.controller('NewsCtrl', function(GuestHTTPService, NewsService, $scope, $http, $state, $stateParams, $window){
+.controller('NewsCtrl', function(Paginator, GuestHTTPService, NewsService, $scope, $http, $state, $stateParams, $window){
 
 	$scope.$state = $state;
 
@@ -48,6 +48,7 @@ angular.module('myApp')
 		for(id in $scope.categoryList) {
 			if($scope.categoryList[id]._id == news_id) {
 				$scope.currentCategory = $scope.categoryList[id];
+				Paginator.setPage(0);
 			}
 		}
 	};

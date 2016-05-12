@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-.controller('CourseCtrl', function(GuestHTTPService, $scope, $http, $state, $stateParams, $window){
+.controller('CourseCtrl', function(Paginator, GuestHTTPService, $scope, $http, $state, $stateParams, $window){
 	
 	$scope.currentCategory = '';
 
@@ -42,6 +42,7 @@ angular.module('myApp')
 		for(id in $scope.categoryList) {
 			if($scope.categoryList[id].deptCode == this.cat.deptCode) {
 				$scope.currentCategory = $scope.categoryList[id];
+				Paginator.setPage(0);
 			}
 		}
 	};
