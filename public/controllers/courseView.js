@@ -36,6 +36,7 @@ angular.module('myApp')
 			$scope.course.endTime = $scope.course.endTime;
 			$scope.course.enrollDueDate = $scope.course.enrollDueDate.substring(0,10);
 			$scope.course.remark = $sce.trustAsHtml($scope.course.remark);
+			$scope.course.moreInfo = $sce.trustAsHtml($scope.course.moreInfo);
 		}
 	}, function (err) {
 		// err handling

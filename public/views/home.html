@@ -4,6 +4,77 @@
 		border: 1px solid #e7e7e7;
 		border-radius: 4px;
 	}
+	#panel-home-body {
+		background-color: #fff;
+		border: 2px solid #DCF0EF;
+		border-radius: 10px;
+		padding: 15px;
+		margin-bottom: 20px;
+	}
+	#panel-news {
+		border-color: #F49B7E;
+	}
+	#news-table {
+		margin-top: 5px;
+		border-top: 2px solid #F49B7E;
+		border-bottom: 2px solid #F49B7E;
+	}
+	#more-news-link {
+		text-decoration: none;
+		background-color: #F46849;
+		padding: 5px 10px;
+		color: #fff;
+		border-radius: 4px;
+	}
+
+	#pop-course-title {
+		display: block;
+		padding-top: 7px;
+		background-color: #55BEA6;
+		border-radius: 4px;
+		width: 180px;
+		height: 42px;
+		font-size: 20px;
+		text-align: center;
+		color: #fff;
+	}
+	#popular-course-table {
+		margin-top: 5px;
+		border-top: 2px solid #55BEA6;
+		border-bottom: 2px solid #55BEA6;
+	}
+	#more-pop-course-link {
+		text-decoration: none;
+		background-color: #55BEA6;
+		padding: 5px 10px;
+		color: #fff;
+		border-radius: 4px;
+	}
+
+	#pin-course-title {
+		display: block;
+		padding-top: 7px;
+		background-color: #A3BC55;
+		border-radius: 4px;
+		width: 180px;
+		height: 42px;
+		font-size: 20px;
+		text-align: center;
+		color: #fff;
+	}
+	#pin-course-table {
+		margin-top: 5px;
+		border-top: 2px solid #A3BC55;
+		border-bottom: 2px solid #A3BC55;
+	}
+	#more-pin-course-link {
+		text-decoration: none;
+		background-color: #A3BC55;
+		padding: 5px 10px;
+		color: #fff;
+		border-radius: 4px;
+	}
+	/*#A3BC55*/
 </style>
 
 <div class="container">
@@ -12,7 +83,10 @@
 		<div class="carousel-inner" role="listbox">
 			<div id="IS1" class="item active"></div>
 			<div id="IS2" class="item"></div>
-			<!-- <div id="IS3" class="item"></div> -->
+			<div id="IS3" class="item"></div>
+			<div id="IS4" class="item"></div>
+			<div id="IS5" class="item"></div>
+			<div id="IS6" class="item"></div>
 		</div>
 		<!-- <a class="left carousel-control" data-target="#myCarousel" role="button" data-slide="prev">
 			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -26,98 +100,91 @@
 
 	<div style="height: 20px;"></div>
 
-	<div class="panel panel-default panel-main">
-		<div class="panel-body">
-			<div ng-controller="HomeCtrl">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="panel panel-primary">
-							<div class="panel-heading text-center">熱門課程</div>
-							<table class="table">
-								<tbody>
-									<tr>
-										<th>地區</th>
-										<th>課程名稱</th>
-										<th>開課單位</th>
-										<th>課程時間</th>
-									</tr>
-									<tr ng-repeat="course in popularCourses">
-										<td><span class="label label-primary">{{course.area}}</span></td>
-										<td>
-											<span class="label label-success" ng-show="course.state=='開課'">確定開課</span>
-											<a href="/course/{{course._id}}">{{course.name}}</a>
-										</td>
-										<td>{{course.category.deptName}}</td>
-										<td>{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</td>
-									</tr>
-									<tr>
-										<td colspan="4" class="text-right">
-											<a href="/course">更多課程資訊 ... </a>	
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-
-						<div class="panel panel-primary">
-							<div class="panel-heading text-center">推薦課程</div>
-							<table class="table">
-								<tbody>
-									<tr>
-										<th>地區</th>
-										<th>課程名稱</th>
-										<th>開課單位</th>
-										<th>課程時間</th>
-									</tr>
-									<tr ng-repeat="course in pinTopCourses">
-										<td><span class="label label-primary">{{course.area}}</span></td>
-										<td>
-											<span class="label label-success" ng-show="course.state=='開課'">確定開課</span>
-											<a href="/course/{{course._id}}">{{course.name}}</a>
-										</td>
-										<td>{{course.category.deptName}}</td>
-										<td>{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</td>
-									</tr>
-									<tr>
-										<td colspan="4" class="text-right">
-											<a href="/course">更多課程資訊 ... </a>	
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="panel panel-info">
-							<div class="panel-heading text-center">最新消息</div>
-							<table class="table">
-								<tbody>
-									<tr>
-										<th>類別</th>
-										<th>標題</th>
-										<th>公告日期</th>
-									</tr>
-									<tr ng-repeat="news in newsList">
-										<td>
-											<span class="label label-info">{{news.category.name}}</span>
-										</td>
-										<td><a href="/news/{{news._id}}">{{news.title}}</a></td>
-										<td>{{news.createdate.substring(0,10)}}</td>
-									</tr>
-									<tr>
-										<td colspan="3" class="text-right"><a href="/news">更多消息 ... </a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-
-					</div>
+	<div id="panel-home-body">
+		<div ng-controller="HomeCtrl">
+			<div class="row">
+				<div class="col-md-6">
+					<img src="/image/最新消息.png" alt="">
+					<table class="table" id="news-table">
+						<tbody>
+							<tr>
+								<th>類別</th>
+								<th>標題</th>
+								<th class="text-right">公告日期</th>
+							</tr>
+							<tr ng-repeat="news in newsList">
+								<td>
+									<span class="label label-danger">{{news.category.name}}</span>
+								</td>
+								<td><a href="/news/{{news._id}}">{{news.title}}</a></td>
+								<td class="text-right">{{news.createdate.substring(0,10)}}</td>
+							</tr>
+							<tr>
+								<td colspan="3" class="text-right"><a href="/news" id="more-news-link">更多消息</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<img src="/image/demo.png" alt="" width="100%">
 				</div>
-				<br>
+
+				<div class="col-md-6">
+					<span id="pop-course-title">熱門課程</span>
+					<table class="table" id="popular-course-table">
+						<tbody>
+							<tr>
+								<th class="pre-content">地區</th>
+								<th class="pre-content">課程名稱</th>
+								<th class="pre-content">開課單位</th>
+								<th class="pre-content">課程時間</th>
+							</tr>
+							<tr ng-repeat="course in popularCourses">
+								<td><span class="label label-primary">{{course.area}}</span></td>
+								<td>
+									<span class="label label-success" ng-show="course.state=='開課'">確定開課</span>
+									<a href="/course/{{course._id}}">{{course.name}}</a>
+								</td>
+								<td>{{course.category.deptName}}</td>
+								<td>{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</td>
+							</tr>
+							<tr>
+								<td colspan="4" class="text-right">
+									<a href="/course" id="more-pop-course-link">更多課程資訊</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<p></p>
+					<span id="pin-course-title">推薦課程</span>
+					<table class="table" id="pin-course-table">
+						<tbody>
+							<tr>
+								<th class="pre-content">地區</th>
+								<th class="pre-content">課程名稱</th>
+								<th class="pre-content">開課單位</th>
+								<th class="pre-content">課程時間</th>
+							</tr>
+							<tr ng-repeat="course in pinTopCourses">
+								<td><span class="label label-primary">{{course.area}}</span></td>
+								<td>
+									<span class="label label-success" ng-show="course.state=='開課'">確定開課</span>
+									<a href="/course/{{course._id}}">{{course.name}}</a>
+								</td>
+								<td>{{course.category.deptName}}</td>
+								<td>{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</td>
+							</tr>
+							<tr>
+								<td colspan="4" class="text-right">
+									<a href="/course" id="more-pin-course-link">更多課程資訊</a>	
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-			
+			<br>
 		</div>
-		
+			
 	</div>
 
 </div>

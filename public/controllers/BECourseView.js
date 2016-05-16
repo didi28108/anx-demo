@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-.controller('BECourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams, $sce){
+.controller('BECourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams, $sce, $window){
 	
 	$scope.classes = ['雲科大', '政府單位'];
 
@@ -45,6 +45,7 @@ angular.module('myApp')
 		$scope.course.confirmDate = $scope.course.confirmDate.substring(0,10);
 		$scope.course.enrollDueDate = $scope.course.enrollDueDate.substring(0,10);
 		$scope.course.remark = $sce.trustAsHtml($scope.course.remark);
+		$scope.course.moreInfo = $sce.trustAsHtml($scope.course.moreInfo);
 	}, function (err) {
 		// err handling
 	});
@@ -79,5 +80,64 @@ angular.module('myApp')
 			});
 		}
 	};
+
+	$scope.stateChanged = function () {
+		var fullNo = this.course.fullNo;
+		var name = this.course.name;
+
+		var course = {
+			_id: this.course._id,
+			state: this.course.state
+		}
+
+		CourseService.updateCourseState(course).then(function (result) {
+			if (result.nModified) {
+				$window.alert("更新成功！\n\n課號: 「 " + fullNo + " 」  課程名稱: 「" + name + " 」\n之課程狀態已更新為「 " + course.state + " 」");
+			} else {
+				$window.alert("發生錯誤，請再試一次！");
+			}
+		});
+	}
+
+	$scope.pinTopChanged = function () {
+		var fullNo = this.course.fullNo;
+		var name = this.course.name;
+
+		var course = {
+			_id: this.course._id,
+			pinTop: this.course.pinTop
+		}
+
+		CourseService.pinTop(course).then(function (result) {
+			console.log(result);
+			if (result.nModified) {
+				var msg = course.pinTop ? "已改為推薦課程" : "已更改為無推薦";
+
+				$window.alert("更新成功！\n\n課號: 「 " + fullNo + " 」  課程名稱: 「" + name + " 」\n" + msg);
+			} else {
+				$window.alert("發生錯誤，請再試一次！");
+			}
+		});
+	}
+
+	$scope.showChanged = function () {
+		var fullNo = this.course.fullNo;
+		var name = this.course.name;
+		var course = {
+			_id: this.course._id,
+			show: this.course.show
+		}
+
+		CourseService.setShow(course).then(function(result) {
+			console.log(result);
+			if (result.nModified) {
+				var msg = course.show ? "已更改為顯示" : "已更改為隱藏";
+
+				$window.alert("更新成功！\n\n課號: 「 " + fullNo + " 」  課程名稱: 「" + name + " 」\n" + msg);
+			} else {
+				$window.alert("發生錯誤，請再試一次！");
+			}
+		});
+	}
 
 });

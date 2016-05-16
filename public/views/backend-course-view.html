@@ -97,7 +97,11 @@
 					</tr>
 					<tr>
 						<td><b>備註：</b></td>
-						<td colspan="3"><pre ng-show="{{course.remark}}">{{course.remark}}</pre></td>
+						<td colspan="3"><pre ng-bind-html="course.remark"></pre></td>
+					</tr>
+					<tr>
+						<td><b>更多資訊：</b></td>
+						<td colspan="3" ng-bind-html="course.moreInfo"></td>
 					</tr>
 					<tr>
 						<td><b>報名連結：</b></td>
