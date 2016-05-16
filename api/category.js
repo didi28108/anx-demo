@@ -64,7 +64,6 @@ var CategoryProto = {
 							for (var i = 0; i < courses.length ; i++) {
 								if(courses[i].show) { // 顯示設定為true的在其對應category計數+1
 									for (var k = 0; k < categoryClone.length ; k++) {
-										console.log(courses[i].category);
 										if(courses[i].category == categoryClone[k]._id) {
 											if(categoryClone[k].shownCourseCount) categoryClone[k].shownCourseCount++;
 											else categoryClone[k].shownCourseCount = 1;

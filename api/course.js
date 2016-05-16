@@ -193,7 +193,7 @@ var CourseProto = {
 			.find()
 			.populate('category')
 			.select('fullNo category area name startDate endDate confirmDate state clicks pinTop show')
-			.sort('-createdate')
+			.sort('-createDate')
 			.exec(function (err, data) {
 				callback(data);
 			});
@@ -203,9 +203,9 @@ var CourseProto = {
 		CourseModel
 			.find()
 			.where({show: true})
+			.sort('-createDate')
 			.populate('category')
 			.select('category area name startDate endDate confirmDate state clicks pinTop show')
-			.sort('-createdate')
 			.exec(function (err, data) {
 				callback(data);
 			});
@@ -236,7 +236,7 @@ var CourseProto = {
 			.where('enrollDueDate').gt(tmrDate)
 			.select('category area name startDate endDate confirmDate state clicks pinTop')
 			.sort('-clicks')
-			.limit(10)
+			.limit(7)
 			.exec(function (err, data) {
 				callback(data);
 			});
