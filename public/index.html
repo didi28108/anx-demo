@@ -41,6 +41,9 @@
 			display: none;
 		}
 		@media (min-width: 768px) {
+			.navbar-nav {
+				margin-top: 57px;
+			}
 			.navbar-nav > li > a {
 				color: #f2f2f2 !important;
 				font-size: 16px;
@@ -89,11 +92,10 @@
 			width: auto;
 			display: inline-block;
 		}
-		/*@media (min-width: 768px) {
-			.my-clear-fix:after {
-				display: none;
-			}
-		}*/
+		.date-text {
+			/*font-size:12px;*/
+			color:#888;
+		}
 		@media (max-width: 991px) {
 			.my-clear-fix:after {
 				content: " ";
@@ -175,16 +177,16 @@
 			  </div>
 
 			  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right">
-				  <li><a href="/">首頁</a></li>
-				  <div class="navbar-item-divider">|</div>
-				  <li><a href="/course" ui-sref="course">課程資訊</a></li>
-				  <div class="navbar-item-divider">|</div>
-				  <li><a href="/news" ui-sref="news">消息公告</a></li>
-				  <div class="navbar-item-divider">|</div>
-				  <li><a href="/backend/course">管理後台</a></li>
-				</ul>
-		  	  </div>
+					<ul class="nav navbar-nav navbar-right">
+					  <li><a href="/">首頁</a></li>
+					  <div class="navbar-item-divider">|</div>
+					  <li><a href="/course" ui-sref="course">課程資訊</a></li>
+					  <div class="navbar-item-divider">|</div>
+					  <li><a href="/news" ui-sref="news">消息公告</a></li>
+					  <div class="navbar-item-divider">|</div>
+					  <li><a href="/backend/course">管理後台</a></li>
+					</ul>
+		  	</div>
 			</div>
 		  </nav>
 		</div>
@@ -281,10 +283,8 @@
 
 		<script src="/bower_components/jquery/dist/jquery.js"></script>
 		<script src="/bower_components/angular/angular.js"></script>
-		<script src="/bower_components/angular-route/angular-route.js"></script>
 		<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 		<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-		<script src="/public/js/bootstrap-datepicker.js"></script>
 		<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<script src="/bower_components/ng-ckeditor/libs/ckeditor/ckeditor.js"></script>
 		<script src="/bower_components/ng-ckeditor/ng-ckeditor.js"></script>
