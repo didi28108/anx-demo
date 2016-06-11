@@ -1,6 +1,3 @@
-// var CourseApi = require('./course');
-// var Course = new CourseApi();
-
 var CourseModel = require('./model/course');
 var CategoryModel = require('./model/category');
 
@@ -12,7 +9,21 @@ var CategoryProto = {
 		newCat.deptCode = req.body.deptCode;
 		newCat.show = req.body.show;
 		newCat.save(function (err, data) {
-			callback(data);
+			if (err) {
+				callback(
+					{
+						success: false,
+						err: 
+							{ 
+								name: err.name,
+								msg: err.message,
+								code: err.code
+							}
+					}
+				);
+			} else {
+				callback({ success: true });
+			}
 		});
 	},
 
@@ -27,7 +38,21 @@ var CategoryProto = {
 				  show: req.body.show
 				},
 				function(err, data) {
-					callback(data);
+					if (err) {
+						callback(
+							{
+								success: false,
+								err: 
+									{ 
+										name: err.name,
+										msg: err.message,
+										code: err.code
+									}
+							}
+						);
+					} else {
+						callback({ success: true });
+					}
 			});
 	},
 
@@ -48,7 +73,7 @@ var CategoryProto = {
 		});
 	},
 
-	'countShown': function (callback) {
+	'getShownWithShownCourseCount': function (callback) {
 		CategoryModel
 			.find({})
 			.where({show: true})
@@ -113,6 +138,7 @@ var CategoryProto = {
 	},
 
 	'getPrevious': function (data, callback) {
+		console.log(data);
 		CategoryModel.findOne({ course: [ data.course_id ] }, function (err, cat) {
 			callback(cat);
 		});

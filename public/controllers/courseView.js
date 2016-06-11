@@ -4,7 +4,7 @@ angular.module('myApp')
 	$scope.classes = ['雲科大', '政府單位'];
 
 	// 取得開課單位
-	GuestHTTPService.getShownCourseCount().then(function(data) {
+	GuestHTTPService.getAllShownCourseCategory().then(function(data) {
 		$scope.categoryList = data;
 
 		if($stateParams.default_category == null) {
@@ -17,6 +17,12 @@ angular.module('myApp')
 		} else {
 			$scope.currentCategory = $stateParams.default_category;
 		}
+	}, function(err) {
+		// err handling
+	});
+
+	GuestHTTPService.getCourseSubcategoryList().then(function(data) {
+		$scope.subcategoryList = data;
 	}, function(err) {
 		// err handling
 	});
@@ -36,7 +42,9 @@ angular.module('myApp')
 			$scope.course.endTime = $scope.course.endTime;
 			$scope.course.enrollDueDate = $scope.course.enrollDueDate.substring(0,10);
 			$scope.course.remark = $sce.trustAsHtml($scope.course.remark);
-			$scope.course.moreInfo = $sce.trustAsHtml($scope.course.moreInfo);
+			$scope.course.goal = $sce.trustAsHtml($scope.course.goal);
+			$scope.course.info = $sce.trustAsHtml($scope.course.info);
+			$scope.course.lecturerInfo = $sce.trustAsHtml($scope.course.lecturerInfo);
 		}
 	}, function (err) {
 		// err handling
@@ -49,6 +57,10 @@ angular.module('myApp')
 			}
 		}
 	};
+
+	$scope.subcategoryClick = function (subcategoryName) {
+		$state.go('^.course', { default_subcategory: subcategoryName });
+	}
 
 	function getIndexByCourseCategoryDeptCode (array, deptCode) {
 		for (var i = 0; i < array.length; i++) {

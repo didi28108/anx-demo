@@ -1,20 +1,19 @@
-angular.module('myApp')
+const BECourseCtrl = (CourseService, $scope, $http, $state, $stateParams, $window) => {
 
-.controller('BECourseCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window){
-	
-	$scope.showCourseManage = true;
-	$scope.showCategoryManage = false;
+	$scope.showCourseManageSection = true;
+	$scope.showCategoryManageSection = false;
+	$scope.showSubcategoryManageSection = false;
 
-	// console.log($stateParams);
+	$scope.addSubcategoryFormVisible = true;
 
-	if($stateParams.mode=="categoryManage") {
-		manageModeToggle();
+	if($stateParams.manageMode) {
+    manageModeSwitcher($stateParams.manageMode);
 	}
 
 	$scope.panelTitle = "新增單位";
 	angular.element('#categoryPanel').addClass('panel-info');
 	$scope.showAddCategoryBtn = true;
-	$scope.classes = ["雲科大", "政府單位"];
+	// $scope.classes = ["雲科大", "政府單位"];
 	$scope.courseStateList = ["開課", "未處理", "不開課"];
 
 	// 課程推薦釘選清單
@@ -42,18 +41,20 @@ angular.module('myApp')
 	];
 
 	$scope.categoryFormData = {
-		class: "雲科大",
+		// class: "雲科大",
 		deptName: "",
 		deptCode: "",
 		show: true
 	};
 
 	$scope.currentCategory = '';
+	$scope.currentSubcategory = undefined;
 
 	$scope.sortType = '';
 	$scope.sortReverse = false;
 	$scope.searchFish = '';
 
+	// 取得課程單位
 	CourseService.getCourseCategoryList().then(function(data) {
 		$scope.categoryList = data;
 		if($stateParams.default_category == null) {
@@ -70,6 +71,13 @@ angular.module('myApp')
 		// err handling
 	});
 
+	// 取得課程分類
+	CourseService.getCourseSubcategoryList().then(function(data) {
+		$scope.subcategoryList = data;
+	}, function(err) {
+		// err handling
+	});
+
 	CourseService.getAllCourse().then(function(data) {
 		$scope.courses = data;
 		console.log(data);
@@ -77,14 +85,29 @@ angular.module('myApp')
 		// err handling
 	});
 
-	$scope.switchManageMode = function () {
-		manageModeToggle();
-	};
+  $scope.switchManageMode = function (args) {
+    manageModeSwitcher(args);
+  };
 
-	function manageModeToggle() {
-		$scope.showCourseManage = !$scope.showCourseManage;
-		$scope.showCategoryManage = !$scope.showCategoryManage;
-	};
+  function manageModeSwitcher(args) {
+    switch (args) {
+      case "course":
+        $scope.showCourseManageSection      = true;
+        $scope.showCategoryManageSection    = false;
+        $scope.showSubcategoryManageSection = false;
+        break;
+      case "category":
+        $scope.showCourseManageSection      = false;
+        $scope.showCategoryManageSection    = true;
+        $scope.showSubcategoryManageSection = false;
+        break;
+      case "subcategory": 
+        $scope.showCourseManageSection      = false;
+        $scope.showCategoryManageSection    = false;
+        $scope.showSubcategoryManageSection = true;
+        break;
+    }
+  }
 
 	$scope.switchFormPanelMode = function () {
 		formPanelModeToggle();
@@ -106,6 +129,7 @@ angular.module('myApp')
 
 	//show course on list when a category is clicked
 	$scope.showCourse = function () {
+		$scope.currentSubcategory = undefined;
 		$scope.sortType = '';
 		for(id in $scope.categoryList) {
 			if($scope.categoryList[id].deptName == this.cat.deptName) {
@@ -113,6 +137,11 @@ angular.module('myApp')
 			}
 		}
 	};
+
+	$scope.subcategoryClick = function (subcategoryName) {
+		$scope.currentCategory = undefined;
+		$scope.currentSubcategory = subcategoryName;
+	}
 
 	$scope.goAdd = function() {
 		$state.go('^.addCourse');
@@ -205,8 +234,6 @@ angular.module('myApp')
 		})
 	}
 
-
-
 	$scope.addCategory = function () {
 		var data = {
 			class: $scope.categoryFormData.class,
@@ -215,7 +242,7 @@ angular.module('myApp')
 			show: Boolean($scope.categoryFormData.show)
 		}
 		CourseService.addCategory(data).then(function(result) {
-			$state.go('^.course', {mode: 'categoryManage'}, {reload: true});
+			$state.go('^.course', {manageMode: 'category'}, {reload: true});
 		});
 	}
 
@@ -228,6 +255,7 @@ angular.module('myApp')
 		$scope.categoryFormData.deptName = this.cat.deptName;
 		$scope.categoryFormData.deptCode = this.cat.deptCode;
 		$scope.categoryFormData.show = this.cat.show.toString();
+    $window.scrollTo(0, 0);
 	}
 
 	$scope.saveCategory = function () {
@@ -241,12 +269,66 @@ angular.module('myApp')
 			show: $scope.categoryFormData.show
 		}
 		CourseService.editCategory(data).then(function(result) {
-			$state.go('^.course', {mode: 'categoryManage'}, {reload: true});
+      console.log(result);
+			$state.go('^.course', {manageMode: 'category'}, {reload: true});
 		});
 	}
 
 	$scope.cancel = function () {
-		$state.go('^.course', {mode: 'categoryManage'}, {reload: true});
+		$state.go('^.course', {manageMode: 'category'}, {reload: true});
 	}
-	
-});
+
+	$scope.addSubcategory = function (data) {
+		var subcategory = {
+			name: this.subcategoryName
+		}
+		CourseService.addSubcategory(subcategory).then(function(result) {
+			if (result.success) {
+				$window.alert("新增「"+ subcategory.name +"」分類成功！");
+				$state.go('^.course', {manageMode: 'subcategory'}, {reload: true});
+			} else {
+				$window.alert("發生錯誤，請再試一次！");
+			}
+		}, function(err) {
+			// err handling
+		});
+	}
+
+	$scope.saveSubcategoryName = function () {
+		var subcategory = {
+			_id: this.$parent.subcat._id,
+			name: this.$data
+		}
+		console.log(subcategory);
+		CourseService.editSubcategory(subcategory).then(function(result) {
+			if (result.success) {
+				$window.alert("分類更新成功！");
+				$state.go('^.course', {manageMode: 'subcategory'}, {reload: true});
+			} else {
+				$window.alert("發生錯誤，請再試一次！");
+			}
+		}, function(err) {
+			// err handling
+		});
+	}
+
+	$scope.removeSubcategory = function () {
+		console.log(this.subcat);
+		if($window.confirm("是否確認刪除此課程分類？")) {
+			var subcategoryName = this.subcat.name;
+			var subcategory = {
+				_id: this.subcat._id
+			}
+			CourseService.removeSubcategory(subcategory).then(function (result) {
+				if (result.success) {
+					$window.alert("分類「"+ subcategoryName +"」刪除成功！");
+					$state.go('^.course', {manageMode: 'subcategory'}, {reload: true});
+				} else {
+					$window.alert("發生錯誤，請再試一次！");
+				}
+			});
+		}
+	}
+};
+
+export default BECourseCtrl;

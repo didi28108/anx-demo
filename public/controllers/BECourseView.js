@@ -45,7 +45,9 @@ angular.module('myApp')
 		$scope.course.confirmDate = $scope.course.confirmDate.substring(0,10);
 		$scope.course.enrollDueDate = $scope.course.enrollDueDate.substring(0,10);
 		$scope.course.remark = $sce.trustAsHtml($scope.course.remark);
-		$scope.course.moreInfo = $sce.trustAsHtml($scope.course.moreInfo);
+		$scope.course.goal = $sce.trustAsHtml($scope.course.goal);
+		$scope.course.info = $sce.trustAsHtml($scope.course.info);
+		$scope.course.lecturerInfo = $sce.trustAsHtml($scope.course.lecturerInfo);
 	}, function (err) {
 		// err handling
 	});

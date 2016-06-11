@@ -6,11 +6,13 @@ var User = require('../api/model/user');
 var PagesApi = require('../api/pages');
 var CourseApi = require('../api/course');
 var CategoryApi = require('../api/category');
+var SubcategoryApi = require('../api/courseSubcategory');
 var NewsApi = require('../api/news');
 
 var Pages = new PagesApi();
 var Course = new CourseApi();
 var Category = new CategoryApi();
+var Subcategory = new SubcategoryApi();
 var News = new NewsApi();
 
 module.exports = function (app, passport, root_dir) {
@@ -228,8 +230,8 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
-	app.get('/api/countShownCourse', function (req, res) {
-		Category.countShown(function (data) {
+	app.get('/api/getShownCourseCategory', function (req, res) {
+		Category.getShownWithShownCourseCount(function (data) {
 			res.json(data);
 		});
 	});
@@ -309,6 +311,55 @@ module.exports = function (app, passport, root_dir) {
 			res.json({msg: "rejected"});
 		}
 	});
+
+	// course subcategory 
+	app.get('/api/getCourseSubcategoryList', function (req, res) {
+		Subcategory.getAll(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.get('/api/getCourseSubcategoryListWithCourseCount', function (req, res) {
+		Subcategory.getAllWithCourseCount(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.get('/api/getCourseSubcategoryListWithShownCourseCount', function (req, res) {
+		Subcategory.getAllWithShownCourseCount(req, function (data) {
+			res.json(data);
+		});
+	});
+
+	app.post('/api/addCourseSubcategory', function (req, res) {
+		if (checkHeaderAuth(req.headers)) {
+			Subcategory.create(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
+	});
+
+	app.post('/api/editCourseSubcategory', function (req, res) {
+		if (checkHeaderAuth(req.headers)) {
+			Subcategory.update(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
+	});
+
+	app.post('/api/removeCourseSubcategory', function (req, res) {
+		if (checkHeaderAuth(req.headers)) {
+			Subcategory.remove(req, function (data) {
+				res.json(data);
+			});
+		} else {
+			res.json({msg: "rejected"});
+		}
+	});	
 
 	// course
 	app.get('/api/getPopularCourse', function (req, res) {

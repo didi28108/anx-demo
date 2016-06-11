@@ -1,39 +1,46 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-/* 課程資料的每一欄位皆不應為空值
- * 後續需加上 required: true
- */
+
 var CourseSchema = new Schema({
-	category: {
-		type: Schema.Types.ObjectId,
-		ref: 'Category'
-	},
-	year 			: Number,
-	no 				: String,	// 課號
-	fullNo			: { type: String, unique: true },
-	name			: String,
-	startDate		: Date,
-	endDate			: Date,
-	startTime		: String,
-	endTime			: String,
-	location		: String,
-	confirmDate		: Date, // 課程確定開課與否之日期
-	enrollDueDate	: Date,
-	enrollTarget	: String,	// 課程招生對象
-	launchOffer		: String,
-	price			: Number,
-	state 			: String,
-	maxEnroll		: Number,
-	remark			: String,	// 備註
-	moreInfo		: String,
-	helpline		: String,
-	area			: String,
-	enrollLink		: String,
-	clicks			: { type: Number, default: 0 },
-	pinTop			: Boolean,
-	show			: Boolean,
-	createDate		: Date,
-	updateDate		: Date
+  category      : {                // 類別_id
+                    type: Schema.Types.ObjectId,
+                    ref: 'Category'
+                  },
+  subcategory   : String,          // 課程子類別
+  year          : Number,          // 年
+  no            : String,          // 課程編號
+  fullNo        : {                // 完整課號("年-課程編號")
+                    type: String,
+                    unique: true
+                  },
+  name          : String,          // 課程名稱
+  info          : String,          // 課程資訊
+  goal          : String,          // 課程目標
+  lecturerInfo  : String,          // 講師資訊
+  startDate     : Date,            // 開始日期
+  endDate       : Date,            // 結束日期
+  startTime     : String,          // 開始時間
+  endTime       : String,          // 結束時間
+  location      : String,          // 上課地點
+  confirmDate   : Date,            // 開課確認日期
+  enrollDueDate : Date,            // 報名截止日期
+  enrollTarget  : String,          // 招生對象
+  launchOffer   : String,          // 提供午餐
+  price         : Number,          // 費用
+  state         : String,          // 課程狀態("未處理", "開課", "不開課")
+  maxEnroll     : Number,          // 報名人數上限
+  remark        : String,          // 備註
+  helpline      : String,          // 諮詢專線
+  area          : String,          // 地區
+  enrollLink    : String,          // 報名連結
+  clicks        : {                // 點閱次數
+                    type: Number,
+                    default: 0
+                  },
+  pinTop        : Boolean,         // 推薦釘選
+  show          : Boolean,         // 顯示或隱藏
+  createDate    : Date,            // 建立日期
+  updateDate    : Date             // 更新日期
 });
 
 module.exports = mongoose.model('Course', CourseSchema);

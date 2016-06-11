@@ -3,8 +3,9 @@ angular.module('myApp')
 .controller('CourseCtrl', function(Paginator, GuestHTTPService, $scope, $http, $state, $stateParams, $window){
 	
 	$scope.currentCategory = '';
+	$scope.currentSubcategory = undefined;
 
-	$scope.classes = ['雲科大', '政府單位'];
+	// $scope.classes = ['雲科大', '政府單位'];
 
 	$scope.sortType	= '';
 	$scope.sortReverse	= false;
@@ -12,18 +13,32 @@ angular.module('myApp')
 
 	$scope.rowsPerPage = 20;
 
-	GuestHTTPService.getShownCourseCount().then(function(data) {
+	GuestHTTPService.getAllShownCourseCategory().then(function(data) {
 		$scope.categoryList = data;
 
-		if($stateParams.default_category == null) {
+		if($stateParams.default_category) {
+			$scope.currentSubcategory = undefined;
+			$scope.currentCategory = $stateParams.default_category;
+		} else {
 			var categoryIndex = getIndexByCourseCategoryDeptCode($scope.categoryList, 'ANX');
 			if(categoryIndex != null) {
 				$scope.currentCategory = $scope.categoryList[categoryIndex];
 			} else {
 				$scope.currentCategory = $scope.categoryList[0];
 			}
+		}
+	}, function(err) {
+		// err handling
+	});
+
+	GuestHTTPService.getCourseSubcategoryList().then(function(data) {
+		$scope.subcategoryList = data;
+		// console.log($stateParams.default_subcategory);
+		if($stateParams.default_subcategory) {
+			$scope.currentCategory = undefined;
+			$scope.currentSubcategory = $stateParams.default_subcategory;
 		} else {
-			$scope.currentCategory = $stateParams.default_category;
+			// console.log("nope");
 		}
 	}, function(err) {
 		// err handling
@@ -31,13 +46,13 @@ angular.module('myApp')
 
 	GuestHTTPService.getAllShownCourse().then(function(data) {
 		$scope.courses = data;
-
 	}, function(err) {
 		// err handling
 	});
 
 	// show course on list when a category is clicked
 	$scope.showCourse = function () {
+		$scope.currentSubcategory = undefined;
 		$scope.sortType = '';
 		for(id in $scope.categoryList) {
 			if($scope.categoryList[id].deptCode == this.cat.deptCode) {
@@ -45,7 +60,12 @@ angular.module('myApp')
 				Paginator.setPage(0);
 			}
 		}
-	};
+	}
+
+	$scope.subcategoryClick = function (subcategoryName) {
+		$scope.currentCategory = undefined;
+		$scope.currentSubcategory = subcategoryName;
+	}
 
 	function getIndexByCourseCategoryDeptCode (array, deptCode) {
 		for (var i = 0; i < array.length; i++) {

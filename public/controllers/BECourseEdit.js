@@ -1,6 +1,6 @@
 angular.module('myApp')
 
-.controller('BECourseEditCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window){
+.controller('BECourseEditCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window, $location){
 	$scope.$state = $state;
 
 	// 如果無法從$stateParams取得課程_id的話就導向課程清單
@@ -32,7 +32,7 @@ angular.module('myApp')
 		$scope.startDatePopup.opened = true;
 	};
 	// end date 預設關閉與開啟function
-	$scope.EndDatePopup = {
+	$scope.endDatePopup = {
 		opened: false
 	};
 	$scope.endDateOpen = function () {
@@ -60,6 +60,13 @@ angular.module('myApp')
 		// err handling
 	});
 
+  // 取得課程分類的所有item
+  CourseService.getCourseSubcategoryList().then(function(data) {
+    $scope.subcategoryList = data;
+  }, function(err) {
+    // err handling
+  });
+
 	CourseService.getCourse($stateParams.course_id).then(function (result) {
 		loadUpDataFromAnx(result);
 	}, function (err) {
@@ -77,6 +84,64 @@ angular.module('myApp')
 		$scope.course.confirmDate	= new Date(result.confirmDate);
 	}
 
+	// updateCourseDataFromYT
+  $scope.updateCourseDataFromYT = function () {
+    if ($window.confirm("更新課程會覆蓋下方灰色區塊的所有資料\n是否確定更新？")) {
+      $scope.loading.success = false;
+      $scope.loading.fail = false;
+      $scope.course.enrollLink = "";
+
+      $scope.loading.showSpinner = true;
+      $scope.loading.msg = "資料取得中";
+      var data = {
+        year: $scope.course.year,
+        no: $scope.course.no
+      };
+      CourseService.getCourseDataFromYT(data).then(function (res) {
+        if (res.success) {
+          loadUpDataFromYuntech(res);
+          $scope.loading.msg = "資料帶入成功";
+          $scope.course.enrollLink = "https://webapp.yuntech.edu.tw/CRISWeb/Home/SignUp?courseYear="+$scope.course.year+"&courseId="+$scope.course.no;
+        } else {
+          $scope.loading.msg = res.msg;
+        }
+      }, function (err) {
+        // err handling
+      }).finally(function() {
+        $scope.loading.showSpinner = false;
+        if ($scope.loading.msg == "資料帶入成功") {
+          $scope.loading.success = true;
+        } else {
+          $scope.loading.fail = true;
+        }
+      });
+    }
+  }
+
+  var loadUpDataFromYuntech = function (res) {
+    $scope.course.name = res.data.CourseName;
+    $scope.categoryList.forEach(function (element, index, array) {
+      if(element.deptCode == res.data.CourseDeptCode) {
+        $scope.course.category = element._id;
+      }
+    });
+    $scope.course.startDate     = new Date(res.data.CourseStartDate);
+    $scope.course.endDate       = new Date(res.data.CourseEndDate);
+    $scope.course.startTime     = new Date(res.data.CourseStartDate.substring(0,11)+res.data.CourseStartTime+":00+08:00");
+    $scope.course.endTime       = new Date(res.data.CourseEndDate.substring(0,11)+res.data.CourseEndTime+":00+08:00");
+    $scope.course.location      = res.data.CourseLocation;
+    $scope.course.confirmDate   = new Date(res.data.CourseOfferedConfirmDate);
+    $scope.course.enrollDueDate = dateAddDays(new Date(res.data.CourseOfferedConfirmDate), -2);
+    $scope.course.enrollTarget  = res.data.CourseTargetStudent;
+    $scope.course.launchOffer   = res.data.CourseIncludeLunch;
+    $scope.course.price         = res.data.CoursePrice;
+    $scope.course.maxEnroll     = res.data.MaxSignUp;
+    $scope.course.state         = res.data.CourseState;
+    $scope.course.remark        = res.data.CourseRemark;
+    $scope.course.helpline      = res.data.CourseHelpline;
+    $scope.course.state         = res.data.CourseState;
+  }
+
 	// 儲存對課程的編輯
 	$scope.save = function () {
 		// 將表單上
@@ -91,7 +156,7 @@ angular.module('myApp')
 		CourseService.updateCourse($scope.course).then(function(result) {
 			if (result.success) {
 				$window.alert("更新成功！");
-				$state.go('^.course');
+        $location.path("/backend/course/" + $scope.course._id);
 			} else {
 				if (result.err.code == 11000) {
 					$window.alert("課程更新失敗！\n課號 " + $scope.course.fullNo + " 已被使用");

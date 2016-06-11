@@ -77,6 +77,13 @@ angular.module('myApp')
 		// err handling
 	});
 
+	// 取得課程分類的所有item
+	CourseService.getCourseSubcategoryList().then(function(data) {
+		$scope.subcategoryList = data;
+	}, function(err) {
+		// err handling
+	});
+
 	$scope.getCourseDataFromYT = function () {
 		$scope.loading.success = false;
 		$scope.loading.fail = false;
@@ -91,7 +98,7 @@ angular.module('myApp')
 		CourseService.getCourseDataFromYT(data).then(function (res) {
 			if (res.success) {
 				loadUpDataFromYuntech(res);
-				$scope.loading.msg = "帶入成功";
+				$scope.loading.msg = "資料帶入成功";
 				$scope.course.enrollLink = "https://webapp.yuntech.edu.tw/CRISWeb/Home/SignUp?courseYear="+$scope.course.year+"&courseId="+$scope.course.no;
 			} else {
 				$scope.loading.msg = res.msg;
@@ -100,7 +107,7 @@ angular.module('myApp')
 			// err handling
 		}).finally(function() {
 			$scope.loading.showSpinner = false;
-			if ($scope.loading.msg == "帶入成功") {
+			if ($scope.loading.msg == "資料帶入成功") {
 				$scope.loading.success = true;
 			} else {
 				$scope.loading.fail = true;

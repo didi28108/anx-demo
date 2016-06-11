@@ -50,9 +50,9 @@ myApp.service('GuestHTTPService', function($q, $http){
 		});
 	}
 
-	var getShownCourseCount = function () {
+	var getAllShownCourseCategory = function () {
 		return $q(function(resolve, reject) {
-			$http.get('/api/countShownCourse').then(function(result) {
+			$http.get('/api/getShownCourseCategory').then(function(result) {
 				if(result.data) {
 					resolve(result.data);
 				} else {
@@ -61,6 +61,19 @@ myApp.service('GuestHTTPService', function($q, $http){
 			});
 		});
 	}
+
+	// 取得所有課程分類
+  var getCourseSubcategoryList = function () {
+    return $q(function(resolve, reject) {
+      $http.get('/api/getCourseSubcategoryListWithCourseCount').then(function(result) {
+        if(result.data) {
+          resolve(result.data);
+        } else {
+          reject('nope');
+        }
+      });
+    });
+  }
 
 	var getAllShownNews = function () {
 		return $q(function(resolve, reject) {
@@ -104,13 +117,14 @@ myApp.service('GuestHTTPService', function($q, $http){
 		return news;
 	};
 
-	return {
-		getPopularCourse	: getPopularCourse,
-		getPinTopCourse		: getPinTopCourse,
-		getAllShownCourse	: getAllShownCourse,
-		getShownCourseCount	: getShownCourseCount,
-		getTenNews			: getTenNews,
-		getAllShownNews		: getAllShownNews,
-		getShownNewsCount	: getShownNewsCount
-	}
+  return {
+    getPopularCourse  				: getPopularCourse,
+    getPinTopCourse    				: getPinTopCourse,
+    getAllShownCourse  				: getAllShownCourse,
+    getAllShownCourseCategory : getAllShownCourseCategory,
+    getCourseSubcategoryList 	: getCourseSubcategoryList,
+    getTenNews      					: getTenNews,
+    getAllShownNews    				: getAllShownNews,
+    getShownNewsCount  				: getShownNewsCount
+  }
 });

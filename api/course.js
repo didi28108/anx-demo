@@ -32,32 +32,35 @@ var CourseProto = {
 		ET = ET.toString().substring(16,21);
 
 		var newCourse = new CourseModel();
-		newCourse.category		= req.body.course.category;
-		newCourse.year 			= req.body.course.year;
-		newCourse.no 			= req.body.course.no;
-		newCourse.fullNo 		= req.body.course.fullNo;
-		newCourse.name  		= req.body.course.name;
-		newCourse.startDate 	= SD;
-		newCourse.endDate  		= ED;
-		newCourse.startTime 	= ST;
-		newCourse.endTime	 	= ET;
-		newCourse.location 		= req.body.course.location;
-		newCourse.confirmDate  	= CD;
-		newCourse.enrollDueDate = EnrollDueD;
-		newCourse.enrollTarget	= req.body.course.enrollTarget;
-		newCourse.launchOffer 	= req.body.course.launchOffer;
-		newCourse.price 		= req.body.course.price;
-		newCourse.state 		= req.body.course.state;
-		newCourse.maxEnroll		= req.body.course.maxEnroll;
-		newCourse.remark 		= req.body.course.remark;
-		newCourse.moreInfo 		= req.body.course.moreInfo;
-		newCourse.helpline 		= req.body.course.helpline;
-		newCourse.area		 	= req.body.course.area;
-		newCourse.enrollLink	= req.body.course.enrollLink;
-		newCourse.clicks		= 0;
-		newCourse.pinTop 		= req.body.course.pinTop;
-		newCourse.show			= req.body.course.show;
-		newCourse.createDate 	= getCurrentDate();
+    newCourse.category      = req.body.course.category;
+    newCourse.subcategory		= req.body.course.subcategory;
+    newCourse.year          = req.body.course.year;
+    newCourse.no            = req.body.course.no;
+    newCourse.fullNo        = req.body.course.fullNo;
+    newCourse.name          = req.body.course.name;
+    newCourse.info          = req.body.course.info;
+    newCourse.goal          = req.body.course.goal;
+    newCourse.lecturerInfo  = req.body.course.lecturerInfo;
+    newCourse.startDate     = SD;
+    newCourse.endDate       = ED;
+    newCourse.startTime     = ST;
+    newCourse.endTime       = ET;
+    newCourse.location      = req.body.course.location;
+    newCourse.confirmDate   = CD;
+    newCourse.enrollDueDate = EnrollDueD;
+    newCourse.enrollTarget  = req.body.course.enrollTarget;
+    newCourse.launchOffer   = req.body.course.launchOffer;
+    newCourse.price         = req.body.course.price;
+    newCourse.state         = req.body.course.state;
+    newCourse.maxEnroll     = req.body.course.maxEnroll;
+    newCourse.remark        = req.body.course.remark;
+    newCourse.helpline      = req.body.course.helpline;
+    newCourse.area          = req.body.course.area;
+    newCourse.enrollLink    = req.body.course.enrollLink;
+    newCourse.clicks        = 0;
+    newCourse.pinTop        = req.body.course.pinTop;
+    newCourse.show          = req.body.course.show;
+    newCourse.createDate    = getCurrentDate();
 
 		// save course
 		newCourse.save(function (err, data) {
@@ -113,28 +116,34 @@ var CourseProto = {
 		CourseModel
 			.update({ _id: req.body.course._id }, 
 					{ 
-						category		: req.body.course.category,
-						year			: req.body.course.year,
-						no 				: req.body.course.no,
-						fullNo 			: req.body.course.fullNo,
-						name			: req.body.course.name,
-						startDate		: SD,
-						endDate 		: ED,
-						startTime		: ST,
-						endTime			: ET,
-						location		: req.body.course.location,
-						confirmDate 	: CD,
-						enrollDueDate	: EnrollDueD,
-						enrollTarget	: req.body.course.enrollTarget,
-						launchOffer		: req.body.course.launchOffer,
-						price 			: req.body.course.price,
-						state 			: req.body.course.state,
-						maxEnroll		: req.body.course.maxEnroll,
-						remark			: req.body.course.remark,
-						helpline		: req.body.course.helpline,
-						area			: req.body.course.area,
-						enrollLink		: req.body.course.enrollLink
-					}, 
+            category      : req.body.course.category,
+            subcategory   : req.body.course.subcategory,
+            year          : req.body.course.year,
+            no            : req.body.course.no,
+            fullNo        : req.body.course.fullNo,
+            name          : req.body.course.name,
+            info          : req.body.course.info,
+            goal          : req.body.course.goal,
+            lecturerInfo  : req.body.course.lecturerInfo,
+            startDate     : SD,
+            endDate       : ED,
+            startTime     : ST,
+            endTime       : ET,
+            location      : req.body.course.location,
+            confirmDate   : CD,
+            enrollDueDate : EnrollDueD,
+            enrollTarget  : req.body.course.enrollTarget,
+            launchOffer   : req.body.course.launchOffer,
+            price         : req.body.course.price,
+            state         : req.body.course.state,
+            maxEnroll     : req.body.course.maxEnroll,
+            remark        : req.body.course.remark,
+            helpline      : req.body.course.helpline,
+            area          : req.body.course.area,
+            enrollLink    : req.body.course.enrollLink,
+            pinTop        : req.body.course.pinTop,
+            show          : req.body.course.show
+          }, 
 					function (err, course) {
 						if (err) {
 
@@ -192,7 +201,7 @@ var CourseProto = {
 		CourseModel
 			.find()
 			.populate('category')
-			.select('fullNo category area name startDate endDate confirmDate state clicks pinTop show')
+			.select('fullNo category subcategory area name startDate endDate confirmDate state clicks pinTop show')
 			.sort('-createDate')
 			.exec(function (err, data) {
 				callback(data);
@@ -205,7 +214,7 @@ var CourseProto = {
 			.where({show: true})
 			.sort('-createDate')
 			.populate('category')
-			.select('category area name startDate endDate confirmDate state clicks pinTop show')
+			.select('category subcategory area name startDate endDate confirmDate state clicks pinTop show')
 			.exec(function (err, data) {
 				callback(data);
 			});

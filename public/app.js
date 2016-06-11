@@ -11,7 +11,7 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable
 		.state('course', {
 			url: '/course',
 			templateUrl: 'views/course.html',
-			params: { 'default_category': null },
+			params: { 'default_category': null, 'default_subcategory': null },
 			controller: 'CourseCtrl'
 		})
 		.state('viewCourse', {
@@ -53,8 +53,7 @@ angular.module('myApp', ['ui.router', 'ngCkeditor', 'ClientPaginate', 'xeditable
 		.state('backend.course', {
 			url: '/course',
 			templateUrl: 'views/backend-course.html',
-			params: { 'default_category': null,
-					  'mode': null },
+			params: { 'default_category': null, 'manageMode': null },
 			controller: 'BECourseCtrl'
 		})
 		.state('backend.viewCourse', {

@@ -35,7 +35,7 @@
 				  <button type="button" class="btn btn-default" ng-show="$state.is('backend.addCourse')" ng-disabled="course.year==null || course.no==null" ng-click="getCourseDataFromYT()">
 				  	<span class="glyphicon glyphicon-download" aria-hidden="true"></span> 帶入資料
 				  </button>
-				  <button ng-show="$state.is('backend.editCourse')" type="button" class="btn btn-default" ng-click="" disabled>
+				  <button type="button" class="btn btn-default" ng-show="$state.is('backend.editCourse')" ng-disabled="course.year==null || course.no==null" ng-click="updateCourseDataFromYT()">
 				  	<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 更新資料
 				  </button>
 				  <span>(由報名繳費系統取得)</span><br><br>
@@ -198,9 +198,35 @@
 			</div><!-- end of well -->
 
 			<div class="form-group">
-			  <label class="control-label col-md-offset-1 col-md-2" for="moreInfo">更多資訊</label>
+			  <label class="control-label col-md-offset-1 col-md-2" for="subcategory">課程分類</label>
+			  <div class="row">
+				  <div class="col-md-2">
+						<select class="form-control" id="subcategory" ng-model="course.subcategory">
+							<option value="">無</option>
+				      <option ng-repeat="subcategory in subcategoryList" value="{{subcategory.name}}">{{subcategory.name}}</option>
+				    </select>
+				  </div>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="goal">課程目標</label>
 			  <div class="col-md-8"> 
-			    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="moreInfo" name="moreInfo" rows="5" ng-model="course.moreInfo"></textarea>
+			    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="goal" name="goal" rows="5" ng-model="course.goal"></textarea>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="info">課程資訊</label>
+			  <div class="col-md-8"> 
+			    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="info" name="info" rows="5" ng-model="course.info"></textarea>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="lecturerInfo">講師資訊</label>
+			  <div class="col-md-8"> 
+			    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="lecturerInfo" name="lecturerInfo" rows="5" ng-model="course.lecturerInfo"></textarea>
 			  </div>
 			</div>
 
