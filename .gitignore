@@ -50,4 +50,3 @@ node_modules
 *.jpg
 *.png
 public/index.html
-public/views/home.html

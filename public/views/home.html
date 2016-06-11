@@ -16,6 +16,7 @@
 	}
 	#news-table {
 		margin-top: 5px;
+		/*border: 2px solid #F49B7E;*/
 		border-top: 2px solid #F49B7E;
 		border-bottom: 2px solid #F49B7E;
 	}
@@ -40,9 +41,21 @@
 	}
 	#popular-course-table {
 		margin-top: 5px;
+		/*border-right: 2px solid #55BEA6;*/
+	}
+	#popular-course-table th:first-child {
+		border: 0px;
+		/*border-right: 2px solid #55BEA6;*/
+		padding: 0px 5px 0px 0px;
+	}
+	#popular-course-table th:not(:first-child) {
 		border-top: 2px solid #55BEA6;
+	}
+	#popular-course-table tr:last-child {
+		/*border-left: 2px solid #55BEA6;*/
 		border-bottom: 2px solid #55BEA6;
 	}
+
 	#more-pop-course-link {
 		text-decoration: none;
 		background-color: #55BEA6;
@@ -50,7 +63,6 @@
 		color: #fff;
 		border-radius: 4px;
 	}
-
 	#pin-course-title {
 		display: block;
 		padding-top: 7px;
@@ -64,7 +76,19 @@
 	}
 	#pin-course-table {
 		margin-top: 5px;
+		/*border-top: 2px solid #A3BC55;*/
+		/*border-bottom: 2px solid #A3BC55;*/
+	}
+	#pin-course-table th:first-child {
+		border: 0px;
+		/*border-right: 2px solid #A3BC55;*/
+		padding: 0px 4px 0px 0px;
+	}
+	#pin-course-table th:not(:first-child) {
 		border-top: 2px solid #A3BC55;
+	}
+	#pin-course-table tr:last-child {
+		/*border-left: 2px solid #A3BC55;*/
 		border-bottom: 2px solid #A3BC55;
 	}
 	#more-pin-course-link {
@@ -81,12 +105,16 @@
 	<!-- image slider -->
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
 		<div class="carousel-inner" role="listbox">
-			<div id="IS1" class="item active"></div>
-			<div id="IS2" class="item"></div>
-			<div id="IS3" class="item"></div>
-			<div id="IS4" class="item"></div>
-			<div id="IS5" class="item"></div>
-			<div id="IS6" class="item"></div>
+			<div id="IS1" class="banner-img item active"></div>
+			<div id="IS2" class="banner-img item"></div>
+			<div id="IS3" class="banner-img item"></div>
+			<div id="IS4" class="banner-img item"></div>
+			<div id="IS5" class="banner-img item"></div>
+			<div id="IS6" class="banner-img item"></div>
+			<div id="IS7" class="banner-img item"></div>
+			<div id="IS8" class="banner-img item"></div>
+			<div id="IS9" class="banner-img item"></div>
+			<div id="IS10" class="banner-img item"></div>
 		</div>
 		<!-- <a class="left carousel-control" data-target="#myCarousel" role="button" data-slide="prev">
 			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -117,7 +145,7 @@
 									<span class="label label-danger">{{news.category.name}}</span>
 								</td>
 								<td><a href="/news/{{news._id}}">{{news.title}}</a></td>
-								<td class="text-right">{{news.createdate.substring(0,10)}}</td>
+								<td class="text-right pre-content">{{news.createdate.substring(0,10)}}</td>
 							</tr>
 							<tr>
 								<td colspan="3" class="text-right"><a href="/news" id="more-news-link">更多消息</a></td>
@@ -125,26 +153,37 @@
 						</tbody>
 					</table>
 					<img src="/image/demo.png" alt="" width="100%">
+					<hr>
+					<div class="">
+						<a href="https://webapp.yuntech.edu.tw/CRISWeb/Account/Login?ReturnUrl=%2fCRISWeb%2fHome%2f" target="_blank">
+							<img src="/image/_02a.png" alt="" width="33%">
+						</a>
+					</div>
 				</div>
 
 				<div class="col-md-6">
-					<span id="pop-course-title">熱門課程</span>
 					<table class="table" id="popular-course-table">
 						<tbody>
 							<tr>
+								<th rowspan="9">
+									<img src="/image/熱門課程.png" alt="">
+								</th>
 								<th class="pre-content">地區</th>
 								<th class="pre-content">課程名稱</th>
 								<th class="pre-content">開課單位</th>
-								<th class="pre-content">課程時間</th>
 							</tr>
 							<tr ng-repeat="course in popularCourses">
-								<td><span class="label label-primary">{{course.area}}</span></td>
+								<td>
+									<span class="label label-primary">{{course.area}}</span>
+								</td>
 								<td>
 									<span class="label label-success" ng-show="course.state=='開課'">確定開課</span>
-									<a href="/course/{{course._id}}">{{course.name}}</a>
+									<a href="/course/{{course._id}}">{{course.name}}</a><br>
+									<span class="pre-content date-text">上課日期：{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</span>
 								</td>
-								<td>{{course.category.deptName}}</td>
-								<td>{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</td>
+								<td>
+									<span class="pre-content">{{course.category.deptName}}</span>
+								</td>
 							</tr>
 							<tr>
 								<td colspan="4" class="text-right">
@@ -153,25 +192,28 @@
 							</tr>
 						</tbody>
 					</table>
-
+					
 					<p></p>
-					<span id="pin-course-title">推薦課程</span>
 					<table class="table" id="pin-course-table">
 						<tbody>
 							<tr>
+								<th rowspan="9">
+									<img src="/image/推薦課程.png" alt="">
+								</th>
 								<th class="pre-content">地區</th>
 								<th class="pre-content">課程名稱</th>
 								<th class="pre-content">開課單位</th>
-								<th class="pre-content">課程時間</th>
 							</tr>
 							<tr ng-repeat="course in pinTopCourses">
 								<td><span class="label label-primary">{{course.area}}</span></td>
 								<td>
 									<span class="label label-success" ng-show="course.state=='開課'">確定開課</span>
-									<a href="/course/{{course._id}}">{{course.name}}</a>
+									<a href="/course/{{course._id}}">{{course.name}}</a><br>
+									<span class="pre-content date-text">上課日期：{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</span>
 								</td>
-								<td>{{course.category.deptName}}</td>
-								<td>{{course.startDate.substring(0,10)}} ~ {{course.endDate.substring(0,10)}}</td>
+								<td>
+									<span class="pre-content">{{course.category.deptName}}</span>
+								</td>
 							</tr>
 							<tr>
 								<td colspan="4" class="text-right">
