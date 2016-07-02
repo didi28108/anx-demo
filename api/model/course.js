@@ -6,7 +6,7 @@ var CourseSchema = new Schema({
                     type: Schema.Types.ObjectId,
                     ref: 'Category'
                   },
-  subcategory   : String,          // 課程子類別
+  subcategory   : [String],          // 課程子類別
   year          : Number,          // 年
   no            : String,          // 課程編號
   fullNo        : {                // 完整課號("年-課程編號")

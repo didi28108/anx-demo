@@ -1,0 +1,282 @@
+<!doctype html>
+<!-- bind BECourseAddCtrl or BECourseEditCtrl -->
+<div>
+	
+	<div class="panel" ng-class="{'panel-info': $state.is('backend.addCourse'), 'panel-warning': $state.is('backend.editCourse') }">
+
+		<div class="panel-heading" ng-if="$state.is('backend.addCourse')">新增課程</div>
+		<div class="panel-heading" ng-if="$state.is('backend.editCourse')">編輯課程</div>
+
+		<div class="panel-body">
+		  <form class="form-horizontal" role="form" name="myForm">
+		  	<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2">年度</label>
+			  <div class="col-md-3">
+				<input type="text" class="form-control" id="year" name="year" placeholder="" ng-model="course.year" required>
+			    <span class="unvalid-alert" ng-hide="myForm.year.$valid">必填欄位，請輸入數字</span>
+			  </div>
+			</div>
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2">編號</label>
+			  <div class="col-md-3">
+				<input type="text" class="form-control" id="no" name="no" placeholder="" ng-model="course.no" maxlength="3" required>
+			    <span class="unvalid-alert" ng-hide="myForm.no.$valid">必填欄位，請輸入數字</span>
+			  </div>
+			</div>
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2"></label>
+			  <div class="col-md-3">
+				<span>課號：</span>
+				<h3>{{course.year}}-{{course.no}}</h3>
+			  </div>
+			</div>
+			<div class="row">
+				<div class="col-md-offset-3 col-md-9">
+				  <button type="button" class="btn btn-default" ng-show="$state.is('backend.addCourse')" ng-disabled="course.year==null || course.no==null" ng-click="getCourseDataFromYT()">
+				  	<span class="glyphicon glyphicon-download" aria-hidden="true"></span> 帶入資料
+				  </button>
+				  <button type="button" class="btn btn-default" ng-show="$state.is('backend.editCourse')" ng-disabled="course.year==null || course.no==null" ng-click="updateCourseDataFromYT()">
+				  	<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 更新資料
+				  </button>
+				  <span>(由報名繳費系統取得)</span><br><br>
+				  <!-- <div class="alert alert-warning" role="alert"> -->
+				  狀態： 
+				  <i class="fa fa-check fa-2x" ng-show="loading.success"></i>
+				  <i class="fa fa-exclamation-triangle fa-2x" ng-show="loading.fail"></i>
+				  <i class="fa fa-spinner fa-2x fa-spin" ng-show="loading.showSpinner"></i> {{loading.msg}}
+				  <!-- </div> -->
+				  <hr>
+				</div>
+			</div>
+
+			<div class="well">
+				<h4 class="text-center">─ 此區塊內容可由報名繳費系統帶入資料，或自行輸入 ─</h4><br>
+			  	<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="link">報名連結</label>
+				  <div class="col-md-8">
+				    <input type="text" class="form-control" id="link" name="link" placeholder="" ng-model="course.enrollLink" required>
+			      	<span class="unvalid-alert" ng-hide="myForm.link.$valid">必填欄位</span>
+				  </div>
+				</div>
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="name">課程名稱</label>
+				  <div class="col-md-8"> 
+				    <input type="text" class="form-control" id="name" name="name" placeholder="" ng-model="course.name" required>
+				    <span class="unvalid-alert" ng-hide="myForm.name.$valid">必填欄位</span>
+				  </div>
+				</div>
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="category">開課單位</label>
+				  <div class="col-md-3">
+				  	<select class="form-control" id="category" ng-model="course.category">
+				  	  <option ng-repeat="cat in categoryList" value="{{cat._id}}">{{cat.deptName}}</option>
+				  	</select>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="startDate">課程起始日期</label>
+				  <div class="col-md-3">
+				  	<div class="input-group">
+						<input type="text" name="startDate" class="form-control" uib-datepicker-popup ng-model="course.startDate" is-open="startDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="startDateOpen()"/>
+						<span class="input-group-btn">
+						  <button type="button" class="btn btn-default" ng-click="startDateOpen()"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+				  	</div>
+				  	<span class="unvalid-alert" ng-hide="myForm.startDate.$valid">必填欄位</span>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="endDate">課程結束日期</label>
+				  <div class="col-md-3">
+				  	<div class="input-group">
+						<input type="text" name="endDate" class="form-control" uib-datepicker-popup ng-model="course.endDate" is-open="endDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="endDateOpen()"/>
+						<span class="input-group-btn">
+						  <button type="button" class="btn btn-default" ng-click="endDateOpen()"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+				  	</div>
+				  	<span class="unvalid-alert" ng-hide="myForm.endDate.$valid">必填欄位</span>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="startTime">開始時間</label>
+				  <div class="col-md-5">
+				  	<uib-timepicker ng-model="course.startTime" ng-change="changed()" hour-step="timePicker.hstep" minute-step="timePicker.mstep" show-meridian="timePicker.ismeridian" ng-required="true"></uib-timepicker>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="endTime">結束時間</label>
+				  <div class="col-md-5">
+				  	<uib-timepicker ng-model="course.endTime" ng-change="changed()" hour-step="timePicker.hstep" minute-step="timePicker.mstep" show-meridian="timePicker.ismeridian" ng-required="true"></uib-timepicker>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="location">上課地點</label>
+				  <div class="col-md-8"> 
+				    <input type="text" class="form-control" id="location" name="location" placeholder="" ng-model="course.location" required>
+				  	<span class="unvalid-alert" ng-hide="myForm.location.$valid">必填欄位</span>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="confirmDate">開課確認日期</label>
+				  <div class="col-md-3">
+				  	<div class="input-group">
+						<input type="text" name="confirmDate" class="form-control" uib-datepicker-popup ng-model="course.confirmDate" is-open="confirmDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="confirmDateOpen()"/>
+						<span class="input-group-btn">
+						  <button type="button" class="btn btn-default" ng-click="confirmDateOpen()"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+				  	</div>
+				  	<span class="unvalid-alert" ng-hide="myForm.confirmDate.$valid">必填欄位</span>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="enrollTarget">招生對象</label>
+				  <div class="col-md-8"> 
+				    <input type="text" class="form-control" id="enrollTarget" name="enrollTarget" placeholder="" ng-model="course.enrollTarget" required>
+			      	<span class="unvalid-alert" ng-hide="myForm.enrollTarget.$valid">必填欄位</span>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="meal">是否包含午餐</label>
+				  <div class="col-md-8"> 
+				    <div class="input-group">
+					  <label class="radio-inline">
+					  	<input type="radio" name="launchOffer" value="包含" ng-model="course.launchOffer">包含
+				      </label>
+				      <label class="radio-inline">
+				    	<input type="radio" name="launchOffer" value="不包含" ng-model="course.launchOffer">不包含
+				      </label>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="price">課程原價</label>
+				  <div class="col-md-3">
+				  	<input type="number" class="form-control" id="price" name="price" min="0" ng-model="course.price" required>
+				  	<span class="unvalid-alert" ng-hide="myForm.price.$valid">必填欄位，請輸入數字</span>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="maxEnroll">報名人數限制</label>
+				  <div class="col-md-3">
+				  	<input type="number" class="form-control" id="maxEnroll" name="maxEnroll" min="0" ng-model="course.maxEnroll" required>
+				  	<span class="unvalid-alert" ng-hide="myForm.maxEnroll.$valid">必填欄位，請輸入數字</span>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="remark">備註</label>
+				  <div class="col-md-8">
+				    <textarea class="form-control" style="resize:vertical;" id="remark" name="remark" rows="5" ng-model="course.remark"></textarea>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="helpline">諮詢專線</label>
+				  <div class="col-md-8"> 
+				    <textarea class="form-control" style="resize:vertical;" id="helpline" name="helpline" rows="5" ng-model="course.helpline"></textarea>
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="control-label col-md-offset-1 col-md-2" for="state">課程狀態</label>
+				  <div class="col-md-3">
+					<select class="form-control" id="state" ng-model="course.state">
+				      <option ng-repeat="state in courseStateList" value="{{state}}">{{state}}</option>
+				    </select>
+				  </div>
+				</div>
+			</div><!-- end of well -->
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="subcategory">課程分類</label>
+			  <div class="row">
+				  <div class="col-md-2">
+						<select class="form-control" id="subcategory" ng-model="course.subcategory[i]" multiple="multiple">
+							<option value="">無</option>
+				      <option ng-repeat="subcategory in subcategoryList" value="{{subcategory.name}}">{{subcategory.name}}</option>
+				    </select>
+				  </div>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="goal">課程目標</label>
+			  <div class="col-md-8"> 
+			    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="goal" name="goal" rows="5" ng-model="course.goal"></textarea>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="info">課程資訊</label>
+			  <div class="col-md-8"> 
+			    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="info" name="info" rows="5" ng-model="course.info"></textarea>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="lecturerInfo">講師資訊</label>
+			  <div class="col-md-8"> 
+			    <textarea ckeditor="editorOptions" class="form-control" style="resize:vertical;" id="lecturerInfo" name="lecturerInfo" rows="5" ng-model="course.lecturerInfo"></textarea>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="area">上課地區</label>
+			  <div class="row">
+				  <div class="col-md-3">
+					<select class="form-control" id="area" ng-model="course.area">
+				      <option ng-repeat="area in areaList" value="{{area}}">{{area}}</option>
+				    </select>
+				  </div>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="pinTop">推薦釘選</label>
+			  <div class="row">
+				  <div class="col-md-2">
+					<select class="form-control" ng-options="option.value as option.text for option in coursePinTopList" ng-model="course.pinTop"></select>
+				  </div>
+			  </div>
+			  <label class="control-label col-md-offset-1 col-md-2" for=""></label>
+			  <div class="row">
+			  	<div class="col-md-7">
+				  	<span>說明：設定為<b>推薦</b>之課程會顯示在首頁推薦課程列表中</span>
+			  	</div>
+			  </div>
+			</div>
+			
+			<div class="form-group">
+			  <label class="control-label col-md-offset-1 col-md-2" for="show">顯示課程</label>
+			  <div class="row">
+				  <div class="col-md-2">
+					<select class="form-control" ng-options="option.value as option.text for option in courseShowList" ng-model="course.show"></select>
+				  </div>
+			  </div>
+			</div>
+
+		  	<br>
+			<div class="form-group">
+			  <div class="col-md-offset-3 col-sm-9">
+			    <button ng-show="$state.is('backend.addCourse')" class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="add()">新增</button>
+			    <button ng-show="$state.is('backend.editCourse')" class="btn btn-warning" ng-disabled="!myForm.$valid" ng-click="save()">儲存</button>
+			    <button class="btn btn-default" ng-click="cancel()">取消</button>
+			  </div>
+			</div>
+		  </form>
+		  <br>
+		  <br>
+		</div>
+	</div>
+	
+</div>

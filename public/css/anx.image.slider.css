@@ -1,32 +1,32 @@
 #IS1 {
-  background-image: url("../image/banner/banner1.jpg");
+  background-image: url("../file_uploads/banners/banner1.jpg");
 }
 #IS2 {
-  background-image: url("../image/banner/banner2.jpg");
+  background-image: url("../file_uploads/banners/banner2.jpg");
 }
 #IS3 {
-  background-image: url("../image/banner/banner3.jpg");
+  background-image: url("../file_uploads/banners/banner3.jpg");
 }
 #IS4 {
-  background-image: url("../image/banner/banner4.jpg");
+  background-image: url("../file_uploads/banners/banner4.jpg");
 }
 #IS5 {
-  background-image: url("../image/banner/banner5.jpg");
+  background-image: url("../file_uploads/banners/banner5.jpg");
 }
 #IS6 {
-  background-image: url("../image/banner/banner6.jpg");
+  background-image: url("../file_uploads/banners/banner6.jpg");
 }
 #IS7 {
-  background-image: url("../image/banner/banner7.jpg");
+  background-image: url("../file_uploads/banners/banner7.jpg");
 }
 #IS8 {
-  background-image: url("../image/banner/banner8.jpg");
+  background-image: url("../file_uploads/banners/banner8.jpg");
 }
 #IS9 {
-  background-image: url("../image/banner/banner9.jpg");
+  background-image: url("../file_uploads/banners/banner9.jpg");
 }
 #IS10 {
-  background-image: url("../image/banner/banner10.jpg");
+  background-image: url("../file_uploads/banners/banner10.jpg");
 }
 .banner-img {
   height: 420px;
@@ -50,5 +50,5 @@
   background-image:linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.3) 100%);
 }
 .carousel-control:hover {
-	opacity: 0.7;
+  opacity: 0.7;
 }

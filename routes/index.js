@@ -1,3 +1,4 @@
+var async = require('async');
 var jwt = require('jwt-simple');
 var request = require('request');
 var config = require('../config/db_conn');
@@ -230,10 +231,24 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
-	app.get('/api/getShownCourseCategory', function (req, res) {
-		Category.getShownWithShownCourseCount(function (data) {
-			res.json(data);
+	// 取得所有狀態為顯示的課程分類和子分類
+	app.get('/api/getAllShownCourseCategorySubcategory', function (req, res) {
+
+		async.parallel({
+			category: function(callback) {
+				Category.getShownWithShownCourseCount(function (data) {
+					callback(null, data);
+				});
+			},
+			subcategory: function(callback) {
+				Subcategory.getAllWithShownCourseCount(req, function (data) {
+					callback(null, data);
+				});
+			}
+		}, function(err, results) {
+			res.json(results);
 		});
+		
 	});
 
 	app.post('/api/addCourseCategory', function (req, res) {

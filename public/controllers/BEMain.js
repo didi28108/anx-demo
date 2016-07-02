@@ -1,16 +1,20 @@
-angular.module('myApp')
+module.exports = (ngModule) => {
 
-.controller('BackendMainCtrl', function($scope, AuthService, $state, $http, $window){
-	$scope.isLogin = AuthService.isAuthenticated();
+	ngModule.controller('BackendMainCtrl', function($scope, AuthService, $state, $http, $window){
 
-	$http.get('/api/userinfo').then(function(result) {
-		$scope.userinfo = 'hi, ' + result.data.name;
-	}, function(err) {
-		// err handling
+		$scope.isLogin = AuthService.isAuthenticated();
+
+		$http.get('/api/userinfo').then(function(result) {
+			$scope.userinfo = 'hi, ' + result.data.name;
+		}, function(err) {
+			// err handling
+		});
+
+		$scope.logout = function() {
+			AuthService.logout();
+			$state.go('backend.login', null, { reload: true });
+		};
+		
 	});
 
-	$scope.logout = function() {
-		AuthService.logout();
-		$state.go('backend.login', null, { reload: true });
-	};
-});
+}

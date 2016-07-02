@@ -1,0 +1,145 @@
+body {
+  /*background-color: #f5f5f5;*/
+  font-family: Microsoft JhengHei;
+}
+.navbar {
+  margin-top: 20px;
+  /*z-index: 9999;
+  margin-bottom: 0px;
+  background-color: #fff;
+  border-color: #fff;
+  box-shadow: 0 1px 5px #888888;
+  border-radius: 0px;*/
+  background-image: url("../image/top.png");
+  background-repeat: no-repeat;
+  min-height: 130px;
+}
+@media (max-width: 767px) {
+  .navbar-nav {
+    background-color: #f5f5f5;
+  }
+  .navbar-header {
+    margin-bottom: 80px;
+  }
+}
+.navbar-item-divider {
+  display: none;
+}
+@media (min-width: 768px) {
+  .navbar-nav {
+    margin-top: 57px;
+  }
+  .navbar-nav > li > a {
+    color: #f2f2f2 !important;
+    font-size: 16px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  .navbar-nav > li > a:hover {
+    color: #fff !important;
+  }
+  .navbar-item-divider {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+}
+.navbar-toggle {
+  color: #ddd;
+}
+.navbar-toggle:hover, .navbar-toggle:active, .navbar-toggle:focus  {
+  color: #333;
+}
+#hamburger-btn {
+  padding-left: 5px;
+  padding-right: 5px;
+  float: right
+}
+.panel-main {
+  background-color: #f5f5f5;
+}
+.stiff-height {
+  min-height: 580px;
+}
+.pre-content {
+  white-space: pre;
+}
+pre {
+  border: 0;
+  background-color: transparent;
+  white-space: pre-wrap;
+  font-size: 14px;
+  padding: 0px;
+}
+.inline-content {
+  width: auto;
+  display: inline-block;
+}
+.date-text {
+  /*font-size:12px;*/
+  color:#888;
+}
+@media (max-width: 991px) {
+  .my-clear-fix:after {
+    content: " ";
+    display: table;
+    clear: both;
+  }
+}
+.footer {
+  display: block;
+  bottom: 0;
+  width: 100%;
+  background-color: #DCF0EF;
+  text-align: center;
+  border-radius: 4px 4px 0px 0px ;
+}
+.footer-title {
+  display: inline-block;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 5px;
+  /*border-bottom: 3px solid #444;*/
+}
+.footer-item {
+  font-size: 16px;
+}
+.footer a {
+  text-decoration: none;
+}
+
+.footer-title-bg {
+  background-repeat: no-repeat;
+  background-position: center 30px;
+  min-height: 80px;
+}
+#anx-intro {
+  background-image: url("../image/中心介紹.png");
+}
+#anx-class-flow {
+  background-image: url("../image/開班流程.png");
+}
+#anx-ttqs {
+  background-image: url("../image/ttqs專區.png");
+}
+#anx-training {
+  background-image: url("../image/教育訓練.png");
+}
+#anx-learning {
+  background-image: url("../image/學習專區.png");
+}
+#anx-service {
+  background-image: url("../image/服務.png");
+}
+#anx-wanted {
+  background-image: url("../image/菁英招募.png");
+}
+#anx-purchase {
+  background-image: url("../image/採購專區.png");
+}

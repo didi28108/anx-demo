@@ -78,38 +78,44 @@ var SubcategoryProto = {
   },
 
   'getAllWithCourseCount': function (req, callback) {
-    SubcategoryModel.find({}, function (err, subcategory) {
+    SubcategoryModel
+    .find({})
+    .select('name')
+    .exec(function (err, subcategory) {
       subcategoryNameArr = _.map(subcategory, function(e) { return e.name });
       CourseModel
-        .find({subcategory: {$in: subcategoryNameArr}})
-        .select('subcategory')
-        .exec(function (err, courses) {
-          callback(
-            _.map(subcategory, function(e) {
-              var e_clone = JSON.parse(JSON.stringify(e));
-              e_clone.courseCount = _.size(_.filter(courses,  _.matches({ 'subcategory': e_clone.name })));
-              return e_clone;
-            })
-          );
+      .find({subcategory: {$in: subcategoryNameArr}})
+      .select('subcategory')
+      .exec(function (err, courses) {
+        callback(
+          _.map(subcategory, function(e) {
+            var e_clone = JSON.parse(JSON.stringify(e));
+            e_clone.courseCount = _.size(_.filter(courses, { 'subcategory': [e_clone.name] }));
+            return e_clone;
+          })
+        );
       });
     });
   },
 
   'getAllWithShownCourseCount': function (req, callback) {
-    SubcategoryModel.find({}, function (err, subcategory) {
+    SubcategoryModel
+    .find({})
+    .select('name')
+    .exec(function (err, subcategory) {
       subcategoryNameArr = _.map(subcategory, function(e) { return e.name });
       CourseModel
-        .find({subcategory: {$in: subcategoryNameArr}})
-        .where({show:true})
-        .select('subcategory')
-        .exec(function (err, courses) {
-          callback(
-            _.map(subcategory, function(e) {
-              var e_clone = JSON.parse(JSON.stringify(e));
-              e_clone.courseCount = _.size(_.filter(courses,  _.matches({ 'subcategory': e_clone.name })));
-              return e_clone;
-            })
-          );
+      .find({subcategory: {$in: subcategoryNameArr}})
+      .where({show:true})
+      .select('subcategory')
+      .exec(function (err, courses) {
+        callback(
+          _.map(subcategory, function(e) {
+            var e_clone = JSON.parse(JSON.stringify(e));
+            e_clone.courseCount = _.size(_.filter(courses, { 'subcategory': [e_clone.name] }));
+            return e_clone;
+          })
+        );
       });
     });
   }

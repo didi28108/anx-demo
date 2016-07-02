@@ -1,10 +1,11 @@
-var myApp = angular.module('myApp');
+module.exports = (ngModule) => {
 
-myApp
-  .constant('AUTH_EVENTS', {
-    notAuthenticated: 'not-authenticated'
-  })
-
-  .constant('USER_ROLES', {
-    admin: 'admin'
-  });
+  ngModule
+    .constant('AUTH_EVENTS', {
+      notAuthenticated: 'not-authenticated'
+    })
+    .constant('USER_ROLES', {
+      admin: 'admin'
+    });
+  
+}

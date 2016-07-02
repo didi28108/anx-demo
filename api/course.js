@@ -96,16 +96,12 @@ var CourseProto = {
 	'update': function(req, callback) {
 
 		var SD = new Date(req.body.course.startDate);
-		SD.addHours(config.timeZoneDiff);
 
 		var ED = new Date(req.body.course.endDate);
-		ED.addHours(config.timeZoneDiff);
 
 		var CD = new Date(req.body.course.confirmDate);
-		CD.addHours(config.timeZoneDiff);
 
 		var EnrollDueD = new Date(req.body.course.enrollDueDate);
-		EnrollDueD.addHours(config.timeZoneDiff-48);
 
 		var ST = new Date(req.body.course.startTime);
 		ST = ST.toString().substring(16,21);
@@ -113,11 +109,13 @@ var CourseProto = {
 		var ET = new Date(req.body.course.endTime);
 		ET = ET.toString().substring(16,21);
 
+    console.log('子類別__',req.body.course.subcategory);
+
 		CourseModel
 			.update({ _id: req.body.course._id }, 
 					{ 
             category      : req.body.course.category,
-            subcategory   : req.body.course.subcategory,
+            $set: { subcategory : req.body.course.subcategory },
             year          : req.body.course.year,
             no            : req.body.course.no,
             fullNo        : req.body.course.fullNo,

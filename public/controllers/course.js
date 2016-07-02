@@ -1,79 +1,112 @@
-angular.module('myApp')
+module.exports = (ngModule) => {
 
-.controller('CourseCtrl', function(Paginator, GuestHTTPService, $scope, $http, $state, $stateParams, $window){
-	
-	$scope.currentCategory = '';
-	$scope.currentSubcategory = undefined;
+  ngModule.controller('CourseCtrl', function(Paginator, GuestHTTPService, $scope, $http, $state, $stateParams, $window){
 
-	// $scope.classes = ['雲科大', '政府單位'];
+    $scope.changeCategory = function(category) {
+      $state.transitionTo('course', {categoryName: category}, { notify: false });
+      setCurrentCategory(category);
+    }
 
-	$scope.sortType	= '';
-	$scope.sortReverse	= false;
-	$scope.searchFish = '';
+    $scope.currentCategory = '';
+    $scope.currentSubcategory;
 
-	$scope.rowsPerPage = 20;
+    // $scope.classes = ['雲科大', '政府單位'];
 
-	GuestHTTPService.getAllShownCourseCategory().then(function(data) {
-		$scope.categoryList = data;
+    $scope.sortType  = '';
+    $scope.sortReverse  = false;
+    $scope.searchFish = '';
 
-		if($stateParams.default_category) {
-			$scope.currentSubcategory = undefined;
-			$scope.currentCategory = $stateParams.default_category;
-		} else {
-			var categoryIndex = getIndexByCourseCategoryDeptCode($scope.categoryList, 'ANX');
-			if(categoryIndex != null) {
-				$scope.currentCategory = $scope.categoryList[categoryIndex];
-			} else {
-				$scope.currentCategory = $scope.categoryList[0];
-			}
-		}
-	}, function(err) {
-		// err handling
-	});
+    $scope.rowsPerPage = 20;
 
-	GuestHTTPService.getCourseSubcategoryList().then(function(data) {
-		$scope.subcategoryList = data;
-		// console.log($stateParams.default_subcategory);
-		if($stateParams.default_subcategory) {
-			$scope.currentCategory = undefined;
-			$scope.currentSubcategory = $stateParams.default_subcategory;
-		} else {
-			// console.log("nope");
-		}
-	}, function(err) {
-		// err handling
-	});
+    // 取得所有課程類別和子類別
+    GuestHTTPService.getAllShownCourseCategorySubcategory().then(function(data) {
+      $scope.categoryList = data.category;
+      $scope.subcategoryList = data.subcategory;
 
-	GuestHTTPService.getAllShownCourse().then(function(data) {
-		$scope.courses = data;
-	}, function(err) {
-		// err handling
-	});
+      console.log($stateParams.categoryName);
 
-	// show course on list when a category is clicked
-	$scope.showCourse = function () {
-		$scope.currentSubcategory = undefined;
-		$scope.sortType = '';
-		for(id in $scope.categoryList) {
-			if($scope.categoryList[id].deptCode == this.cat.deptCode) {
-				$scope.currentCategory = $scope.categoryList[id];
-				Paginator.setPage(0);
-			}
-		}
-	}
+      setCurrentCategory($stateParams.categoryName);
+      
+    }, function(err) {
+      // err handling
+    });
 
-	$scope.subcategoryClick = function (subcategoryName) {
-		$scope.currentCategory = undefined;
-		$scope.currentSubcategory = subcategoryName;
-	}
+    GuestHTTPService.getAllShownCourse().then(function(data) {
+      $scope.courses = data;
+    }, function(err) {
+      // err handling
+    });
 
-	function getIndexByCourseCategoryDeptCode (array, deptCode) {
-		for (var i = 0; i < array.length; i++) {
-			if (array[i].deptCode == deptCode) {
-				return i;
-			}
-		}
-		return null;
-	}
+    // show course on list when a category is clicked
+    $scope.showCourse = function () {
+      $scope.currentSubcategory = undefined;
+      $scope.sortType = '';
+      for(var id in $scope.categoryList) {
+        if($scope.categoryList[id].deptCode == this.cat.deptCode) {
+          $scope.currentCategory = $scope.categoryList[id];
+          Paginator.setPage(0);
+        }
+      }
+    }
 
-});
+    $scope.subcategoryClick = function (subcategoryName) {
+      $scope.currentCategory = undefined;
+      $scope.currentSubcategory = subcategoryName;
+    }
+
+
+    var setCurrentCategory = function(categoryName) {
+      $scope.currentCategory = undefined;
+      $scope.currentSubcategory = undefined;
+      if(categoryName) {
+        // if state params has a categoryName
+        // look for category data in array with all course categories
+        $scope.categoryList.map(function(e, i) {
+          if(categoryName == e.deptCode) {
+            // category found, set as currentCategory,
+            // then set currentSubcategory as undefined
+            $scope.currentCategory = e;
+            $scope.currentSubcategory = undefined;
+          }
+        });
+        if(!$scope.currentCategory) {
+          console.log('try to set subcategory');
+          // if categoryName is not found in all categories
+          // look for it again in array with all course subcategories
+          $scope.subcategoryList.map(function(e, i) {
+            if(categoryName == e.name) {
+              // subcategory found, set as currentSubcategory
+              // then set currentCategory as undefined
+              $scope.currentCategory = undefined;
+              $scope.currentSubcategory = e.name;
+            }
+          });
+          if(!$scope.currentSubcategory) {
+            // if categoryName is not found in both categories and subcategories
+            // give currentCategory a category as default value
+            setCurrentCategoryAsDefault();
+          }
+        }
+      } else {
+        // if there is no categoryName in state params
+        // give currentCategory a category as default value
+        setCurrentCategoryAsDefault();
+      }
+      
+    }
+
+    // give currentCategory a category as default value
+    var setCurrentCategoryAsDefault = function() {
+      $scope.categoryList.map(function(e, i) {
+        if(e.deptCode == 'ANX') {
+          $scope.currentCategory = e;
+        }
+      });
+      if(!$scope.currentCategory) {
+        $scope.currentCategory = $scope.categoryList[0];
+      }
+    }
+
+  });
+
+}

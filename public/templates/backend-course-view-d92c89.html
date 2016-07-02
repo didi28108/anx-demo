@@ -1,0 +1,149 @@
+<!doctype html>
+<style>
+	.field-name {
+		text-align: right;
+		font-weight: bold;
+	}
+	.panel-heading {
+		text-align: center;
+	}
+	.table th, .table td {
+		border-top: none !important;
+	}
+</style>
+
+<div class="col-md-3">
+	<a href="/backend/course">課程管理</a>
+	<!-- <h3>課程單位</h3>
+	<div class="list-group">
+		<a ng-repeat="cat in categoryList | filter:{class:classes[0]} | filter:{course:'!!'}" href="" class="list-group-item" ng-click="showCourse()">
+			<span ng-if="!cat.show" class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+			{{cat.deptName}}
+			<span class="badge">{{cat.course.length}}</span>
+		</a>
+	</div>
+	<h3>課程分類</h3>
+	<div class="list-group">
+	</div> -->
+</div>
+
+<div class="col-md-9">
+	<h3>{{course.category.deptName}} － {{course.name}}</h3>
+	<div class="panel panel-default">
+		<div class="panel-heading">課程資料</div>
+		<div class="panel-body">
+			<div>
+				
+			</div>
+			
+			<table class="table">
+				<tbody>
+					<tr>
+						<td class="pre-content"><b>課號：</b></td>
+						<td>{{course.fullNo}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>課程名稱：</b></td>
+						<td>{{course.name}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>開課單位：</b></td>
+						<td>{{course.category.deptName}}</td>
+					</tr>
+					<tr ng-if="course.subcategory">
+						<td class="pre-content"><b>課程分類：</b></td>
+						<td>
+							<span ng-repeat="subcat in course.subcategory">
+								<a href="">{{subcat}}</a> 
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>課程日期：</b></td>
+						<td>{{course.startDate}} ~ {{course.endDate}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>課程時間：</b></td>
+						<td>{{course.startTime}} ~ {{course.endTime}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>開課確認日期：</b></td>
+						<td>{{course.confirmDate}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>課程目標：</b></td>
+						<td ng-bind-html="course.goal"></td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>課程資訊：</b></td>
+						<td ng-bind-html="course.info"></td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>講師資訊：</b></td>
+						<td ng-bind-html="course.lecturerInfo"></td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>上課地點：</b></td>
+						<td>{{course.location}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>課程原價：</b></td>
+						<td>{{course.price}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>招生對象：</b></td>
+						<td>{{course.enrollTarget}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>報名截止日：</b></td>
+						<td>{{course.enrollDueDate}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>是否包含午餐：</b></td>
+						<td>{{course.launchOffer}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>報名人數限制：</b></td>
+						<td>{{course.maxEnroll}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>諮詢專線：</b></td>
+						<td class="pre-content">{{course.helpline}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>課程狀態：</b></td>
+						<td>{{course.state}}</td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>備註：</b></td>
+						<td><pre ng-bind-html="course.remark"></pre></td>
+					</tr>
+					<tr>
+						<td class="pre-content"><b>報名連結：</b></td>
+						<td>
+							<a href="{{course.enrollLink}}" target="_blank">{{course.enrollLink}}</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<br>
+		</div>
+		<div class="panel-footer">
+			<p>管理動作：</p>
+			<button class="btn btn-warning btn-sm" ng-click="goEdit()">編輯</button>
+			<button class="btn btn-danger btn-sm" ng-click="delete()">刪除</button>
+
+			<span>&nbsp;&nbsp;&nbsp;課程狀態：</span>
+			<select class="inline-content form-control" ng-model="course.state" ng-change="stateChanged()">
+			<option ng-repeat="state in courseStateList" value="{{state}}">{{state}}</option>
+			</select>
+
+			<span>&nbsp;&nbsp;&nbsp;推薦：</span>
+			<select class="inline-content form-control" ng-options="option.value as option.text for option in coursePinTopList" ng-model="course.pinTop" ng-change="pinTopChanged()"></select>
+			
+			<span>&nbsp;&nbsp;&nbsp;顯示：</span>
+			<select class="inline-content form-control" ng-options="option.value as option.text for option in courseShowList" ng-model="course.show" ng-change="showChanged()"></select>
+		</div>
+	</div>
+</div>
