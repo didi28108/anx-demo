@@ -1,6 +1,7 @@
 module.exports = (ngModule) => {
 
   ngModule.controller('LoginCtrl', function($scope, AuthService, $state){
+
     $scope.msg = '';
     $scope.user = {name: '', password: ''};
 
@@ -12,6 +13,7 @@ module.exports = (ngModule) => {
         $scope.user = {name: '', password: ''};
       });
     }
+    
   });
 
 }

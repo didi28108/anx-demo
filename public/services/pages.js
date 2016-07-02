@@ -1,5 +1,6 @@
 module.exports = (ngModule) => {
 
+  // 其他頁面相關http request service
   ngModule.service('PagesService', function($q, $http) {
 
     var getPageCategory = function () {

@@ -2,6 +2,13 @@ module.exports = (ngModule) => {
 
   ngModule.controller('BECourseEditCtrl', function(CourseService, $scope, $http, $state, $stateParams, $window, $location){
 
+    /*  後台編輯課程controller
+     *  template: views/backend-course-add-or-edit.html
+     *  主要功能:
+     *    - 自報名繳費系統更新課程部分資料
+     *    - 填表修改課程資料
+     */
+
     $scope.$state = $state;
 
     // 如果無法從$stateParams取得課程_id的話就導向課程清單
@@ -152,13 +159,6 @@ module.exports = (ngModule) => {
 
     // 儲存對課程的編輯
     $scope.save = function () {
-      // 將表單上
-      // startdate, enddate, confirmdate
-      // 的value格式由string轉為date
-      // $scope.course.startDate = new Date($scope.course.startDate.toString().replace(/\//g, "-"));
-      // $scope.course.endDate = new Date($scope.course.endDate.toString().replace(/\//g, "-"));
-      // $scope.course.confirmDate = new Date($scope.course.confirmDate.toString().replace(/\//g, "-"));
-      // $scope.course.enrollDueDate = new Date(dateAddDays($scope.course.confirmDate, -2));
       $scope.course.fullNo = $scope.course.year + "-" + $scope.course.no;
 
       CourseService.updateCourse($scope.course).then(function(result) {

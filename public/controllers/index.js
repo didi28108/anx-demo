@@ -1,5 +1,7 @@
 module.exports = (ngModule) => {
 
+  // require所有controller
+
   require('./BECourse')(ngModule);
   require('./BECourseAdd')(ngModule);
   require('./BECourseEdit')(ngModule);

@@ -1,6 +1,15 @@
 module.exports = (ngModule) => {
 
 	ngModule.controller('BEPagesCtrl', function(PagesService, $scope, $state, $stateParams, $window, $location) {
+		
+		/*  其他頁面管理controller
+		 *  template: views/backend-pages.html
+		 *  主要功能:
+		 *    - 瀏覽頁面內容
+		 *    - 增刪改頁面類別
+		 *		- 增刪改頁面
+		 */
+
 		$scope.url = $location.protocol() + "://" + $location.host();
 		$scope.panelVisible = false;
 		$scope.addCatFormVisible = false;
@@ -12,14 +21,6 @@ module.exports = (ngModule) => {
 
 		PagesService.getPageCategory().then(function (data) {
 			$scope.pageCategoryList = data;
-			// if($stateParams.default_category) {
-			// 	var currentCatIndex = getCategoryIndexById($stateParams.default_category.id, $scope.pageCategoryList);
-			// 	$scope.currentCategory = {
-			// 		id: $stateParams.default_category.id,
-			// 		name: $scope.pageCategoryList[currentCatIndex].name
-			// 	}
-			// 	console.log($scope.currentCategory);
-			// }
 		}, function (err) {
 			// err handling ...
 		});
@@ -40,8 +41,6 @@ module.exports = (ngModule) => {
 				});
 			}
 		}
-
-		// console.log('default_category:', $stateParams.default_category);
 
 		$scope.showAddCatForm = function () {
 			$scope.addCatFormVisible = true;

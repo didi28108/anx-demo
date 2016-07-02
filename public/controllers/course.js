@@ -2,9 +2,21 @@ module.exports = (ngModule) => {
 
   ngModule.controller('CourseCtrl', function(Paginator, GuestHTTPService, $scope, $http, $state, $stateParams, $window){
 
+    /*  前台課程controller
+     *  template: views/course.html
+     *  主要功能:
+     *    - 以列表呈現課程資訊
+     *    - 以課程單位及課程分類篩選呈現課程列表
+     */
+
+    // 課程單位、分類被點選
     $scope.changeCategory = function(category) {
       $state.transitionTo('course', {categoryName: category}, { notify: false });
       setCurrentCategory(category);
+      
+      $scope.sortType  = '';
+      $scope.sortReverse  = false;
+      $scope.searchFish = '';
     }
 
     $scope.currentCategory = '';
@@ -12,10 +24,12 @@ module.exports = (ngModule) => {
 
     // $scope.classes = ['雲科大', '政府單位'];
 
+    // 搜尋列相關變數
     $scope.sortType  = '';
     $scope.sortReverse  = false;
     $scope.searchFish = '';
 
+    // Paginator預設單頁資料筆數
     $scope.rowsPerPage = 20;
 
     // 取得所有課程類別和子類別
@@ -23,14 +37,13 @@ module.exports = (ngModule) => {
       $scope.categoryList = data.category;
       $scope.subcategoryList = data.subcategory;
 
-      console.log($stateParams.categoryName);
-
       setCurrentCategory($stateParams.categoryName);
       
     }, function(err) {
       // err handling
     });
 
+    // 取得所有狀態為顯示的課程
     GuestHTTPService.getAllShownCourse().then(function(data) {
       $scope.courses = data;
     }, function(err) {
@@ -49,12 +62,7 @@ module.exports = (ngModule) => {
       }
     }
 
-    $scope.subcategoryClick = function (subcategoryName) {
-      $scope.currentCategory = undefined;
-      $scope.currentSubcategory = subcategoryName;
-    }
-
-
+    // 設定當前瀏覽類別
     var setCurrentCategory = function(categoryName) {
       $scope.currentCategory = undefined;
       $scope.currentSubcategory = undefined;
@@ -70,7 +78,6 @@ module.exports = (ngModule) => {
           }
         });
         if(!$scope.currentCategory) {
-          console.log('try to set subcategory');
           // if categoryName is not found in all categories
           // look for it again in array with all course subcategories
           $scope.subcategoryList.map(function(e, i) {

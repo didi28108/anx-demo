@@ -18,7 +18,7 @@ var News = new NewsApi();
 
 module.exports = function (app, passport, root_dir) {
 
-	// pages routes
+	/* pages routes */
 	app.get('/api/getPageCategory', function (req, res) {
 		Pages.getAllCategory(req, function (data) {
 			res.json(data);
@@ -109,7 +109,7 @@ module.exports = function (app, passport, root_dir) {
 		}
 	});
 
-	// news category related routes
+	/* news category related routes */
 	app.get('/api/getNewsCategory', function (req, res) {
 		News.findAllCategory(req, function (data) {
 			res.json(data);
@@ -152,7 +152,7 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
-	// news related routes
+	/* news related routes */
 	app.post('/api/getNews', function (req, res) {
 		News.findOne(req, function (data) {
 			res.json(data);
@@ -224,7 +224,7 @@ module.exports = function (app, passport, root_dir) {
 	});
 
 
-	// course category
+	/* course category routes */
 	app.get('/api/getCourseCategory', function (req, res) {
 		Category.getAll(req, function (data) {
 			res.json(data);
@@ -271,17 +271,8 @@ module.exports = function (app, passport, root_dir) {
 		}
 	});
 
-	app.get('/api/removeAllCats', function (req, res) {
-		if (checkHeaderAuth(req.headers)) {
-			Category.removeAll(req, function (data) {
-				res.json(data);
-			});
-		} else {
-			res.json({msg: "rejected"});
-		}
-	});
-
-	// POST course data from Yuntech
+	/* 存取報名繳費系統 routes */
+	// get course data from Yuntech
 	app.post('/getCourseDataFromYuntech', function (req, res) {
 		if (req.body.year != undefined && req.body.no != undefined) {
 			request({
@@ -327,7 +318,7 @@ module.exports = function (app, passport, root_dir) {
 		}
 	});
 
-	// course subcategory 
+	/* course subcategory routes */
 	app.get('/api/getCourseSubcategoryList', function (req, res) {
 		Subcategory.getAll(req, function (data) {
 			res.json(data);
@@ -376,7 +367,7 @@ module.exports = function (app, passport, root_dir) {
 		}
 	});	
 
-	// course
+	/* course routes */
 	app.get('/api/getPopularCourse', function (req, res) {
 		Course.getPopular(req, function (data) {
 			res.json(data);
@@ -467,12 +458,6 @@ module.exports = function (app, passport, root_dir) {
 		}
 	});
 
-	app.get('/api/removeAllCourse', function (req, res) {
-		Course.removeAll(req, function (data) {
-			res.json(data);
-		});
-	});
-
 	// 課程點擊次數+1
 	app.post('/api/courseClicked', function (req, res) {
 		Course.addClick(req, function (data) {
@@ -480,7 +465,7 @@ module.exports = function (app, passport, root_dir) {
 		});
 	});
 
-	// authentication related
+	/* 後台登入驗證 routes */
 	app.post('/api/signup', function (req, res) {
 		if (!req.body.name || !req.body.password) {
 			res.json({success: false, msg: 'Please pass name and password.'});

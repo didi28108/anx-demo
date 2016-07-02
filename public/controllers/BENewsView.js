@@ -2,6 +2,14 @@ module.exports = (ngModule) => {
 
   ngModule.controller('BENewsViewCtrl', function(NewsService, $scope, $http, $state, $stateParams, $window, $sce){
     
+    /*  後台瀏覽公告controller
+     *  template: views/backend-news-view.html
+     *  主要功能:
+     *    - 瀏覽公告內容
+     *    - 前往編輯、刪除、更新顯示狀態
+     */
+
+    // 公告顯示狀態預設值陣列
     $scope.newsShowList = [
       {
         text: "顯示",
@@ -13,12 +21,14 @@ module.exports = (ngModule) => {
       }
     ];
 
+    // 取得公告類別
     NewsService.getNewsCategory().then(function(data) {
       $scope.categoryList = data;
     }, function(err) {
       // err handling
     });
 
+    // 取得公告
     NewsService.getNews($stateParams.id).then(function(data) {
       $scope.news = data;
       $scope.news.content = $sce.trustAsHtml(data.content);

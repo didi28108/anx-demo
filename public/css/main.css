@@ -1,15 +1,8 @@
 body {
-  /*background-color: #f5f5f5;*/
   font-family: Microsoft JhengHei;
 }
 .navbar {
   margin-top: 20px;
-  /*z-index: 9999;
-  margin-bottom: 0px;
-  background-color: #fff;
-  border-color: #fff;
-  box-shadow: 0 1px 5px #888888;
-  border-radius: 0px;*/
   background-image: url("../image/top.png");
   background-repeat: no-repeat;
   min-height: 130px;
@@ -78,7 +71,6 @@ pre {
   display: inline-block;
 }
 .date-text {
-  /*font-size:12px;*/
   color:#888;
 }
 @media (max-width: 991px) {
@@ -105,7 +97,6 @@ pre {
   margin-right: auto;
   margin-left: auto;
   padding-bottom: 5px;
-  /*border-bottom: 3px solid #444;*/
 }
 .footer-item {
   font-size: 16px;

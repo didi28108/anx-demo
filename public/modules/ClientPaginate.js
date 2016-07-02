@@ -1,3 +1,5 @@
+// 課程及消息公告列表頁面所使用的分割頁面模組
+
 let ClientPaginateModule = angular.module('ClientPaginate', []);
 
 ClientPaginateModule

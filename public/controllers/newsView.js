@@ -1,7 +1,14 @@
 module.exports = (ngModule) => {
 
   ngModule.controller('NewsViewCtrl', function(GuestHTTPService, NewsService, $scope, $http, $state, $stateParams, $sce){
+    
+    /*  消息公告瀏覽controller
+     *  template: views/news-view.html
+     *  主要功能:
+     *    - 瀏覽公告內容
+     */
 
+    // 取得公告
     NewsService.getNews($stateParams.id).then(function(data) {
       if(data.notfound) {
         $state.go('^.news');
@@ -26,6 +33,7 @@ module.exports = (ngModule) => {
       }
     });
 
+    // 轉跳消息公告頁面，顯示被點選類別的公告列表
     $scope.showNews = function (news_id) {
       for (var id in $scope.categoryList) {
         if($scope.categoryList[id]._id == news_id) {

@@ -2,6 +2,13 @@ module.exports = (ngModule) => {
 
   ngModule.controller('BECourseAddCtrl', function(CourseService, $scope, $http, $state, $window){
     
+    /*  後台新增課程controller
+     *  template: views/backend-course-add-or-edit.html
+     *  主要功能:
+     *    - 自報名繳費系統帶入課程部分資料
+     *    - 填表新增課程
+     */
+
     // 將目前的$state注入$scope中，供views使用
     $scope.$state = $state;
 
@@ -21,11 +28,11 @@ module.exports = (ngModule) => {
       year: 105,          // 預設年度
       startTime: defaultDate1,
       endTime: defaultDate2,
-      launchOffer: "不包含",    // 預設不供餐
-      area: "雲林",        // 預設雲林地區
-      state: "未處理",      // 預設課程狀態
-      pinTop: false,        // 預設課程推薦釘選
-      show: true          // 預設課程顯示
+      launchOffer: "不包含",   // 預設不供餐
+      area: "雲林",            // 預設雲林地區
+      state: "未處理",         // 預設課程狀態
+      pinTop: false,           // 預設課程推薦釘選
+      show: true               // 預設課程顯示
     }
 
     // 設定time picker 小時與分鐘間隔
@@ -136,7 +143,7 @@ module.exports = (ngModule) => {
       $scope.course.endTime       = new Date(res.data.CourseEndDate.substring(0,11)+res.data.CourseEndTime+":00+08:00");
       $scope.course.location      = res.data.CourseLocation;
       $scope.course.confirmDate   = new Date(res.data.CourseOfferedConfirmDate);
-      $scope.course.enrollDueDate = dateAddDays(new Date(res.data.CourseOfferedConfirmDate), -2);
+      $scope.course.enrollDueDate = new Date(res.data.CourseAvailableSignUpDate);
       $scope.course.enrollTarget  = res.data.CourseTargetStudent;
       $scope.course.launchOffer   = res.data.CourseIncludeLunch;
       $scope.course.price         = res.data.CoursePrice;
@@ -153,13 +160,6 @@ module.exports = (ngModule) => {
     }
 
     $scope.add = function () {
-      // 將表單上
-      // startdate, enddate, confirmdate
-      // 的value格式由string轉為date
-      // $scope.course.startDate = new Date($scope.course.startDate.toString().replace(/\//g, "-"));
-      // $scope.course.endDate = new Date($scope.course.endDate.toString().replace(/\//g, "-"));
-      // $scope.course.confirmDate = new Date($scope.course.confirmDate.toString().replace(/\//g, "-"));
-      // $scope.course.enrollDueDate = new Date(dateAddDays($scope.course.confirmDate, -2));
       $scope.course.fullNo = $scope.course.year + "-" + $scope.course.no;
 
       CourseService.addCourse($scope.course).then(function(result) {

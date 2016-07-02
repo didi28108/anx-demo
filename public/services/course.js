@@ -1,5 +1,6 @@
 module.exports = (ngModule) => {
 
+  // 課程相關http request service
   ngModule.service('CourseService', function($q, $http){
 
     // 取得所有課程單位

@@ -1,5 +1,6 @@
 module.exports = (ngModule) => {
 
+  // 消息公告相關http request service
   ngModule.service('NewsService', function($q, $http){
 
     // 取得消息公告分類

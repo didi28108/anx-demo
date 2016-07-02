@@ -1,6 +1,12 @@
 module.exports = (ngModule) => {
 
   ngModule.controller('NewsCtrl', function(Paginator, GuestHTTPService, NewsService, $scope, $http, $state, $stateParams, $window){
+    
+    /*  消息公告controller
+     *  template: views/news.html
+     *  主要功能:
+     *    - 顯示消息公告列表
+     */
 
     $scope.$state = $state;
 

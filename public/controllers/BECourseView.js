@@ -2,7 +2,14 @@ module.exports = (ngModule) => {
 
   ngModule.controller('BECourseViewCtrl', function(CourseService, $scope, $http, $state, $stateParams, $sce, $window){
     
-    $scope.classes = ['雲科大', '政府單位'];
+    /*  後台瀏覽課程controller
+     *  template: views/backend-course-view.html
+     *  主要功能:
+     *    - 瀏覽課程資料
+     *    - 前往編輯、刪除、更新課程狀態、更新推薦狀態、更新顯示狀態
+     */
+
+    // $scope.classes = ['雲科大', '政府單位'];
 
     $scope.courseStateList = ["開課", "未處理", "不開課"];
     
@@ -38,35 +45,28 @@ module.exports = (ngModule) => {
       // err handling
     });
 
+    // 取得課程
     CourseService.getCourse($stateParams.id).then(function(result) {
       $scope.course = result;
 
-      $scope.course.startDate    = new Date($scope.course.startDate).toLocaleDateString().replace(/-/g, "/");
-      $scope.course.endDate      = new Date($scope.course.endDate).toLocaleDateString().replace(/-/g, "/");
-      $scope.course.confirmDate 	= new Date($scope.course.confirmDate).toLocaleDateString().replace(/-/g, "/");
+      $scope.course.startDate     = new Date($scope.course.startDate).toLocaleDateString().replace(/-/g, "/");
+      $scope.course.endDate       = new Date($scope.course.endDate).toLocaleDateString().replace(/-/g, "/");
+      $scope.course.confirmDate   = new Date($scope.course.confirmDate).toLocaleDateString().replace(/-/g, "/");
       $scope.course.enrollDueDate = new Date($scope.course.enrollDueDate).toLocaleDateString().replace(/-/g, "/");
-      $scope.course.remark 				= $sce.trustAsHtml($scope.course.remark);
-      $scope.course.goal 					= $sce.trustAsHtml($scope.course.goal);
-      $scope.course.info 					= $sce.trustAsHtml($scope.course.info);
-      $scope.course.lecturerInfo 	= $sce.trustAsHtml($scope.course.lecturerInfo);
+      $scope.course.remark        = $sce.trustAsHtml($scope.course.remark);
+      $scope.course.goal          = $sce.trustAsHtml($scope.course.goal);
+      $scope.course.info          = $sce.trustAsHtml($scope.course.info);
+      $scope.course.lecturerInfo  = $sce.trustAsHtml($scope.course.lecturerInfo);
     }, function (err) {
       // err handling
     });
 
-    $scope.showCourse = function(abbr) {
-      for(var id in $scope.categoryList) {
-        if($scope.categoryList[id].deptName == this.cat.deptName) {
-          $state.go('^.course', { default_category: $scope.categoryList[id] });
-        }
-      }
-    };
-
-    /* course list options */
-    // edit course
+    // go edit course
     $scope.goEdit = function() {
       $state.go('^.editCourse', { course_id: this.course._id });
     };
 
+    // delete course
     $scope.delete = function() {
       var course_id = this.course._id;
       var category_id = this.course.category._id;
@@ -84,6 +84,7 @@ module.exports = (ngModule) => {
       }
     };
 
+    // 更新課程開課狀態
     $scope.stateChanged = function () {
       var fullNo = this.course.fullNo;
       var name = this.course.name;
@@ -102,6 +103,7 @@ module.exports = (ngModule) => {
       });
     }
 
+    // 更新課程推薦狀態
     $scope.pinTopChanged = function () {
       var fullNo = this.course.fullNo;
       var name = this.course.name;
@@ -123,6 +125,7 @@ module.exports = (ngModule) => {
       });
     }
 
+    // 更新課程顯示狀態
     $scope.showChanged = function () {
       var fullNo = this.course.fullNo;
       var name = this.course.name;

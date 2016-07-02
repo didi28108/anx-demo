@@ -1,6 +1,12 @@
 module.exports = (ngModule) => {
 
   ngModule.controller('CourseViewCtrl', function(GuestHTTPService, CourseService, $scope, $http, $state, $stateParams, $sce){
+    /*  前台課程瀏覽controller
+     *  template: views/course-view.html
+     *  主要功能:
+     *    - 瀏覽課程詳細資訊
+     */
+
     // $scope.classes = ['雲科大', '政府單位'];
     
     // 用課程_id取得課程
@@ -37,20 +43,7 @@ module.exports = (ngModule) => {
       // err handling
     });
 
-    $scope.showCourse = function() {
-      for(var id in $scope.categoryList) {
-
-        if($scope.categoryList[id].deptName == this.cat.deptName) {
-          $state.go('^.course', { default_category: $scope.categoryList[id] });
-        }
-      }
-    };
-
-    $scope.subcategoryClick = function (subcategoryName) {
-      $state.go('^.course', { default_subcategory: subcategoryName });
-    }
-
-
+    // 設定當前瀏覽類別
     var setCurrentCategory = function(categoryName) {
       $scope.currentCategory = undefined;
       $scope.currentSubcategory = undefined;

@@ -2,6 +2,14 @@ module.exports = (ngModule) => {
 
   ngModule.controller('BENewsCtrl', function(NewsService, $scope, $http, $state, $stateParams, $window){
 
+    /*  後台公告管理controller
+     *  template: views/backend-news.html
+     *  主要功能:
+     *    - 列表呈現消息公告
+     *    - 前往新增、編輯、刪除、更新顯示狀態
+     */
+    
+    // 將目前的$state注入$scope中，供views使用
     $scope.$state = $state;
 
     $scope.newsShowList = [
@@ -50,6 +58,7 @@ module.exports = (ngModule) => {
       }
     };
 
+    // 前往新增公告
     $scope.goAdd = function() {
       $state.go('^.addNews');
     };

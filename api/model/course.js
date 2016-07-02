@@ -1,15 +1,17 @@
+/* 課程schema */
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CourseSchema = new Schema({
-  category      : {                // 類別_id
+  category      : {                // 課程所屬類別的_id, 參照Category collections
                     type: Schema.Types.ObjectId,
                     ref: 'Category'
                   },
-  subcategory   : [String],          // 課程子類別
+  subcategory   : [String],        // 課程子類別, 課程對子類別唯一對多
   year          : Number,          // 年
   no            : String,          // 課程編號
-  fullNo        : {                // 完整課號("年-課程編號")
+  fullNo        : {                // 完整課號("年-課程編號"), 必須為唯一值
                     type: String,
                     unique: true
                   },

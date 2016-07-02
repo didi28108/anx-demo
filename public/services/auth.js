@@ -1,5 +1,6 @@
 module.exports = (ngModule) => {
   
+  // 登入驗證模組
   ngModule.service('AuthService', function($q, $http) {
     var LOCAL_TOKEN_KEY = 'idontknowwhatsgoingon';
     var isAuthenticated = false;

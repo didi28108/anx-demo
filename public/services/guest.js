@@ -1,5 +1,6 @@
 module.exports = (ngModule) => {
 
+	// 前台(學員端)所使用的http request service
 	ngModule.service('GuestHTTPService', function($q, $http){
 
 		var getPopularCourse = function () {

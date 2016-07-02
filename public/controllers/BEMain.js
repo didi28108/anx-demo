@@ -1,6 +1,13 @@
 module.exports = (ngModule) => {
 
-	ngModule.controller('BackendMainCtrl', function($scope, AuthService, $state, $http, $window){
+	ngModule.controller('BEMainCtrl', function($scope, AuthService, $state, $http, $window){
+
+		/*  後台登入頁面controller
+		 *  template: views/backend-home.html
+		 *  主要功能:
+		 *    - 登入
+		 *    - 登出
+		 */
 
 		$scope.isLogin = AuthService.isAuthenticated();
 

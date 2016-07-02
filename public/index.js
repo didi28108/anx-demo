@@ -47,10 +47,6 @@ ngModule.config(($stateProvider, $urlRouterProvider, $locationProvider) => {
 		.state('course', {
 			url: '/course/:categoryName',
 			templateUrl: require("./views/course.html"),
-			params: {
-				'default_category': null,
-				'default_subcategory': null
-			},
 			controller: 'CourseCtrl'
 		})
 		.state('viewCourse', {
@@ -78,7 +74,8 @@ ngModule.config(($stateProvider, $urlRouterProvider, $locationProvider) => {
 		})
 		.state('backend', {
 			url: '/backend',
-			templateUrl: require("./views/backend-home.html")
+			templateUrl: require("./views/backend-home.html"),
+			controller: 'BEMainCtrl'
 		})
 		.state('backend.login', {
 			url: '/login', 
