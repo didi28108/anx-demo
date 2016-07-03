@@ -9,10 +9,11 @@ bundle our app with webpack `npm run build`
 start the server `node app.js`
 
 ## Stack
-- node.js + express
-- mongodb (mongoose as ODM)
-- angular 1.x
-- webpack
+- Node.js + Express
+- Mongodb (Mongoose as ODM)
+- Angular 1.x
+- Bootstrap 3
+- Webpack
 
 ## App Structure
 
