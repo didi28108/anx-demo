@@ -1,4 +1,5 @@
 # anx-demo
+Website of NYUST ANX department
 
 ## Setup
 install node modules `npm install`
