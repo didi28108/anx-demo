@@ -18,8 +18,8 @@ app.use('/bower_components', express.static(path.join(__dirname, '/bower_compone
 var mongoose = require('mongoose');
 var dbconfig = require('./config/db_conn');
 mongoose.connect(dbconfig.url, function(err){
-	if(err) console.log(err);
-	else console.log('MongoDB connected! \nlink: ' + dbconfig.url);
+  if(err) console.log(err);
+  else console.log('MongoDB connected! \nlink: ' + dbconfig.url);
 });
 
 // use the passport package
@@ -33,5 +33,5 @@ require('./routes/index.js')(app, passport, __dirname);
 
 var server = require('http').createServer(app);
 server.listen(port, function () {
-	console.log('Anx-demo server running on ' + port);
+  console.log('Anx-demo server running on ' + port);
 });
