@@ -1,6 +1,8 @@
 # anx-demo
 Website of NYUST ANX department
 
+Check out `live-demo` branch for live demo.
+
 ## Setup
 install node modules `npm install`
 
@@ -46,7 +48,7 @@ root/
 ## NOTICE
 There is some importing issues with webpack. As we import ng-ckeditor(using bower) and angular-xeditable(using npm) as modules for dependency injection. Webpack got them as "object" instead of "module". This issue leads to angular app instantiate failure(failed to setup app) because those modules can not be properly inject.
 
-Hacky way to solve this prob: 
+A Hacky way to solve this prob: 
 Add a index.js file to the root of each modules(node_modules/angular-xeditable, bower_components/ng-ckeditor). In the index.js file, simply import the main file of the module(angular-xeditable/dist/js/xeditable, ng-ckeditor/ng-ckeditor). Then simply write module.exports to export them. And make sure to modify package.json of the modules. Change the value of "main" property to "index.js", which means to let the module loader look for index.js file we've created.
 
 The index.js file will look like this:
