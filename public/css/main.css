@@ -104,33 +104,9 @@ pre {
 .footer a {
   text-decoration: none;
 }
-
 .footer-title-bg {
+  background-image: url("../image/footer-title-bg.png");
   background-repeat: no-repeat;
   background-position: center 30px;
   min-height: 80px;
-}
-#anx-intro {
-  background-image: url("../image/中心介紹.png");
-}
-#anx-class-flow {
-  background-image: url("../image/開班流程.png");
-}
-#anx-ttqs {
-  background-image: url("../image/ttqs專區.png");
-}
-#anx-training {
-  background-image: url("../image/教育訓練.png");
-}
-#anx-learning {
-  background-image: url("../image/學習專區.png");
-}
-#anx-service {
-  background-image: url("../image/服務.png");
-}
-#anx-wanted {
-  background-image: url("../image/菁英招募.png");
-}
-#anx-purchase {
-  background-image: url("../image/採購專區.png");
 }

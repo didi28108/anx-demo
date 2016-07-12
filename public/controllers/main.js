@@ -12,7 +12,7 @@ module.exports = (ngModule) => {
     }
     
     // 取得footer資料
-    // getFooterData(chunk);    // 目前footer資料在寫死前端
+    getFooterData(chunk);    // 目前footer資料在寫死前端
 
     function getFooterData (callback) {
       var categories = [];

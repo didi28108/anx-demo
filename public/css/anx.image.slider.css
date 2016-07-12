@@ -1,32 +1,11 @@
 #IS1 {
-  background-image: url("../file_uploads/banners/banner1.jpg");
+  background-image: url("../image/banner1.jpg");
 }
 #IS2 {
-  background-image: url("../file_uploads/banners/banner2.jpg");
+  background-image: url("../image/banner2.jpg");
 }
 #IS3 {
-  background-image: url("../file_uploads/banners/banner3.jpg");
-}
-#IS4 {
-  background-image: url("../file_uploads/banners/banner4.jpg");
-}
-#IS5 {
-  background-image: url("../file_uploads/banners/banner5.jpg");
-}
-#IS6 {
-  background-image: url("../file_uploads/banners/banner6.jpg");
-}
-#IS7 {
-  background-image: url("../file_uploads/banners/banner7.jpg");
-}
-#IS8 {
-  background-image: url("../file_uploads/banners/banner8.jpg");
-}
-#IS9 {
-  background-image: url("../file_uploads/banners/banner9.jpg");
-}
-#IS10 {
-  background-image: url("../file_uploads/banners/banner10.jpg");
+  background-image: url("../image/banner3.jpg");
 }
 .banner-img {
   height: 420px;
