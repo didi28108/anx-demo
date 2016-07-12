@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
+.header-wrap {
+  display: block;
+  width: 100%;
+  height: 100px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  background-color: #333;
+  -webkit-user-select: none;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+#header {
+  float: left;
+  padding-top: 20px;
+}
+#header a {
+  color: #fff;
+  font-size: 40px;
+}
+#header a:hover {
+  text-decoration: none;
+}
+#header a:focus {
+  text-decoration: none;
+}
+.time-wrap {
+  float: right;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 25px;
+  text-align: right;
+}

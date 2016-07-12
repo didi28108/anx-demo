@@ -1,0 +1,22 @@
+{
+  "name": "anx-demo",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "imrobinized <almigod0718@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/imrobinized/anx-demo",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ckeditor": "^4.5.9",
+    "ng-ckeditor": "^0.2.1"
+  }
+}
