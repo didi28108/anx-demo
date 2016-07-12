@@ -1,5 +1,6 @@
 # anx-demo
-Website of NYUST ANX department 
+Website of NYUST ANX department
+
 [Live Demo](http://128.199.127.18:5000) (based on live-demo branch)
 
 ## Setup
