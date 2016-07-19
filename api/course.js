@@ -38,19 +38,15 @@ var CourseProto = {
 
     // 課程開始日期
     var SD = new Date(req.body.course.startDate);
-    SD.addHours(config.timeZoneDiff);
 
     // 課程結束日期
     var ED = new Date(req.body.course.endDate);
-    ED.addHours(config.timeZoneDiff);
 
     // 開課確認日期
     var CD = new Date(req.body.course.confirmDate);
-    CD.addHours(config.timeZoneDiff);
 
     // 開課截止日
     var EnrollDueD = new Date(req.body.course.enrollDueDate);
-    EnrollDueD.addHours(config.timeZoneDiff);
 
     // 開始時間
     var ST = new Date(req.body.course.startTime);
