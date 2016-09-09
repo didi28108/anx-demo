@@ -263,15 +263,10 @@ var CourseProto = {
 
   // 查找熱門課程: 查找報名未截止, 點閱量最高的前7筆課程
   'getPopular': function (req, callback) {
-    var tmr = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-    var day = tmr.getDate();
-    var month = tmr.getMonth() + 1;
-    var year = tmr.getFullYear;
-    var tmrDate = new Date(year+"-"+month+"-"+day);
     CourseModel
       .find({show: true})
       .populate('category')
-      .where('enrollDueDate').gt(tmrDate)
+      .where('enrollDueDate').gt(new Date(new Date().getTime() - 86400000 * 3))
       .select('category area name startDate endDate confirmDate state clicks pinTop')
       .sort('-clicks')
       .limit(7)
@@ -280,20 +275,15 @@ var CourseProto = {
       });
   },
 
-  // 查找推薦課程: 查找有被推薦, 報名未截止, 點閱量最高的前10筆課程
-  'getPinTop': function (req, callback) {
-    var tmr = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-    var day = tmr.getDate();
-    var month = tmr.getMonth() + 1;
-    var year = tmr.getFullYear;
-    var tmrDate = new Date(year+"-"+month+"-"+day);
+  // 查找熱門課程: 查找開課確認日後3天之前, 點閱量最高的前7筆課程
+  'getPopular': function (req, callback) {
     CourseModel
-      .find({pinTop: true, show: true})
+      .find({show: true})
       .populate('category')
-      .where('enrollDueDate').gt(tmrDate)
+      .where('enrollDueDate').gt(new Date(new Date().getTime() - 86400000 * 3))
       .select('category area name startDate endDate confirmDate state clicks pinTop')
       .sort('-clicks')
-      .limit(10)
+      .limit(7)
       .exec(function (err, data) {
         callback(data);
       });
