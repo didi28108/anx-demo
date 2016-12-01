@@ -1,15 +1,6 @@
 # anx-demo
 Website of NYUST ANX department
 
-Check out `live-demo` branch for live demo.
-
-## Setup
-install node modules `npm install`
-
-bundle our app with webpack `npm run build`
-
-start the server `node app.js`
-
 ## Stack
 - Node.js + Express
 - Mongodb (Mongoose as ODM)
@@ -45,7 +36,7 @@ root/
 └─ webpack.comfig.js
 ```
 
-## NOTICE
+## NOTES
 There is some importing issues with webpack. As we import ng-ckeditor(using bower) and angular-xeditable(using npm) as modules for dependency injection. Webpack got them as "object" instead of "module". This issue leads to angular app instantiate failure(failed to setup app) because those modules can not be properly inject.
 
 A Hacky way to solve this prob: 
